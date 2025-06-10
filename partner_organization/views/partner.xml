@@ -1,0 +1,51 @@
+<odoo>
+    <record id="partner_parent_custom" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="replace">
+                <field name="parent_partner_ids" context="{'active_id': active_id}"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"
+                       widget="many2many_tags" placeholder="Add Parent"/>
+                <field name="parent_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='contact_addresses']" position="replace">
+                <page string="Contacts" name="parent_chart_ids" autofocus="autofocus">
+                    <field name="parent_chart_ids" mode="kanban">
+                        <kanban>
+                            <field name="id"/>
+                            <field name="color"/>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="display_name"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                    <div t-att-class="color +  ' oe_kanban_global_click'">
+                                        <div class="o_kanban_image">
+                                            <img alt="Contact image"
+                                                 t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)"/>
+                                        </div>
+                                        <div class="oe_kanban_details">
+                                            <field name="name"/>
+                                            <div t-if="record.function.raw_value">
+                                                <field name="function"/>
+                                            </div>
+                                            <div t-if="record.email.raw_value">Email:
+                                                <field name="email" widget="email"/>
+                                            </div>
+                                            <div>Mobile:
+                                                <field name="mobile"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

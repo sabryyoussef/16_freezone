@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_statement_template">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o"/>
+            <div class="page">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <span style="font-size:30px;">  
+                            Partner Statement
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                    </div>
+                    <div class="col-5">
+                        <span t-raw="o.contact_address.replace('\n\n', '\n').replace('\n', '&lt;br&gt;')"/>
+                        <!-- <t t-foreach="o.contact_address.split('\n')" t-as="addr_comp">
+                          <div t-esc="addr_comp"/>
+                        </t> -->
+                        <span t-field="o.vat"/>
+                    </div>
+                </div>
+
+                <table class="table mt-3">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Date</th>
+                            <th>Invoice Number</th>
+                            <th>Account</th>
+                            <th>Ref</th>
+                            <th>Invoices/Debit</th>
+                            <th>Payments/Credit</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <t t-set="total_debit" t-value="0.0"/>
+                    <t t-set="total_credit" t-value="0.0"/>
+                    <t t-set="total_balance" t-value="0.0"/>
+                    <t t-set="opening_balance" t-value="o.get_opbalance(from_date, to_date)"/>
+                    <tr>
+                        <td></td>
+                        <td><strong>Initial Balance</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong><t t-out="opening_balance"/></strong></td>
+                    </tr>
+                    <tr t-foreach="o.get_statements(from_date, to_date)" t-as="stmt">
+                        <t t-set="account" t-value="stmt.line_ids.filtered(lambda line: line.name == stmt.name)"/>
+                        <td><t t-out="stmt.invoice_date"/></td>
+                        <td><t t-out="stmt.name"/></td>
+                        <td><t t-out="account.account_id.display_name"/></td>
+                        <td><t t-out="stmt.name"/></td>
+                        <td><t t-out="stmt.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <td><t t-out="stmt.amount_total - stmt.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <td><t t-out="stmt.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+
+                        <t t-set="total_debit" t-value="total_debit+stmt.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        <t t-set="total_credit" t-value="total_credit+(stmt.amount_total - stmt.amount_residual)" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        <t t-set="total_balance" t-value="total_balance+stmt.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><strong>Ending Balance</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong><t t-out="total_balance+opening_balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><t t-out="total_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <td><t t-out="total_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                        <td><t t-out="total_debit-total_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total Amounts Overdue:</strong></td>
+                        <td></td>
+                        <td><strong><t t-out="total_balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Balance Due:</strong></td>
+                        <td></td>
+                        <td><strong><t t-out="total_balance+opening_balance" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong></td>
+                    </tr>
+                </table>
+                <table class="table table-condensed">
+                    <t t-set="agedheader" t-value="o.get_agedheader(from_date, to_date)"/>
+                    <thead>
+                        <tr>
+                            <th class="text-right">
+                                <span>Not due</span>
+                            </th>
+                            <th class="text-right"><span t-out="agedheader['4']['name']"/></th>
+                            <th class="text-right"><span t-out="agedheader['3']['name']"/></th>
+                            <th class="text-right"><span t-out="agedheader['2']['name']"/></th>
+                            <th class="text-right"><span t-out="agedheader['1']['name']"/></th>
+                            <th class="text-right"><span t-out="agedheader['0']['name']"/></th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.get_ageddata(from_date, to_date)" t-as="partner">
+                            <td class="text-right">
+                                <span t-out="partner['direction']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['4']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['3']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['2']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['1']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['0']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-out="partner['total']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <template id="report_statement_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="partner_statement_knk.report_statement_template"/>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+

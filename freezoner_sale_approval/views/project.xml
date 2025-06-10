@@ -1,0 +1,37 @@
+<odoo>
+    <record id="project_approval_requests_kanban" model="ir.ui.view">
+        <field name="name">project_stages_kanban</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="mode">extension</field>
+        <field name="arch" type="xml">
+            <xpath expr="//span[@t-if='record.partner_id.value']" position='after'>
+                <field name="is_approval_request" invisible="1"/>
+                <span t-if="record.is_approval_request.raw_value"
+                      attrs="{'invisible':[('sale_payment_status','=', 'Paid')]}"
+                      style="color: green">
+                    <br/>
+                    <br/>
+                    <strong>Payment Exception Approved</strong>
+                    <br/>
+                    <br/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+    <record id="project_project_exceptions_form" model="ir.ui.view">
+        <field name="name">project.project.exception</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position='before'>
+                <field name="sale_payment_status" invisible="1"/>
+                <div class="alert alert-info oe_edit_only mb-0 text-center"
+                     attrs="{'invisible':['|',('is_approval_request','=', False),('sale_payment_status','=', 'Paid')]}" style="color: green">
+                    <field name="is_approval_request" invisible="1"/>
+                    <strong>Payment Exception Approved</strong>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

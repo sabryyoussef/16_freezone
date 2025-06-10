@@ -1,0 +1,15 @@
+<odoo>
+    <record id="res_partner_commission" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_commissions" class="oe_stat_button" icon="fa-dollar" type="object"
+                        attrs="{'invisible':[('commission_ids','=',[])]}" string="Commissions">
+                    <field name="commission_ids" invisible="1"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

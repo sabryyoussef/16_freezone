@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="documents.DocumentsInspector.documentsInfo" t-inherit-mode="extension">
+        <!-- Replace the whole inspector table -->
+        <xpath expr="//table[@class='o_inspector_table table table-sm table-borderless']" position="replace">
+            <table class="o_inspector_table table table-sm table-borderless">
+                <tbody>
+                    <t t-if="nbPreviews === 1">
+                        <t t-call="documents.DocumentsInspector.field">
+                            <t t-set="field" t-translation="off">name</t>
+                        </t>
+                        <t t-if="records[0].data.type === 'url'" t-call="documents.DocumentsInspector.field">
+                            <t t-set="field" t-translation="off">url</t>
+                        </t>
+                    </t>
+
+                    <!-- partner_id with no create -->
+                    <t t-call="documents.DocumentsInspector.field">
+                        <t t-set="field" t-translation="off">partner_id</t>
+                        <t t-set="additionalProps"
+                             t-value="{canOpen: false, canCreate: false, canCreateEdit: false, canQuickCreate: false}"/>
+                    </t>
+
+                    <!-- owner_id with no create -->
+                    <t t-call="documents.DocumentsInspector.field">
+                        <t t-set="field" t-translation="off">owner_id</t>
+                        <t t-set="additionalProps"
+                             t-value="{canOpen: false, canCreate: false, canCreateEdit: false, canQuickCreate: false}"/>
+                    </t>
+
+                    <!-- folder_id with icon and no create -->
+                    <t t-call="documents.DocumentsInspector.field">
+                        <t t-set="icon" t-translation="off">fa fa-folder text-odoo</t>
+                        <t t-set="field" t-translation="off">folder_id</t>
+                        <t t-set="additionalProps"
+                             t-value="{canOpen: false, canCreate: false, canCreateEdit: false, canQuickCreate: false}"/>
+                    </t>
+
+                    <!-- Divider row -->
+                    <tr class="o_inspector_divider"/>
+
+                    <!-- Linked model display -->
+                    <tr t-if="nbPreviews === 1 and records[0].data.res_id and records[0].data.res_model_name and records[0].data.res_model !== 'documents.document'"
+                        class="o_inspector_custom_field o_model_container">
+                        <td class="o_inspector_label align-middle">
+                            <label t-att-title="records[0].data.res_model_name" class="o_inspector_model_name">
+                                <i class="o_documents_model_color fa fa-file-text"/> <t t-esc="records[0].data.res_model_name"/>
+                            </label>
+                        </td>
+                        <td class="w-100 o_inspector_trigger_hover_target o_inspector_model_flex">
+                            <t t-set="isModifiableAttachment" t-value="records[0].data.is_editable_attachment and !isLocked and !isEditDisabled"/>
+                            <span t-att-class="'o_inspector_model o_inspector_object_name ' + (isModifiableAttachment ? 'o_inspector_model_editable' : '')"
+                                  t-att-title="records[0].data.res_name"
+                                  t-att-href="`#id=${records[0].data.res_id}&amp;model=${records[0].data.res_model}`"
+                                  t-on-click.prevent="onClickResModel">
+                                <t t-esc="records[0].data.res_name || records[0].data.res_model"/>
+                            </span>
+                            <t t-if="isModifiableAttachment">
+                                <span class="o_inspector_model_buttons">
+                                    <span class="o_inspector_model_button o_inspector_model_edit fa fa-pencil"
+                                          t-on-click.stop.prevent="onEditModel"/>
+                                    <span class="o_inspector_model_button o_inspector_model_delete fa-fw ps-1"
+                                          t-on-click.stop.prevent="onDeleteModel">&#215;</span>
+                                </span>
+                            </t>
+                        </td>
+                    </tr>
+
+                    <!-- Tags row -->
+                    <tr class="o_inspector_custom_field">
+                        <td class="o_inspector_label align-baseline">
+                            <label>
+                                <i class="o_documents_tag_color fa fa-tag"/> Tags
+                            </label>
+                        </td>
+                        <td class="o_inspector_value w-100">
+                            <t t-call="documents.DocumentsInspector.tags"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+    </t>
+
+</templates>

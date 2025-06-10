@@ -1,0 +1,56 @@
+<odoo>
+    <record id="first_email_template_employee_late_checkin" model="mail.template">
+        <field name="name">Employee Late Check-In Notification</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">{{ object.name }} , You did not check in by 08:20 AM</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or
+            user.email_formatted) }}
+        </field>
+        <field name="email_to">{{ object.work_email }}</field>
+        <field name="description">Employee Late Check-In Notification</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 12px;">
+                    Hello
+                    <t t-out="object.name"/>
+                    ,
+                    <br/>
+                    <span style="font-weight:bold;">You did not check in by 08:20 AM today</span>
+                    <br/>
+                    <span>Please make sure to check in on time in the future.</span>
+                    <br/>
+                    <span>With best regards,</span>
+                    <br/>
+                </p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+    <record id="second_email_template_employee_late_checkin" model="mail.template">
+        <field name="name">Employee Late Check-In Notification</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">{{ object.name }} , You did not check in by 09:20 AM</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or
+            user.email_formatted) }}
+        </field>
+        <field name="email_to">{{ object.work_email }}</field>
+        <field name="description">Employee Late Check-In Notification</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 12px;">
+                    Hello
+                    <t t-out="object.name"/>
+                    ,
+                    <br/>
+                    <span style="font-weight:bold;">You did not check in by 09:20 AM today</span>
+                    <br/>
+                    <span>Please make sure to check in on time in the future.</span>
+                    <br/>
+                    <span>With best regards,</span>
+                    <br/>
+                </p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

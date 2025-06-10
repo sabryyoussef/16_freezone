@@ -1,0 +1,33 @@
+<odoo>
+    <record id="authority_commission" model="product.template">
+        <field name="name">Authority Commission / Referral Fee</field>
+        <field name="list_price">1.0</field>
+        <field name="standard_price">1.0</field>
+        <field name="detailed_type">service</field>
+        <field name="is_service_commission">True</field>
+    </record>
+    <record id="all_documents_action" model="ir.actions.server">
+        <field name="name">Create Documents</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="binding_model_id" ref="project.model_project_task"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                for rec in records:
+                    rec.create_documents()
+        </field>
+    </record>
+<!--    <record id="all_update_managers_action" model="ir.actions.server">-->
+<!--        <field name="name">Update Managers</field>-->
+<!--        <field name="model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--            if records:-->
+<!--                for rec in records:-->
+<!--                    rec.action_update_manager()-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

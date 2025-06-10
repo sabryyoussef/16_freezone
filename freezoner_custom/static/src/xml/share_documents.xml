@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+<!--    <t t-name="freezoner_custom.DocumentsCustomViewsButtons" t-inherit="documents.DocumentsViews.Buttons" t-inherit-mode="extension">-->
+<!--        <xpath expr="//button[contains(@t-attf-class, 'o_documents_kanban_share_domain')]" position="replace">-->
+<!--            <button type="button"-->
+<!--                    t-attf-class="btn btn-secondary o_documents_custom_button"-->
+<!--                    t-att-disabled="disabled"-->
+<!--                    t-on-click.stop.prevent="onClickCustomFunction">-->
+<!--                Custom Action-->
+<!--            </button>-->
+<!--        </xpath>-->
+<!--    </t>-->
+</templates>

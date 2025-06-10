@@ -1,0 +1,33 @@
+<odoo>
+
+    <!--        <record id="project_client_documents_form" model="ir.ui.view">-->
+<!--            <field name="name">project_client_documents_form</field>-->
+<!--            <field name="model">project.project</field>-->
+<!--            <field name="inherit_id" ref="project.edit_project"/>-->
+<!--            <field name="mode">extension</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//header" position='before'>-->
+<!--                    <field name="documents_fulfilment" invisible="1"/>-->
+<!--                    <div class="alert alert-info oe_edit_only mb-0 text-center" role="status"-->
+<!--                         attrs="{'invisible':[('documents_fulfilment','=', True)]}" style="color: red">-->
+<!--                        <p>Client's Documents Are Not Fulfilled</p>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="project_client_documents_kanban" model="ir.ui.view">-->
+<!--            <field name="name">project_client_documents_kanban</field>-->
+<!--            <field name="model">project.project</field>-->
+<!--            <field name="inherit_id" ref="project.view_project_kanban"/>-->
+<!--            <field name="mode">extension</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//span[@t-if='record.partner_id.value']" position='after'>-->
+<!--                    <field name="documents_fulfilment" invisible="1"/>-->
+<!--                    <span t-if="!record.documents_fulfilment.raw_value" style="color: red">-->
+<!--                        <p>Client's Documents Are Not Fulfilled</p>-->
+<!--                    </span>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+</odoo>

@@ -1,0 +1,70 @@
+<odoo>
+    <record id="email_template_leave_backup_hr" model="mail.template">
+        <field name="name">Leave Employee Backup</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="model">hr.leave</field>
+        <field name="subject">Leave Employee Backup</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{ (object.employee_company_id.email) }}</field>
+        <field name="email_to">{{ object.get_email_to() }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 20px; padding-left: 20px; font-size: 15px; color: #333;">
+                <p style="margin: 0px; padding: 0px; text-align: left;">
+                    <strong>Dear Freezoner Team,</strong>
+                    <br/>
+                    <br/>
+                    I hope this message finds you well.
+                    <br/>
+                    <br/>
+
+                    I wanted to inform you that
+                    <strong>
+                        <t t-out="object.employee_id.sudo().name"/>
+                    </strong>
+                    will be on leave
+                    from
+                    <strong>
+                        <t t-out="object.date_from.strftime('%Y-%m-%d')"/>
+                    </strong>
+                    to
+                    <strong>
+                        <t t-out="object.date_to.strftime('%Y-%m-%d')"/>
+                    </strong>
+                    . During this time,
+                    <t t-if="object.employee_id.sudo().gender == 'male'">he</t>
+                    <t t-if="object.employee_id.sudo().gender == 'female'">she</t>
+                    will be away from work and may not be available to respond to emails or attend meetings.
+                    <br/>
+                    <br/>
+
+                    In
+                    <t t-if="object.employee_id.sudo().gender == 'male'">his</t>
+                    <t t-if="object.employee_id.sudo().gender == 'female'">her</t>
+                    absence, if there are any urgent matters,
+                    please contact
+                    <strong>
+                        <t t-out="object.backup_employee_id.sudo().name"/>
+                    </strong>
+                    .
+                    <br/>
+                    <br/>
+
+                    We appreciate your understanding and cooperation in ensuring a smooth workflow
+                    during
+                    <strong>
+                        <t t-out="object.employee_id.sudo().name"/>
+                    </strong>
+                    's absence.
+                    <br/>
+                    <br/>
+
+                    Best regards,
+                    <br/>
+                    <strong>
+                        <t t-out="object.employee_company_id.name"/>
+                    </strong>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,355 @@
+<odoo>
+    <template id="custom_internal_layout" inherit_id="web.internal_layout" primary="True">
+        <xpath expr="//div[hasclass('header')]" position="replace"/>
+    </template>
+    <template id="external_layout_invoice_custom">
+        <div class="header">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <!--                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 140px;" alt="Logo"/>-->
+                    <!--                    <br/>-->
+                    <!--                    <span t-esc="company.name"/>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_standard_footer">
+            <div class="row mt12" style="padding-top:20px;">
+                <div class="text-center">
+                    <ul class="list-inline">
+                        <div t-field="company.report_footer"/>
+                    </ul>
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="external_layout_invoice_new">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="account_invoice_report.external_layout_invoice_custom">
+            <t t-raw="0"/>
+        </t>
+    </template>
+    <template id="report_invoice_document_new" inherit_id="account.report_invoice_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+            <attribute name="t-call">account_invoice_report.custom_internal_layout</attribute>
+        </xpath>
+        <xpath expr="//p" position="replace"/>
+        <xpath expr="//div" position="replace"/>
+        <xpath expr="//div[2]" position="replace"/>
+        <xpath expr="//table[@name='invoice_line_table']" position="replace"/>
+        <xpath expr="//div[@id='total']" position="replace"/>
+        <xpath expr="//div[@id='informations']" position="replace"/>
+        <xpath expr="//t/div[@class='mt-5']" position="replace">
+            <div>
+                <div class="header">
+                    <table class="table table-bordered" DIR="LTR"
+                           style="margin-top:-40px;border: 2px solid white;width: 100%;">
+                        <tr>
+                            <tr>
+                                <td width="30%">
+                                    <br/><br/>
+                                    <img src="/account_invoice_report/static/description/freezoner.png"
+                                         style="max-height: 65px;"
+                                         alt="Logo"/>
+                                    <br/><br/>
+                                    <span style="font-weight:bold;font-size:13px;">Freezoner Corporate Business Provider
+                                    </span>
+                                    <br/>
+                                    <span style="font-size:14px;">Office 2001, Tower B</span>
+                                    <br/>
+                                    <span style="font-size:14px;">Business Central Tower, Media City</span>
+                                    <br/>
+                                    <span style="font-size:14px;">Dubai United Arab Emirates</span>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">TRN</span>
+                                    <span style="font-size:14px;">100592590200003</span>
+                                </td>
+                                <td width="35%"></td>
+                                <td width="35%">
+                                    <br/><br/>
+                                    <span style="font-weight:bold;color:#DAA520;font-size:18px;">Tax Invoice</span>
+                                    <span style="font-weight:bold;color:#DAA520;font-size:18px;" t-esc="o.name"/>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">Date</span>
+                                    <span style="font-size:14px;" t-esc="o.invoice_date"/>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">Expiry</span>
+                                    <span style="font-size:14px;" t-esc="o.invoice_date_due"/>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">Proforma</span>
+                                    <span style="font-size:14px;" t-esc="o.invoice_origin"/>
+                                    <br/>
+                                    <br/>
+                                    <t t-if="o.partner_id.parent_id">
+                                        <span style="font-weight:bold;font-size:14px;">
+                                            <span t-esc="o.partner_id.parent_id.name"/>
+                                        </span>
+                                        <br/>
+                                        <span style="font-size:14px;">
+                                            <span t-esc="o.partner_id.name"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="not o.partner_id.parent_id">
+                                        <span style="font-weight:bold;font-size:14px;">
+                                            <span t-esc="o.partner_id.name"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="o.partner_id.street">
+                                        <br/>
+                                        <span style="font-size:14px;">
+                                            <span t-esc="o.partner_id.street"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="o.partner_id.city">
+                                        <br/>
+                                        <span style="font-size:14px;">
+                                            <span t-esc="o.partner_id.city"/>
+                                            ,
+                                            <span t-esc="o.partner_id.country_id.name"/>
+                                        </span>
+                                    </t>
+                                    <t t-if="o.partner_id.email">
+                                        <br/>
+                                        <span style="font-size:14px;" t-esc="o.partner_id.email"/>
+                                    </t>
+                                    <t t-if="o.partner_id.phone">
+                                        <br/>
+                                        <span style="font-size:14px;" t-esc="o.partner_id.phone"/>
+                                    </t>
+                                    <t t-if="o.partner_id.vat">
+                                        <br/>
+                                        <span style="font-weight:bold;font-size:14px;">TRN (VAT)</span>
+                                        <span style="font-size:14px;" t-esc="o.partner_id.vat"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <br/>
+
+                <table style="width: 100%;border-collapse: collapse;font-size:18px;">
+                    <thead style="text-align:center;">
+                        <th style="border: 1px solid;padding: 10px;width:45%;" scope="col">Service Description</th>
+                        <th style="border: 1px solid;padding: 10px;width:5%;" scope="col">Qty</th>
+                        <th style="border: 1px solid;padding: 10px;width:10%;" scope="col">Amount</th>
+                        <th style="border: 1px solid;padding: 10px;width:12%;" scope="col">VAT %</th>
+                        <th style="border: 1px solid;padding: 10px;width:13%;" scope="col">VAT Amount</th>
+                        <th style="border: 1px solid;padding: 10px;width:20%;" scope="col">Total</th>
+                    </thead>
+                    <tr t-foreach="o.invoice_line_ids" t-as="line">
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <t t-esc="line.name"/>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <t t-esc="line.quantity"/>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <t t-esc="line.price_unit" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
+                                  id="line_tax_ids"/>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <t t-esc="line.l10n_ae_vat_amount" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;padding: 10px;" class="col">
+                            <t t-esc="line.price_subtotal" t-options='{"widget": "float", "precision": 2}'/>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom-style:hidden;border-left-style:hidden;">
+                        <td colspan="4" style="border: none;">
+
+                        </td>
+                        <td style="border: none;text-align:center;font-weight:bold;padding: 10px;">
+                            <span>Subtotal</span>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;font-weight:bold;padding: 10px;">
+                            <span style="font-size:14px;font-weight:bold;">
+                                <t t-esc="o.amount_untaxed_signed" t-options='{"widget": "float", "precision": 2}'/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom-style:show;border-top-style:hidden;border-left-style:hidden;">
+                        <td colspan="4" style="border: none;">
+                        </td>
+                        <td style="text-align:center;padding: 10px;border: none;">
+                            <span>VAT Total</span>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;font-weight:bold;padding: 10px;">
+                            <span style="font-size:14px;font-weight:bold;">
+                                <t t-esc="o.amount_tax_signed" t-options='{"widget": "float", "precision": 2}'/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr style="border-top-style:hidden;border-left-style:hidden;">
+                        <td colspan="4" style="border-bottom-style:hidden;">
+                        </td>
+                        <td style="border-bottom-style:hidden;border-left-style:hidden;text-align:center;padding: 10px;font-weight:bold;">
+                            <span>Total</span>
+                        </td>
+                        <td style="border: 1px solid;text-align:center;font-weight:bold;padding: 10px;">
+                            <span style="font-size:14px;font-weight:bold;color:#DAA520;">
+                                AED
+                                <t t-esc="o.amount_total_in_currency_signed"
+                                   t-options='{"widget": "float", "precision": 2}'/>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <t t-if="o.payment_state == 'paid'">
+                    <img t-attf-src="/account_invoice_report/static/description/signature.jpeg"
+                         alt="icon_img" style="max-width: 15%; width:auto"/>
+                </t>
+                <t t-if="o.payment_state != 'paid'">
+                    <h4 style="font-weight:bold;text-align:center;">Bank Details</h4>
+                    <br/>
+                    <span style="font-weight:bold;font-size:14px;">Beneficiary :</span>
+                    <span style="font-size:14px;">Freezoner Corporate Service Provider</span>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <t t-if="o.bank_name == 'nbd'">
+                        <table class="table table-bordered" DIR="LTR"
+                               style="margin-left: -10px;margin-right: -10px;margin-top:-40px;border: 2px solid white;width: 100%;">
+                            <tr style="border: none;">
+                                <td style="border: none;width:40%;">
+                                    <span style="font-weight:bold;font-size:12px;">Bank Name :</span>
+                                    <span style="font-size:14px;">EMIRATES NBD</span>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">Currency</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AED</span>
+                                    <br/>
+                                    <span style="font-size:14px;">USD</span>
+                                    <br/>
+                                    <span style="font-size:14px;">EURO</span>
+                                </td>
+                                <td style="border: none;width:30%;">
+                                    <span style="font-weight:bold;text-align:;font-size:12px;">SWIFT CODE :</span>
+                                    <span style="font-size:14px;">EBILAEADXXX</span>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        Account #
+                                    </span>
+                                    <br/>
+                                    <span style="text-align:center;font-size:14px;">1015418304901</span>
+                                    <br/>
+                                    <span style="font-size:14px;">1025418304902</span>
+                                    <br/>
+                                    <span style="font-size:14px;">1025418304903</span>
+                                </td>
+                                <td style="border: none;width:30%;text-align:left;">
+                                    <span style="font-weight:bold;font-size:12px;">Bank Address :</span>
+                                    <span style="font-size:14px;">Barsha Heights Dubai</span>
+                                    <br/>
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span style="font-weight:bold;font-size:14px;">I BAN #</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AE250260001015418304901</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AE330260001025418304902</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AE060260001025418304903</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                    <t t-if="o.bank_name == 'rak'">
+                        <table class="table table-bordered" DIR="LTR"
+                               style="margin-left: -10px;margin-right: -10px;margin-top:-40px;border: 2px solid white;width: 100%;">
+                            <tr style="border: none;">
+                                <td style="border: none;width:40%;">
+                                    <span style="font-weight:bold;font-size:14px;">Bank Name :</span>
+                                    <span style="font-size:14px;">RAKBank</span>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">Currency</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AED</span>
+                                </td>
+                                <td style="border: none;width:30%;">
+                                    <span style="font-weight:bold;text-align:;font-size:14px;">SWIFT CODE :</span>
+                                    <span style="font-size:14px;">NRAKAEAK</span>
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        Account #
+                                    </span>
+                                    <br/>
+                                    <span style="text-align:center;font-size:14px;">0122881382001</span>
+                                </td>
+                                <td style="border: none;width:30%;text-align:left;">
+                                    <span style="font-weight:bold;font-size:14px;">Bank Address :</span>
+                                    <span style="font-size:14px;">AL QUOZ, DUBAI</span>
+                                    <br/>
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                    <span style="font-weight:bold;font-size:14px;">I BAN #</span>
+                                    <br/>
+                                    <span style="font-size:14px;">AE430400000122881382001</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                    <br/>
+                    <br/>
+                </t>
+                <h4 style="text-align:center;font-size:23px;font-weight:bold;color:#DAA520;">Thank you for choosing
+                    Freezoner
+                </h4>
+                <br/>
+                <br/>
+                <div style="text-align:center;">
+                    <img t-attf-src="/account_invoice_report/static/description/Group.png"
+                         alt="icon_img" style="width: 80%;"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <record id="paperformat_invoice_reports" model="report.paperformat">
+        <field name="name">Invoice Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">60</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">50</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(6, 0, [ref('account.account_invoices')])]"/>
+    </record>
+
+</odoo>

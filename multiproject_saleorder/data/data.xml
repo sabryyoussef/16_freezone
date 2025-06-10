@@ -1,0 +1,17 @@
+<odoo>
+        <record id="analytic_plan_projects" model="account.analytic.plan">
+            <field name="name">Projects</field>
+            <field name="default_applicability">optional</field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="account_analytic_plans" model="ir.ui.view">
+            <field name="name">account.analytic.plan</field>
+            <field name="model">account.analytic.plan</field>
+            <field name="inherit_id" ref="analytic.account_analytic_plan_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='color']" position="after">
+                    <field name="is_default"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

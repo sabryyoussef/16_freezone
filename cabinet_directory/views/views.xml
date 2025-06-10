@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem id="directory_main_menu" name="Documents Management" parent="contacts.menu_contacts" sequence="20"/>
+
+</odoo>

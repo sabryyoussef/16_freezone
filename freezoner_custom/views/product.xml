@@ -1,0 +1,57 @@
+<odoo>
+    <record id="product_template_document_type" model="ir.ui.view">
+        <field name="name">product.template.document.type</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="after">
+                <page name="documents" string="Deliverable Document">
+                    <field name="document_type_ids">
+                        <tree editable="bottom">
+                            <field name="document_id"/>
+                            <field name="is_required"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="required_documents" string="Required Document">
+                    <field name="document_required_type_ids">
+                        <tree editable="bottom">
+                            <field name="document_id"/>
+                            <field name="is_required"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="partner_fields" string="Partner Related Fields">
+                    <field name="partner_field_ids">
+                        <tree editable="bottom">
+                            <field name="field_id" required="1"/>
+                            <field name="is_required"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="tasks" string="Tasks" attrs="{'invisible': [('service_tracking', '!=','new_workflow')]}">
+                    <field name="task_ids"/>
+                </page>
+            </xpath>
+            <xpath expr="//label[@for='sale_ok']" position="after">
+                <div>
+                    <field name="stripe_visa"/>
+                    <label for="stripe_visa"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="responsible_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_responsible" model="ir.ui.view">
+        <field name="name">product.product.responsible</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="responsible_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

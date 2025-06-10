@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <t t-inherit="web_studio.SystrayItem" t-inherit-mode="extension" owl="1">
+        <xpath expr="//i" position="replace">
+        </xpath>
+      <xpath expr="//a" position="replace">
+          <a href="#" class="ks-toggle-studio" title="Toggle Studio"></a>
+        </xpath>
+    </t>
+</templates>

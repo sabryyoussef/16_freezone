@@ -1,0 +1,16 @@
+<odoo>
+    <record model="ir.ui.view" id="project_update_fields_form_inherit_view">
+        <field name="name">project.update.fields.form.view</field>
+        <field name="model">project.update.fields</field>
+        <field name="inherit_id" ref="freezoner_custom.project_update_fields_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="nationality_id" attrs="{'invisible': [('field_name', '!=', 'nationality_id')]}"
+                                   options="{'no_create': True,'no_open': True}"/>
+                <field name="business_structure_id"
+                                   attrs="{'invisible': [('field_name', '!=', 'business_structure_id')]}"
+                                   options="{'no_create': True,'no_open': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

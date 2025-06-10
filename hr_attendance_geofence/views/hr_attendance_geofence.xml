@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_attendance_geofence_gmap" model="ir.ui.view">
+        <field name="name">hr.attendance.geofence</field>
+        <field name="model">hr.attendance.geofence</field>
+        <field name="arch" type="xml">
+            <geofence_view library="drawing">
+                <field name="overlay_paths"/>
+            </geofence_view>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geofence_form" model="ir.ui.view">
+        <field name="name">hr.attendance.geofence</field>
+        <field name="model">hr.attendance.geofence</field>
+        <field name="arch" type="xml">
+            <form string="Employee attendances">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="company_id"/>
+                            <field name="employee_ids" widget="many2many_tags" can_create="true" can_write="true" modifiers="{}" id="employee_ids"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="overlay_paths" string="Shape">
+                            <field name="overlay_paths" widget="geofence_drawing"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+    <record id="hr_attendance_geofence_action" model="ir.actions.act_window">
+        <field name="name">Attendances Geofence</field>
+        <field name="res_model">hr.attendance.geofence</field>
+        <field name="view_mode">tree,kanban,form,geofence_view</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No Geofence records found
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        id="menu_hr_attendance_geofence" 
+        name="Geofences" 
+        parent="hr_attendance.menu_hr_attendance_root" 
+        sequence="16"
+        groups="hr_attendance.group_hr_attendance_manager" 
+        action="hr_attendance_geofence_action"/>
+</odoo>

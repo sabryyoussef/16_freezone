@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_crm_lead_view_form" model="ir.ui.view">
+            <field name="name">inherit.crm.lead.view.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group//group[2]//field[@name='partner_id']" position="after">
+                    <field name="lead_heat" string="Heat" widget="radio" options="{'horizontal': True}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="module_view_kanban">
+            <field name="name">inherit.crm.lead.view.kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="lead_heat" string="Category"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+<odoo>
+    <record id="employee_manager_groups" model="res.groups">
+        <field name="name">Employee Manager</field>
+    </record>
+</odoo>

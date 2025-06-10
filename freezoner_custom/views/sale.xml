@@ -1,0 +1,121 @@
+<odoo>
+    <record id="sale_view_quotation_tree_with_onboardin" model="ir.ui.view">
+        <field name="name">sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="replace">
+                <field name="date_order"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="sale_order_form_view_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="after">
+                <field name="is_expired" invisible="1"/>
+                <field name="active" invisible="1"/>
+                <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='validity_date']" position="replace">
+                <field name="validity_date"/>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="date_confirmed"/>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="check_crm_payment" id="action_confirm" data-hotkey="v" string="Confirm"
+                        class="btn-primary"
+                        groups="freezoner_custom.confirm_proforma_invoice"
+                        type="object" context="{'validate_analytic': True}"
+                        attrs="{'invisible': [('state', 'not in', ['sent'])]}"/>
+                <button name="check_crm_payment" data-hotkey="v" string="Confirm" type="object"
+                        groups="freezoner_custom.confirm_proforma_invoice"
+                        context="{'validate_analytic': True}" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+            </xpath>
+            <xpath expr="//button[@id='action_confirm']" position='attributes'>
+                <attribute name="groups">freezoner_custom.confirm_proforma_invoice</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position='attributes'>
+                <attribute name="groups">freezoner_custom.confirm_proforma_invoice</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="payment_method" widget="radio" attrs="{'readonly': [('state', '!=','draft')]}"/>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page name="sov" string="SOV">
+                    <field name="sov_ids">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="state" invisible="1"/>
+                            <field name="product_id" readonly="1" force_save="1"/>
+                            <field name="name" string="Product Description" optional="hide"/>
+                            <field name="qty" sum="Qty" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="is_access_price"/>
+                            <field name="unit_price" sum="Price"
+                                   attrs="{'readonly': [('is_access_price', '=', False)]}"/>
+                            <field name="unit_cost" sum="Cost" attrs="{'readonly': [('is_access_price', '=',False)]}"/>
+                            <field name="revenue" sum="Revenue"/>
+                            <field name="planned_expenses" sum="Planned Expenses"/>
+                            <field name="profit" sum="Profit"/>
+                            <field name="tax" sum="Tax"/>
+                            <field name="net" sum="Net"/>
+                            <field name="commission_attribute" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="sale_commission_user_ids" widget="many2many_avatar_user"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="analytic_items" string="Analytic Account Items">
+                    <field name="analytic_item_ids" attrs="{'readonly': [('state', '!=','draft')]}">
+                        <tree>
+                            <field name="date" optional="show"/>
+                            <field name="name" optional="show"/>
+                            <field name="account_id" optional="hide"/>
+                            <field name="plan_id" optional="show"/>
+                            <field name="unit_amount" sum="Quantity" optional="hide"/>
+                            <field name="product_uom_id" optional="hide"/>
+                            <field name="partner_id" optional="hide"/>
+                            <field name="company_id" optional="hide"/>
+                            <field name="amount" sum="Total" optional="show"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="after">
+                <field name="price_total"/>
+            </xpath>
+        </field>
+    </record>
+    <record model='ir.ui.menu' id='sale.sale_menu_root'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+    <record model='ir.ui.menu' id='crm.crm_menu_sales'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+    <record model='ir.ui.menu' id='sale.menu_sales_config'>
+        <field name="name">Pro-forma Invoice Orders</field>
+    </record>
+    <record model='ir.ui.menu' id='sale_crm.sale_order_menu_quotations_crm'>
+        <field name="name">My Pro-forma Invoice</field>
+    </record>
+    <record model='ir.ui.menu' id='sale.menu_sale_quotations'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+    <record model='ir.actions.act_window' id='sale.action_quotations'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+    <record model='ir.actions.act_window' id='sale.action_quotations_with_onboarding'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+    <record model='ir.actions.act_window' id='sale.action_orders'>
+        <field name="name">Pro-forma Invoice</field>
+    </record>
+</odoo>

@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* prt_email_from
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20180424\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-07 18:23+0000\n"
+"PO-Revision-Date: 2018-05-07 21:29+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: prt_email_from
+#: model:ir.model.fields,help:prt_email_from.field_res_company_add_sender_reply_to
+msgid ""
+"Before: 'My Company <mycompany@example.com>'\n"
+"After: Some User via My Company <mycompany@example.com>"
+msgstr ""
+"Было: 'Моя Фирма <mycompany@example.com>'\n"
+"Стало: Пользователь через Моя Фирма <mycompany@example.com>"
+
+#. module: prt_email_from
+#: model:ir.model.fields,help:prt_email_from.field_res_company_add_company_from
+msgid ""
+"Before: 'Some User <mycompany@example.com>'\n"
+"After: Some User via My Company <mycompany@example.com>"
+msgstr ""
+"Было: 'Моя Фирма <mycompany@example.com>'\n"
+"Стало: Пользователь через Моя Фирма <mycompany@example.com>"
+
+#. module: prt_email_from
+#: model:ir.model.fields,help:prt_email_from.field_res_company_use_company_email
+msgid ""
+"Before: 'Some User <some.user@example.com>'\n"
+"After: Some User <mycompany@example.com>"
+msgstr ""
+"Было: 'Пользователь <some.user@example.com>'\n"
+"Стало: Пользователь <mycompany@example.com>"
+
+#. module: prt_email_from
+#: model:ir.model.fields,help:prt_email_from.field_res_company_email_joint
+msgid ""
+"Before: 'Some User My Company <mycompany@example.com>'\n"
+"After: Some User via My Company <mycompany@example.com>"
+msgstr ""
+"Было: 'Пользователь Моя Фирма <mycompany@example.com>'\n"
+"After: Пользователь через Моя Фирма <mycompany@example.com>"
+
+#. module: prt_email_from
+#: model:ir.model,name:prt_email_from.model_res_company
+msgid "Companies"
+msgstr "Компании"
+
+#. module: prt_email_from
+#: model:ir.model.fields,field_description:prt_email_from.field_res_company_add_company_from
+msgid "Company Name In 'From'"
+msgstr "Имя Компании в 'From'"
+
+#. module: prt_email_from
+#: model:ir.model,name:prt_email_from.model_mail_thread
+msgid "Email Thread"
+msgstr "Цепочка эл.почты"
+
+#. module: prt_email_from
+#: model:ir.model,name:prt_email_from.model_mail_message
+msgid "Message"
+msgstr "Сообщение"
+
+#. module: prt_email_from
+#: model:ir.model.fields,field_description:prt_email_from.field_res_company_email_joint
+msgid "Name Joint"
+msgstr "Вставка между именами"
+
+#. module: prt_email_from
+#: model:ir.model.fields,field_description:prt_email_from.field_res_company_add_sender_reply_to
+msgid "Sender's Name In 'Reply-to'"
+msgstr "Имя Отправителя в 'Reply-to'"
+
+#. module: prt_email_from
+#: code:addons/prt_email_from/models/mail.py:38
+#, python-format
+msgid "Unable to send email, please configure company email address."
+msgstr ""
+"Не возможно отправить email, пожалуйста настройте адрес email компании."
+
+#. module: prt_email_from
+#: code:addons/prt_email_from/models/mail.py:27
+#, python-format
+msgid "Unable to send email, please configure the sender's email address."
+msgstr ""
+"Не возможно отправить email, пожалуйста настройте адрес email отправителя."
+
+#. module: prt_email_from
+#: model:ir.model.fields,field_description:prt_email_from.field_res_company_use_company_email
+msgid "Use Company Email"
+msgstr "Использовать Email Компании"

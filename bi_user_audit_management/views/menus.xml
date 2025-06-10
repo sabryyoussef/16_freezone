@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<menuitem id="user_audit_menu_root"
+		name="User Audit">
+
+		<menuitem id="user_audit_log"
+			name="User Audit Log"
+			action="user_audit_log_action_view"
+			groups="bi_user_audit_management.bi_group_user"
+			sequence="1">
+		</menuitem>
+
+		<menuitem id="user_audit_configuration"
+			name="Configuration"
+			action="user_audit_action_view"
+			groups="bi_user_audit_management.bi_group_manager"
+			sequence="3">
+		</menuitem>
+
+	</menuitem>
+
+</odoo>

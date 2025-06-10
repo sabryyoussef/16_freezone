@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="HrAttendanceMyMainMenu">
+        <t t-jquery="t[t-set='bodyContent'] t[t-call='HrAttendanceCheckInOutButtons']" t-operation="after">
+            <t t-if="widget.employee">
+                
+                <div class="gmap_kisok_container mb8" id="gmap_kisok" style="display: none;">
+                    <i class="fa fa-1x fa-angle-double-down gmap_kisok_toggle" id="gmap_kisok_toggle">
+                        Map Location
+                    </i>
+                    <div class="gmap_kisok_view" style="display: none;"></div>
+                </div>
+            </t>
+        </t>
+    </t>
+
+</templates>

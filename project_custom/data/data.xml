@@ -1,0 +1,63 @@
+<odoo>
+    <record id="res_partner_document_type_passport" model="res.partner.document.type">
+        <field name="name">Passport Copy</field>
+    </record>
+    <record id="res_partner_document_type_entry_stamp" model="res.partner.document.type">
+        <field name="name">Entry Stamp</field>
+    </record>
+    <record id="res_partner_document_type_trade_license" model="res.partner.document.type">
+        <field name="name">Trade License</field>
+    </record>
+    <record id="res_partner_document_type_current_visa" model="res.partner.document.type">
+        <field name="name">Current Visa</field>
+    </record>
+    <record id="res_partner_document_type_tourist_visa" model="res.partner.document.type">
+        <field name="name">Tourist Visa</field>
+    </record>
+
+    <record id="is_complete_return_compliance" model="reached.checkpoint">
+        <field name="name">is_complete_return_compliance</field>
+    </record>
+    <record id="is_confirm_compliance" model="reached.checkpoint">
+        <field name="name">is_confirm_compliance</field>
+    </record>
+    <record id="is_update_compliance" model="reached.checkpoint">
+        <field name="name">is_update_compliance</field>
+    </record>
+    <record id="is_complete_return_hand" model="reached.checkpoint">
+        <field name="name">is_complete_return_hand</field>
+    </record>
+    <record id="is_confirm_hand" model="reached.checkpoint">
+        <field name="name">is_confirm_hand</field>
+    </record>
+    <record id="is_update_hand" model="reached.checkpoint">
+        <field name="name">is_update_hand</field>
+    </record>
+    <record id="is_complete_return_required" model="reached.checkpoint">
+        <field name="name">is_complete_return_required</field>
+    </record>
+    <record id="is_confirm_required" model="reached.checkpoint">
+        <field name="name">is_confirm_required</field>
+    </record>
+    <record id="is_update_required" model="reached.checkpoint">
+        <field name="name">is_update_required</field>
+    </record>
+    <record id="is_complete_return_deliverable" model="reached.checkpoint">
+        <field name="name">is_complete_return_deliverable</field>
+    </record>
+    <record id="is_confirm_deliverable" model="reached.checkpoint">
+        <field name="name">is_confirm_deliverable</field>
+    </record>
+    <record id="is_update_deliverable" model="reached.checkpoint">
+        <field name="name">is_update_deliverable</field>
+    </record>
+    <record id="is_complete_return_partner_fields" model="reached.checkpoint">
+        <field name="name">is_complete_return_partner_fields</field>
+    </record>
+    <record id="is_confirm_partner_fields" model="reached.checkpoint">
+        <field name="name">is_confirm_partner_fields</field>
+    </record>
+    <record id="is_update_partner_fields" model="reached.checkpoint">
+        <field name="name">is_update_partner_fields</field>
+    </record>
+</odoo>

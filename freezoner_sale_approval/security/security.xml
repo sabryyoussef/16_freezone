@@ -1,0 +1,5 @@
+<odoo>
+    <record id="approvals_button_in_approvals_group" model="res.groups">
+        <field name="name">Approvals Button IN Email Approvals Request</field>
+    </record>
+</odoo>

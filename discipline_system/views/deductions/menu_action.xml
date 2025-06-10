@@ -1,0 +1,90 @@
+<odoo>
+    <data>
+
+        <record model="ir.actions.server" id="discipline_system_bulk_accept">
+            <field name="name">Accept Selected</field>
+            <field name="model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.accept()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="discipline_system_bulk_cancel">
+            <field name="name">Cancel Selected</field>
+            <field name="model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.cancel()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="discipline_system_bulk_rest">
+            <field name="name">Rest Selected To Draft</field>
+            <field name="model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_model_id" ref="discipline_system.model_hr_deductions"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.reset()
+            </field>
+        </record>
+
+
+        <record id="hr_deductions_search_view" model="ir.ui.view">
+            <field name="name">hr_deductions_search_view</field>
+            <field name="model">hr.deductions</field>
+
+            <field name="arch" type="xml">
+
+                <search string="Deductions Search View">
+                    <field name="employee_id" string="Employee"/>
+                    <filter name="month" string="this Month"
+                            domain="[('deduction_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-1')),
+                            ('deduction_date', '&lt;=',datetime.datetime.now()+ relativedelta(day=31))]"/>
+                    <filter
+                            name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                        <filter name="date" string="Date" context="{'group_by':'deduction_date:month'}"/>
+                        <filter name="state" string="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+
+            </field>
+
+        </record>
+
+
+        <record id="act_deductions" model="ir.actions.act_window">
+            <field name="name">Disciplinary</field>
+            <field name="res_model">hr.deductions</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hr_deductions_search_view"/>
+            <field name="view_id" ref="hr_deductions_tree_view"/>
+            <field name="context">{'search_default_month': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Deductions.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="deductions"
+                name="Disciplinary"
+                sequence="10"
+        />
+        <menuitem
+                parent="deductions"
+                id="employee_deductions"
+                action="act_deductions"
+                name="Disciplinary Items"
+                sequence="10"
+        />
+
+
+    </data>
+</odoo>

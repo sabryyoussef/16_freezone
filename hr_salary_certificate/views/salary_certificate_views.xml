@@ -1,0 +1,115 @@
+<odoo>
+    <data>
+        <record id="seq_hr_salary_certificate_seq" model="ir.sequence">
+            <field name="name">salary.certificate.master Seq</field>
+            <field name="code">salary.certificate.master</field>
+            <field name="prefix">SC/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="salary_certificate_form_view" model="ir.ui.view">
+            <field name="name">Salary Certificate Form View</field>
+            <field name="model">salary.certificate.master</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="generate_pdf" string="Print" type="object"
+                                class="btn-primary" invisible="1"/>
+                        <button name="action_request_signature" string="Request Signature"
+                                states="draft"
+                                type="object" class="btn-warning"/>
+                        <button name="action_draft" string="Reset To Draft" type="object"
+                                class="btn-primary" states="cancelled"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                class="btn-primary" states="submitted"/>
+                        <button name="action_approve" string="Approve" type="object"
+                                class="btn-primary" states="submitted" invisible="1"/>
+                        <button name="action_declined" string="Declined" type="object"
+                                class="btn-primary" states="approved"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,submitted,approved,declined,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_sign_request" class="oe_stat_button" icon="fa-pencil-square-o" type="object"
+                                    attrs="{'invisible':[('sign_request_ids','=',[])]}" string="Sign Signature">
+                                <field name="sign_request_ids" invisible="1"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                        <h1>
+                            <field name="request_id" readonly="1"/>
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="certificate_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                	<field name="related_report_ids" invisible="1"/>
+                                <field name="report_ids" required="1" widget="many2many_tags"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                <field name="type" widget="radio" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'horizontal': true}"/>
+                                <field name="partner_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')],'invisible':[('type','!=','specific')],'required':[('type','=','specific')]}"/>
+                                <field name="name" string="Name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="date_of_joining" string="Date of Joining" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="purpose_of_certificate" string="Purpose"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="issued_date" string="Date of Issue"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="currency_id" string="Currency"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="attachment_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="date_issue" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="employee_id" string="Employee" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="salary" string="Salary" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="director_id" string="Director" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="travel_start" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="travel_end" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="company_id" string="Company"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="salary_certificate_tree_view" model="ir.ui.view">
+            <field name="name">Salary Certificate Tree View</field>
+            <field name="model">salary.certificate.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="request_id"/>
+                    <field name="name"/>
+                    <field name="employee_id" optional="show"/>
+                    <field name="date_of_joining" optional="show"/>
+                    <field name="issued_date" optional="show"/>
+                    <field name="salary" optional="show"/>
+                    <field name="director_id" optional="show"/>
+                    <field name="purpose_of_certificate" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="salary_certificate_master_action" model="ir.actions.act_window">
+            <field name="name">Salary Certificate</field>
+            <field name="res_model">salary.certificate.master</field>
+            <field name="target">main</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <menuitem id="menu_hr_recruitment_config_certificates" name="Certificates" parent="hr.menu_hr_root"
+                  sequence="99"/>
+        <menuitem id="menu_hr_employee_salary_certificate" parent="menu_hr_recruitment_config_certificates"
+                  name="Salary Certificates" action="salary_certificate_master_action" sequence="10"/>
+    </data>
+</odoo>

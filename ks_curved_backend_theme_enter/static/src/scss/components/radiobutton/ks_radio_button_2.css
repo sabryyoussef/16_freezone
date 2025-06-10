@@ -1,0 +1,71 @@
+:root{
+    --primary: #28C397;
+}
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::before{
+background-color:var(--primary) !important;
+}
+.custom-control.custom-radio .custom-control-label::before {
+  background: var(--primary);
+  border-color: transparent;
+  content: "";
+  border-radius:50% !important;
+}
+.custom-control.custom-radio .custom-control-input ~ .custom-control-label::after {
+  //transform: scale(0);
+  background-color: var(--primary);
+  transition: transform ease-in-out 0.3s;
+  border-radius: 50%;
+  content: "";
+}
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+  transform: scale(0.45);
+  background-image: none !important;
+  background-color: #fff !important;
+  content: "";
+  border-radius:50% !important;
+}
+.custom-control.custom-control-align-center .custom-control-input:checked ~ .custom-control-label::after {
+  /*top: 2px;*/
+  /*top: 50%;
+  transform: translateY(-50%) scale(0.5);*/
+  content: "";
+}
+#ThemeButtonStyles .custom-control.custom-control-align-center .custom-control-input:checked ~ .custom-control-label::after {
+  /*top: 10px;*/
+  content: "";
+}
+
+/* new css 10/2/23 */
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::before{
+background-color:var(--primary) !important;
+}
+.form-check.o_radio_item .form-check-label::before {
+  background: var(--primary);
+  border-color: transparent;
+  content: "";
+  border-radius:50% !important;
+}
+.form-check.o_radio_item .form-check-input ~ .form-check-label::after {
+  //transform: scale(0);
+  background-color: var(--primary);
+  transition: transform ease-in-out 0.3s;
+  border-radius: 50%;
+  content: "";
+}
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::after {
+  transform: scale(0.45);
+  background-image: none;
+  background-color: #fff !important;
+  content: "";
+  border-radius:50% !important;
+}
+.form-check.form-check-align-center .form-check-input:checked ~ .form-check-label::after {
+  /*top: 2px;*/
+  /*top: 50%;
+  transform: translateY(-50%) scale(0.5);*/
+  content: "";
+}
+#ThemeButtonStyles .form-check.form-check-align-center .form-check-input:checked ~ .form-check-label::after {
+  /*top: 10px;*/
+  content: "";
+}

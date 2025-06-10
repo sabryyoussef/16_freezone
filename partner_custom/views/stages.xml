@@ -1,0 +1,21 @@
+<odoo>
+    <record id="partner_stage_tree" model="ir.ui.view">
+        <field name="name">partner.stage.tree</field>
+        <field name="model">partner.stage</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name" required="1"/>
+                <field name="sequence" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="partner_stage_action" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.stage</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="partner_stage_menu" name="Stages"
+              parent="contacts.res_partner_menu_config"
+              action="partner_stage_action" sequence="70"/>
+</odoo>

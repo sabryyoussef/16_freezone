@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record model="hr.salary.rule.category" id="sales_commission_salary_category">
+            <field name="name">Commission</field>
+            <field name="code">COMM</field>
+        </record>
+        <record model="hr.payroll.structure" id="sales_commission_salary_structure">
+            <field name="name">Sales Salary</field>
+            <field name="type_id" ref="hr_contract.structure_type_employee"/>
+            <field name="schedule_pay">monthly</field>
+        </record>
+        <record model="hr.salary.rule" id="sales_commission_salary_rule">
+            <field name="name">Commission</field>
+            <field name="code">COMM</field>
+            <field name="category_id" ref="sales_commission_salary_category"/>
+            <field name="struct_id" ref="sales_commission_salary_structure"/>
+            <field name="appears_on_payroll_report">True</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+target_percentage  = payslip.env['hr.payslip'].has_commissions(payslip)
+result = target_percentage
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+target_percentage,type,net_sales  = payslip.env['hr.payslip'].commissions(payslip)
+commission = 0.0
+if type == "Team":
+    if target_percentage >= 201:
+        commission = net_sales * 0.22
+    elif target_percentage >= 151:
+        commission = net_sales * 0.22
+    elif target_percentage >= 101:
+        commission = net_sales * 0.175
+    elif target_percentage >= 76:
+        commission = net_sales * 0.15
+    elif target_percentage >= 50:
+        commission = net_sales * 0.10
+
+elif type == "Member":
+    if target_percentage >= 201:
+        commission = net_sales * 0.15
+    elif target_percentage >= 151:
+        commission = net_sales * 0.125
+    elif target_percentage >= 101:
+        commission = net_sales * 0.10
+    elif target_percentage >= 75:
+        commission = net_sales * 0.05
+
+result = commission
+            </field>
+
+        </record>
+
+    </data>
+</odoo>

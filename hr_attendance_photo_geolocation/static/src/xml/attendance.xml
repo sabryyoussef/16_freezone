@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="HrAttendanceMyMainMenu">
+        <t t-jquery="t[t-set='bodyContent'] t[t-call='HrAttendanceCheckInOutButtons']" t-operation="after">
+            <t t-if="widget.employee">
+                <div class="glocation_kisok_container mb8" id="glocation_kisok" style="display: none;">
+                    <i class="fa fa-1x fa-angle-double-down glocation_kisok_toggle" id="glocation_kisok_toggle">
+                        Geo Location
+                    </i>
+                    <div class="glocation_kisok_view" style="display: none;">
+                        <span></span>
+                    </div>
+                </div>                
+            </t>
+        </t>
+    </t>
+
+</templates>

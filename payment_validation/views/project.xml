@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="project_client_payment_form" model="ir.ui.view">
+            <field name="name">project_client_payment_form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="mode">extension</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position='before'>
+                    <field name="payment_valid" invisible="1"/>
+                    <div class="alert alert-info oe_edit_only mb-0 text-center" role="status"
+                         attrs="{'invisible':[('payment_valid','=', True)]}" style="color: red">
+                        <p>Client's Payment is Not Fulfilled</p>
+                    </div>
+                    <button name="change_payment_status" type="object" string="Confirm Payment" attrs="{'invisible': [('payment_valid', '=', True)]}"/>
+                    <button name="change_payment_status" type="object" string="Cancel Payment" attrs="{'invisible': [('payment_valid', '!=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_client_payment_kanban" model="ir.ui.view">
+            <field name="name">project_client_payment_kanban</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="mode">extension</field>
+            <field name="arch" type="xml">
+                <xpath expr="//span[@t-if='record.partner_id.value']" position='after'>
+                    <field name="payment_valid" invisible="1"/>
+                    <span t-if="!record.payment_valid.raw_value" style="color: red">
+                        <p>Client's Payment is Not Fulfilled</p>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

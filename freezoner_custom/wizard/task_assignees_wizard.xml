@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="project_task_assignees_form_view">
+        <field name="name">project.task.assignees.form.view</field>
+        <field name="model">project.task.assignees</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="">
+                    <group>
+                        <group string="Assignees">
+                            <field name="user_ids" widget="many2many_avatar_user"/>
+                            <field name="task_id" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="submit" string="Assign" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

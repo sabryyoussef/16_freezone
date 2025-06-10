@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+    Copyright (C) 2020 Cetmix OÜ
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU LESSER GENERAL PUBLIC LICENSE as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU LESSER GENERAL PUBLIC LICENSE for more details.
+
+    You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENSE
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<odoo>
+
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.email.from.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <field name="email" position="after">
+                <field name="use_company_email" />
+                <label
+                    for="add_company_from"
+                    attrs="{'invisible':[('use_company_email','=',False)]}"
+                />
+                <div
+                    class="o_row"
+                    attrs="{'invisible':[('use_company_email','=',False)]}"
+                >
+                    <field name="add_company_from" />
+                    <span style="padding-right: 3px;" />
+                    <field
+                        name="add_company_mode"
+                        attrs="{'required':[('use_company_email','!=',False)], 'invisible': [('add_company_from', '=', False)]}"
+                    />
+                </div>
+                <field name="add_sender_reply_to" />
+                <field
+                    name="email_joint"
+                    attrs="{'invisible':[('add_company_from','=',False), ('add_sender_reply_to','=',False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

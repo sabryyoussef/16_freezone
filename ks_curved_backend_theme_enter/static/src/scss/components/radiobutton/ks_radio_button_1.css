@@ -1,0 +1,99 @@
+:root{
+    --primary: #28C397;
+}
+
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+  /*background-size: 1rem;*/
+  background: var(--primary);
+  border-radius: 50%;
+  transform: scale(0.5);
+  content: "";
+  display:block !important;
+}
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: transparent;
+  border-color: var(--primary);
+  border-radius: 50% !important;
+  content: "";
+   display:block !important;
+}
+.custom-control.custom-radio .custom-control-label::before,
+.custom-control.custom-radio .custom-control-label::after{
+    width: 1.32rem;
+    height: 1.32rem;
+    content: "";
+}
+.custom-control.custom-radio .custom-control-label::before{
+    border-radius: 50%;
+    content: "";
+}
+
+/* new css 10/2/23 */
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::after {
+  /*background-size: 1rem;*/
+  background: var(--primary);
+  border-radius: 50%;
+  transform: scale(0.5);
+  content: "";
+}
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::before {
+  background-color: transparent;
+  border-color: var(--primary);
+  border-radius: 50% !important;
+  content: "";
+}
+.form-check.o_radio_item .form-check-label::before,
+.form-check.o_radio_item .form-check-label::after{
+    width: 1.32rem;
+    height: 1.32rem;
+    content: "";
+}
+.form-check.o_radio_item .form-check-label::before{
+    border-radius: 50%;
+    content: "";
+}
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::after {
+  background: var(--primary);
+  border-radius: 50%;
+  content: "";
+}
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::before {
+  background-color: transparent;
+  border-color: var(--primary);
+  content: "";
+}
+.form-check.o_radio_item .form-check-label {
+    position: relative;
+    vertical-align: top;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-label:before, .form-check.o_radio_item .form-check-label:after {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    content: "";
+    border: var(--primary) solid 1px;
+    border-radius: 50%;
+    width: 1.33rem;
+    height: 1.3rem;
+    left: -18px;
+    top: 0.2rem;
+}
+.form-check.o_radio_item .form-check-label:before {
+    border-radius: 50%;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-input {
+    position: absolute;
+    opacity: 0;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.custom-control-input{
+display:block !important;
+}
+label.custom-control-label::before{
+display:block !important;
+}
+label.custom-control-label::after{
+display:block !important;
+}

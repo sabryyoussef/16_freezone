@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    
+    <t t-name="GeofenceView" class="o_map_container">
+        <div class="o_geofence_container">
+            <div id="olmap_widget" class="olmap_widget" style="width: 100%; height: 100%;"></div>
+        </div>
+    </t>
+
+    <t t-name="GeofenceDrawingView" class="o_map_container" owl="1">
+        <div class="o_geofence_draw_container">
+            <div id="olmap_widget" class="olmap_widget" style="width: 100%; height: 100%;" t-ref="mapContainer"></div>
+        </div>
+    </t>
+
+</templates>

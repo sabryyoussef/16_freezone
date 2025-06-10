@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="client_birthday_mail" model="mail.template">
+        <field name="name">Birth Day Celebration Mail</field>
+        <field name="subject">Birth Day {{object.name}}</field>
+        <field name="model_id" ref="client_birthday.model_res_partner"/>
+        <field name="partner_to">{{ object != False and object.id }}</field>
+        <field name="email_cc">{{ object.user_id.login}}</field>
+        <field name="body_html" type="html">
+            <div>
+                Dear <t t-out="object.name or ''">Customer</t>,<br/>
+                Happy Birthday
+                Thank you,
+            </div></field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <record id="hr_manager_leaves_action" model="ir.actions.act_window">
+            <field name="name">My employees' Leave</field>
+            <field name="res_model">hr.leave</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['|',('employee_id.parent_id.user_id', '=', uid),('employee_id.user_id', '=', uid)]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr_holidays.hr_leave_view_search_manager"/>
+        </record>
+    <menuitem id="hr_manager_leaves_menu" name="My employees' Leave" parent="hr_holidays.menu_hr_holidays_root"
+              groups="hr_employee_custom.employee_manager_groups"
+              action="hr_manager_leaves_action" sequence="3"/>
+</odoo>

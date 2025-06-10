@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record id="equipment_maintenance_view_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.equipment.view.form.inherit.hr</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" statusbar_visible="draft,occupied,free to use,scrap"/>
+                </header>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+            </xpath>
+
+
+            <xpath expr="//page[@name='maintenance']" position="after">
+                    <page string="Components" name="Components">
+                        <field
+                            name="components_ids"
+                            widget="section_and_note_one2many"
+                        >
+                            <tree editable="bottom">
+                                <field name="name" invisible="True"/>
+                                <field name="component_id"/>
+                            <field name="employee_id"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <page string="User History" name="history">
+                            <field name="history_ids" readonly="true">
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="assigned_date"/>
+                                    <field name="end_date"/>
+                                </tree>
+                            </field>
+                        </page>
+            </xpath>
+
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="equipment_code"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

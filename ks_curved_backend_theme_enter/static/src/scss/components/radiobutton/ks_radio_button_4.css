@@ -1,0 +1,64 @@
+:root{
+    --primary: #28C397;
+}
+
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+	 border-radius: 0px;
+	 background: url('/ks_curved_backend_theme_enter/static/src/images/radio_btn_fill.png') no-repeat center;
+	 background-size: 10px;
+     content: "";
+}
+ .custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+	 background-color: transparent;
+	 border-color: var(--primary);
+	 border-radius: 2px;
+     content: "";
+}
+ .custom-control.custom-radio .custom-control-label::before {
+	 border-radius: 2px;
+     content: "";
+}
+
+/* new css 10/2/23 */
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::after {
+	 border-radius: 0px;
+	 background: url('/ks_curved_backend_theme_enter/static/src/images/radio_btn_fill.png') no-repeat center;
+	 background-size: 10px;
+     content: "";
+}
+ .form-check.o_radio_item .form-check-input:checked ~ .form-check-label::before {
+	 background-color: transparent;
+	 border-color: var(--primary);
+	 border-radius: 2px;
+     content: "";
+}
+ .form-check.o_radio_item .form-check-label::before {
+	 border-radius: 2px;
+     content: "";
+}
+.form-check.o_radio_item .form-check-label {
+    position: relative;
+    vertical-align: top;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-label:before, .form-check.o_radio_item .form-check-label:after {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    content: "";
+    border: var(--primary) solid 1px;
+    border-radius: 2px;
+    width: 1.33rem;
+    height: 1.3rem;
+    left: -18px;
+    top: 0.2rem;
+}
+.form-check.o_radio_item .form-check-label:before {
+    border-radius: 2px;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-input {
+    position: absolute;
+    opacity: 0;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

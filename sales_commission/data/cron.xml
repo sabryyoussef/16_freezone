@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="sales_commission_cron" model="ir.cron">
+            <field name="name">Sales Commission CRON</field>
+            <field name="model_id" ref="model_crm_commission"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sales_commission()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False"/>
+            <field name="doall">True</field>
+        </record>
+
+    </data>
+</odoo>

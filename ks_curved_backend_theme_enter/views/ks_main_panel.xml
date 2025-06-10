@@ -1,0 +1,18 @@
+<odoo>
+    <template id="ks_main_panel" inherit_id="web.webclient_bootstrap" name="Main Sidebar Panel">
+<!--        <xpath expr="//t[@t-call-assets='web.assets_common']" position="before">-->
+
+<!--            <t t-if="request.env['ir.config_parameter'].sudo().get_param(-->
+<!--            'ks_curved_backend_theme_enter.ks_enable_pwa_app')">-->
+<!--                <link rel="manifest" t-attf-href="/ks_curved_backend_theme_enter/manifest.webmanifest" />-->
+<!--                <meta name="apple-mobile-web-app-capable" content="yes" />-->
+<!--                <meta name="apple-mobile-web-app-status-bar-style" content="black" />-->
+<!--            </t>-->
+<!--        </xpath>-->
+
+        <xpath expr="//t[@t-set='body_classname']" position="after">
+            <div class="ks_right_sidebar_panel"/>
+        </xpath>
+        
+    </template>
+</odoo>

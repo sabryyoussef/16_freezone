@@ -1,0 +1,116 @@
+.custom-control.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+	 background-image: url('/ks_curved_backend_theme/static/src/images/checkbox-checked_light.svg');
+	 background-size: 24px 20px;
+	 background-position: 0px -4px;
+	 width: 24px;
+	 content: "";
+}
+ .custom-control.custom-checkbox .custom-control-input:focus:not(:checked) ~ .custom-control-label::before, .custom-control.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before, .custom-control.custom-checkbox .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+	 background: url('/ks_curved_backend_theme/static/src/images/checkbox_round.png') no-repeat center;
+	 background-size: contain;
+	 border: none;
+	 content: "";
+}
+ .custom-control.custom-checkbox .custom-control-label::before, .custom-control.custom-checkbox .custom-control-label::after {
+	 border-radius: 50%;
+	 height: 18px;
+	 width: 18px;
+	 background: url('/ks_curved_backend_theme/static/src/images/checkbox_round.png') no-repeat center;
+	 background-size: contain;
+	 border: none;
+	 content: "";
+}
+
+.o_rtl .custom-control.custom-checkbox .custom-control-label::before,
+.o_rtl .custom-control.custom-checkbox .custom-control-label::after{
+   width: 28px;
+   content: "";
+}
+
+.o_rtl .custom-control.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after{
+    background-position: 2px -3px;
+    width: 24px;
+    content: "";
+}
+
+
+
+
+
+
+.form-check.o-checkbox .form-check-input:checked ~ .form-check-label::after {
+	 background-image: url('/ks_curved_backend_theme_enter/static/src/images/checkbox-checked_light.svg');
+	 background-size: 24px 20px;
+	 background-position: 0px -4px;
+	 width: 24px;
+    content: "";
+}
+ .form-check.o-checkbox .form-check-input:focus:not(:checked) ~ .form-check-label::before, .form-check.o-checkbox .form-check-input:checked ~ .form-check-label::before, .form-check.o-checkbox .form-check-input:not(:disabled):active ~ .form-check-label::before {
+	 background: url('/ks_curved_backend_theme_enter/static/src/images/checkbox_round.png') no-repeat center;
+	 background-size: contain;
+	 border: none;
+    content: "";
+}
+ .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after {
+	 border-radius: 50%;
+	 height: 18px;
+	 width: 18px;
+	 background: url('/ks_curved_backend_theme_enter/static/src/images/checkbox_round.png') no-repeat center;
+	 background-size: contain;
+	 border: none;
+    content: "";
+    display: block;
+}
+.form-check.o-checkbox .form-check-label::before, .form-check-label::after{
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    content: "";
+    }
+ .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label,.form-check.o-checkbox .form-check-input{
+ transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+ }
+ .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after, .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after{
+     left: -2rem;
+    top: 0.2rem;
+    }
+   .form-check.o-checkbox .form-check-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    }
+   .form-check.o-checkbox .form-check-input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    }
+   .form-check.o-checkbox {
+    padding-left: 2rem;
+    word-break: break-all;
+    position: relative;
+    display: block;
+    }
+
+.o_rtl .form-check.o-checkbox .form-check-label::before,
+.o_rtl .form-check.o-checkbox .form-check-label::after{
+   width: 28px;
+    content: "";
+}
+
+.o_rtl .form-check.o-checkbox .form-check-input:checked ~ .form-check-label::after{
+    background-position: 2px -3px;
+    width: 24px;
+    content: "";
+}
+
+
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-input {
+    z-index: 0 !important;
+    opacity: 1 !important;
+}
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-label::before {
+     display:none;
+}
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-label::after {
+     display:none;
+}

@@ -1,0 +1,47 @@
+<odoo>
+    <record id="hr_leave_backup" model="ir.ui.view">
+        <field name="name">hr.leave.backup</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+            <xpath expr="//sheet" position="after">
+                <footer>
+                    <field name="is_submitted" invisible="1"/>
+                    <button name="action_submit" type="object" string="Save" class="oe_highlight"
+                            attrs="{'invisible':[('is_submitted','=',True)]}"/>
+                    <button special="cancel" string="Close" close="1"/>
+                </footer>
+            </xpath>
+            <xpath expr="//button[@name='action_approve']" position="replace">
+                <button string="Approve" name="action_approve" type="object" class="oe_highlight"
+                        attrs="{'invisible': ['|', '|', '|', '|', ('id', '=', False), ('active', '=', False), ('can_approve', '=', False), ('state', '!=', 'confirm'), ('is_submitted', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="replace">
+                <button string="Refuse" name="action_refuse" type="object"
+                        attrs="{'invisible': ['|', '|', '|', '|', ('id', '=', False), ('active', '=', False), ('can_approve', '=', False), ('state', 'not in', ('confirm','validate1','validate')), ('is_submitted', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="replace">
+                <button string="Mark as Draft" name="action_draft" type="object"
+                        attrs="{'invisible': ['|', '|', '|', ('id', '=', False), ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse']), ('is_submitted', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="backup_employee_id"/>
+                <!--                       attrs="{'invisible': [('is_backup_employee', '=', False)],'required': [('is_backup_employee', '=', True)]}"/>-->
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_leave_view_tree_my" model="ir.ui.view">
+        <field name="name">hr.leave</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree_my"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

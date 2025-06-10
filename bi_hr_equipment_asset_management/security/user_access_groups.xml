@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="group_aequipement_request_approval" model="res.groups">
+		   <field name="name">Equipement Request Approval</field>
+	   </record>
+
+	   <record id="group_automatic_generate_asset_code" model="res.groups">
+		   <field name="name">Automatic Generate Asset Code</field>
+	   </record>
+	</data>
+</odoo>

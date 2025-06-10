@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_password_password,password_password,model_password_password,,1,1,1,1
+access_password_tags,password_tags,model_password_tags,,1,1,1,1
+access_password_sites,password_sites,model_password_sites,,1,1,1,1

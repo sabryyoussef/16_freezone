@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_first_check_late_employees" model="ir.cron">
+            <field name="name">First Check and Notify Late Employees</field>
+            <field name="model_id" ref="hr_attendance_location.model_hr_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.first_check_and_notify_late_employees()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).replace(hour=9, minute=1, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+        <record id="ir_cron_second_check_late_employees" model="ir.cron">
+            <field name="name">Second Check and Notify Late Employees</field>
+            <field name="model_id" ref="hr_attendance_location.model_hr_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.second_check_and_notify_late_employees()</field>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="nextcall" eval="(datetime.now() + timedelta(days=1)).replace(hour=9, minute=1, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+    </data>
+</odoo>

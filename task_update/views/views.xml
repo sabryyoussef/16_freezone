@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+
+        <record id="task_kanban_inherit" model="ir.ui.view">
+        <field name="name">task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_bottom')]/div[hasclass('oe_kanban_bottom_left')]/field[@name='priority']" position="replace">
+                <field name="is_sent" invisible="1"/>
+                <div attrs="{'invisible': [('is_sent', '=', False)]}">
+                    <img style="display: block; border-width: 0px; border-color: initial; border-image: initial; max-width: 50%; width: 80px !important;"
+                         src="/task_update/static/src/description/images/send.png"
+                         width="10"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+        <record id="project_task_update" model="ir.ui.view">
+            <field name="name">Update Client By Task</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header" position="inside">
+                    <field name='closing' invisible="1"/>
+                    <button name="update_client" string="Notify Client By Update" type="object"
+                            attrs="{'invisible':[('closing', '=', False)]}" class="btn-primary"/>
+
+                </xpath>
+
+            </field>
+        </record>
+        <record id="project_task_stage_closing" model="ir.ui.view">
+            <field name="name">Project Task Stage Closing</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id" ref="project.task_type_edit"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='fold']" position="after">
+                    <field name='closing'/>
+                </xpath>
+
+            </field>
+        </record>
+
+<!--        <record id="sale_order_quotation_send" model="ir.ui.view">-->
+<!--            <field name="name">sales</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//button[@name='action_quotation_send']" position="replace">-->
+<!--                    <button name="action_quotation_send_custom" string="Send by Email" type="object" states="draft" class="btn-primary" data-hotkey="g" context="{'validate_analytic': True}"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='action_quotation_send'][2]" position="replace">-->
+<!--                <button name="action_quotation_send_custom" type="object" string="Send PRO-FORMA Invoice" groups="sale.group_proforma_sales" class="btn-primary" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True, 'validate_analytic': True}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="ks_toggle_switch_templates" xml:space="preserve">
+    <t t-name="ks_toggle_switch">
+        <div class="ks_switch_btn">
+            <div class="custom-control custom-switch ks_toggle_theme"> <!--mt-n2-->
+                <input type="checkbox" checkbox="checkbox" data-name="ks_dark_mode" name="ks_dark_mode_toggle"
+                       class="custom-control-input ks_menu_toggle_switch" id="ks_menubar_dark_mode"
+                       t-att-checked="widget.data['ks_dark_mode'] ? 'checked' : None"
+                       />
+                <label class="custom-control-label ks_cursor_pointer" for="ks_menubar_dark_mode"/>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,50 @@
+<odoo>
+    <record id="cabinet_directory_form" model="ir.ui.view">
+        <field name="name">cabinet.directory.form</field>
+        <field name="model">cabinet.directory</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="work_location_id" required="1"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Folders">
+                            <field name="directory_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="cabinet_directory_tree" model="ir.ui.view">
+        <field name="name">cabinet.directory.tree</field>
+        <field name="model">cabinet.directory</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="work_location_id"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="cabinet_directory_action" model="ir.actions.act_window">
+        <field name="name">Cabinet Directory</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cabinet.directory</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="cabinet_directory_menu" name="Cabinet Directory"
+              parent="directory_main_menu" action="cabinet_directory_action" sequence="1"/>
+</odoo>

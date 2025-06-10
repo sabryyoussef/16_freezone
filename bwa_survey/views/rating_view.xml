@@ -1,0 +1,59 @@
+<odoo>
+    <record id="survey_rating_forms" model="ir.ui.view">
+        <field name="name">survey.rating.form</field>
+        <field name="model">survey.rating</field>
+        <field name="arch" type="xml">
+            <form string="" delete="0" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="feedback"/>
+                        </group>
+                        <group>
+                            <field name="task_id"/>
+                            <field name="feedback_rating" widget="priority" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="survey_rating_tree" model="ir.ui.view">
+        <field name="name">survey.rating.tree</field>
+        <field name="model">survey.rating</field>
+        <field name="arch" type="xml">
+            <tree string="" create="0" edit="0" delete="0">
+                <field name="customer_id"/>
+                <field name="task_id"/>
+                <field name="feedback_rating" widget="priority" readonly="1"/>
+                <field name="feedback"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="survey_rating_search" model="ir.ui.view">
+        <field name="name">survey.rating.search</field>
+        <field name="model">survey.rating</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="customer_id"/>
+            </search>
+        </field>
+    </record>
+    <record id="survey_rating_action" model="ir.actions.act_window">
+        <field name="name">Survey Rating</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.rating</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="survey_root" name="Survey" sequence="2"
+                   web_icon="bwa_survey,static/description/img/icon.png"
+    />
+    <menuitem id="survey_menu" name="Survey Rating" parent="survey_root" action="survey_rating_action" sequence="1"/>
+</odoo>

@@ -1,0 +1,114 @@
+[data-color-mode="ks-dark"] {
+    .oe_form_field_html .note-editable{
+        color: black !important;
+    }
+    .modal-title{
+        color: black !important;
+    }
+    .modal-header{
+        .close{
+            color: black !important;
+        }
+    }
+
+    .o_form_view.o_form_readonly{
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5{
+            color: var(--color) !important;
+        }
+    }
+    .o_form_view.o_form_editable{
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5{
+            color: var(--color) !important;
+        }
+    }
+    .o_web_studio_app_creator_left_content {
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5{
+            color : #262c34 !important;
+        }
+    }
+    .o_web_studio_model_configurator {
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5{
+            color : #262c34 !important;
+        }
+    }
+    .o_web_studio_model_configurator_option {
+            color : #262c34 !important;
+    }
+
+    .o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.disabled:not(.btn-primary),
+    .o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.disabled:not(.btn-primary):hover,
+    .o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.disabled:not(.btn-primary):focus{
+        color: var(--color);
+    }
+}
+
+.o_cp_bottom_left{
+    .o_list_buttons{
+        .btn{
+            margin-right: 7px;
+        }
+    }
+}
+
+.ks-phone-filter-modal{
+    .small{
+        font-size: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .o_cp_bottom_left{
+        .btn-group > .btn.active{
+            z-index: 0;
+        }
+    }
+
+    .o_cp_searchview.ks_search_responsive.show{
+        width: 100%;
+    }
+}
+
+.o_form_view .o_form_sheet_bg .o_group .o_field_widget > .btn {
+color: white;
+}
+
+.datepicker .datepicker-days .table-sm thead tr .prev:hover, .datepicker .datepicker-days .table-sm thead tr .picker-switch:hover, .datepicker .datepicker-days .table-sm thead tr .next:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+[data-color-mode="ks-dark"]{
+    .o-autocomplete.dropdown ul li:first-child a {
+    background-color: transparent !important;
+    color: white !important;
+    }
+}
+
+.o-autocomplete.dropdown ul li:first-child a {
+    background-color: transparent !important;
+    color: charcoal !important;
+}
+.o-autocomplete.dropdown ul li:first-child a:hover {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+.o-autocomplete.dropdown ul li a:hover{
+    color: white !important;
+
+}
+
+.nav-tabs .nav-item .nav-link.active{
+    background: var(--primary-btn);
+    color: white;
+}
+
+.nav-tabs .nav-item .nav-link:hover{
+    background: var(--primary-btn);
+    color: white !important;
+}
+
+.o_statusbar_buttons .btn-primary:hover{
+    background: var(--primary-btn);
+    color: white !important;
+}

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_sale_sov_tree" model="ir.ui.view">
+        <field name="name">sale.sov.tree</field>
+        <field name="model">sale.sov</field>
+        <field name="arch" type="xml">
+            <tree string="Statement of Values" decoration-info="state == 'draft'" decoration-success="state == 'done'" decoration-warning="state == 'in_progress'" decoration-danger="state == 'cancelled'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="sale_id"/>
+                <field name="project_id"/>
+                <field name="partner_id"/>
+                <field name="revenue" sum="Total Revenue"/>
+                <field name="planned_expenses" sum="Total Planned Expenses"/>
+                <field name="net" sum="Total Net"/>
+                <field name="actual_expenses" sum="Total Actual Expenses"/>
+                <field name="profit_margin"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_sale_sov_form" model="ir.ui.view">
+        <field name="name">sale.sov.form</field>
+        <field name="model">sale.sov</field>
+        <field name="arch" type="xml">
+            <form string="Statement of Values">
+                <header>
+                    <button name="action_draft" string="Set to Draft" type="object" class="oe_highlight" states="in_progress,done,cancelled"/>
+                    <button name="action_in_progress" string="Set to In Progress" type="object" class="oe_highlight" states="draft"/>
+                    <button name="action_done" string="Set to Done" type="object" class="oe_highlight" states="in_progress"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="draft,in_progress"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Description"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sale_id"/>
+                            <field name="project_id"/>
+                            <field name="partner_id"/>
+                            <field name="analytic_account_id"/>
+                        </group>
+                        <group>
+                            <field name="revenue"/>
+                            <field name="planned_expenses"/>
+                            <field name="net"/>
+                            <field name="actual_expenses"/>
+                            <field name="profit_margin" widget="percentage"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Analytic Lines" name="analytic_lines">
+                            <field name="analytic_line_ids" context="{'default_sov_id': active_id}">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="unit_amount"/>
+                                    <field name="product_id"/>
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+                            <button name="action_view_analytic_lines" string="View Analytic Lines" type="object" class="btn btn-primary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_sale_sov_search" model="ir.ui.view">
+        <field name="name">sale.sov.search</field>
+        <field name="model">sale.sov</field>
+        <field name="arch" type="xml">
+            <search string="Statement of Values">
+                <field name="name"/>
+                <field name="sale_id"/>
+                <field name="project_id"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Sale Order" name="groupby_sale" context="{'group_by': 'sale_id'}"/>
+                    <filter string="Project" name="groupby_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Customer" name="groupby_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sale_sov" model="ir.actions.act_window">
+        <field name="name">Statement of Values</field>
+        <field name="res_model">sale.sov</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_sale_sov_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first statement of values!
+            </p>
+            <p>
+                Track revenue, expenses, and profit margins for your projects.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_sale_sov"
+        name="Statement of Values"
+        parent="sale.sale_menu_root"
+        action="action_sale_sov"
+        sequence="20"/>
+</odoo> 

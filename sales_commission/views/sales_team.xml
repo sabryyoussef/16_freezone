@@ -1,0 +1,25 @@
+<odoo>
+    <record id="sales_team_member" model="ir.ui.view">
+        <field name="name">Sales Team Member Commission</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='members_users']" position="after">
+                <page string="Members Target">
+                    <field name="crm_team_member_ids">
+                        <tree editable="bottom">
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_membership_multi" invisible="1"/>
+                            <field name="member_warning" invisible="1"/>
+                            <field name="user_in_teams_ids" invisible="1"/>
+                            <field name="user_company_ids" invisible="1"/>
+                            <field name="user_id"/>
+                            <field name="target_amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

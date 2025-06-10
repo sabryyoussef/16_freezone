@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="stripe_checkout_form">
+            <t t-if="acquirer.tx_do=='on_redirect_page'">
+                <form t-att-action="api_url" method="get" t-att-provider="provider">       
+                </form>
+            </t>
+            <t t-else="">
+                <input type="hidden" name='return_url' t-att-value='return_url'/>
+                <!--Order Information -->
+                <input type='hidden' name='invoice_num' t-att-value='reference'/>
+                <!-- <input type='hidden' name='currency_name' t-att-value='currency.name'/> -->
+                <input type='hidden' name='currency_name' t-att-value='currency_name'/>
+                <input type='hidden' name='amount' t-att-value="amount"/>
+                <!-- Billing Information-->
+                <input type="hidden" name='partner_id' t-att-value='billing_partner_id'/>
+                <input type="hidden" name='partner_name' t-att-value='partner_name'/>
+                <input type="hidden" name='partner_email' t-att-value='partner_email'/>
+                <input type="hidden" name='line1' t-att-value='line1'/>
+                <input type="hidden" name='postal_code' t-att-value='postal_code'/>
+                <input type="hidden" name='city' t-att-value='city'/>
+                <input type="hidden" name='state' t-att-value='state'/>
+                <input type="hidden" name='country' t-att-value='country'/>
+                
+                <!-- API Information-->
+                <input type='hidden' name="acquirer_id" t-att-value="acquirer_id"/>
+                <!-- <input type='hidden' name="stripe_checkout_pub_key" t-att-value="acquirer.stripe_checkout_publishable_key"/> -->
+                <input type='hidden' name="stripe_checkout_pub_key" t-att-value="acquirer.stripe_checkout_publishable_key"/>
+                <input type="hidden" name="acquirer_id" t-att-value="acquirer_id"/>
+                <!-- <input type='hidden' name="stripe_checkout_pub_key" t-att-value="acquirer.sudo().stripe_checkout_publishable_key"/> -->
+                <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div id="stripe-checkout-payment-form">
+                    <div id="stripe-checkout-card-element" class="m-3"/>
+                    <div id="stripe-checkout-card-errors" class="m-3 text-danger"/>
+                </div>
+
+
+                <div class="modal stripe_dropin_modal" tabindex="-1" role="dialog" id="stripe_dropin_modal" style="z-index:2000"> 
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Stripe Payment</h4> 
+                                <span id="close-modal" type="button" style="border:none" class="btn shadow-sm close-modal">X</span>
+                            </div>
+                            <div class="modal-body">
+                                <form id="payment-form" style="width:100%">
+                                    <div id="payment-element">
+                                        <!--Stripe.js injects the Payment Element-->
+                                    </div>
+                                    <button class="stripe_same_page" id="submit">
+                                        <div class="spinner hidden" id="spinner"></div>
+                                        <span id="button-text">Pay now</span>
+                                    </button>
+                                    <div id="payment-message" class="hidden"></div>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Stripe Checkout JS-->
+                <link rel='stylesheet' href='/payment_stripe_checkout/static/src/css/stripe_js.css'/>
+                <script t-if="reference != '/'" type="text/javascript" src="/payment_stripe_checkout/static/src/js/stripe_checkout.js"></script>
+            </t>
+        </template>
+
+    
+       
+        <!-- <template id="stripe_checkout_s2s_form">
+                <link rel='stylesheet' href='/payment_stripe_checkout/static/src/css/stripe_js.css'/>
+                <input type="hidden" name="acquirer_id" t-att-value="id"/>
+                <input type='hidden' name="stripe_checkout_pub_key" t-att-value="acq.sudo().stripe_checkout_publishable_key"/>
+                <input t-if="return_url" type="hidden" name="return_url" t-att-value="return_url"/>
+                <input t-if="partner_id" type="hidden" name="partner_id" t-att-value="partner_id"/>
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div id="stripe-checkout-payment-form">
+                    <div id="stripe-checkout-card-element" class="m-3"/>
+                    <div id="stripe-checkout-card-errors" class="m-3 text-danger"/>
+                </div>
+        </template> -->
+
+
+        <!-- temporary comment it -->
+        <!-- <template id="stripe_checkout_payment_list" inherit_id="payment.payment_tokens_list"> -->
+        <!-- <template id="stripe_checkout_payment_list" inherit_id="payment.checkout">
+            <xpath expr="//t[@t-foreach='tokens']//input" position="attributes">
+                <attribute name="t-att-data-is_stripe_checkout">pm.acquirer_id.provider=='stripe_checkout'</attribute>
+                <attribute name="t-att-data-stripe_checkout_id">pm.acquirer_id.id if pm.acquirer_id.provider=='stripe_checkout' else False</attribute>
+            </xpath>
+        </template> -->
+
+
+
+    </data>
+</odoo>

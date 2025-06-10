@@ -1,0 +1,53 @@
+<odoo>
+    <record id="res_partner_project_data_form" model="ir.ui.view">
+        <field name="name">res.partner.project.data</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="corporate_tax_registered"/>
+                <field name="corporate_tax_number"
+                       attrs="{'invisible': [('corporate_tax_registered', '!=', True)],'required': [('corporate_tax_registered', '=', True)]}"/>
+                <label for="corporate_tax_period_from" string="Corporate Tax Period" attrs="{'invisible': [('corporate_tax_registered', '!=', True)]}"/>
+                <div name="corporate_tax_period" class="o_row" attrs="{'invisible': [('corporate_tax_registered', '!=', True)]}">
+                    <field name="corporate_tax_period_from"
+                           widget="daterange"
+                           options="{&quot;related_end_date&quot;: &quot;corporate_tax_period_to&quot;}"
+                           attrs="{'invisible': [('corporate_tax_registered', '!=', True)],
+                       'required': [('corporate_tax_registered', '=', True)]}"/>
+                    <i class="fa fa-long-arrow-right mx-2 oe_edit_only"
+                       aria-label="Arrow icon"
+                       title="Arrow"/>
+                    <field name="corporate_tax_period_to"
+                           widget="daterange"
+                           options="{&quot;related_start_date&quot;: &quot;corporate_tax_period_from&quot;}"
+                           attrs="{'invisible': [('corporate_tax_registered', '!=', True)],
+                       'required': [('corporate_tax_registered', '=', True)]}"/>
+                </div>
+                <field name="corporate_tax_filing"
+                       attrs="{'invisible': [('corporate_tax_registered', '!=', True)],'required': [('corporate_tax_registered', '=', True)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="license_activity_trees" model="ir.ui.view">-->
+<!--        <field name="name">license.activity.tree</field>-->
+<!--        <field name="model">license.activity</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree editable="bottom">-->
+<!--                <field name="name"/>-->
+<!--                <field name="code"/>-->
+<!--                <field name="license_authority_id"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    <record id="licenses_activity_action" model="ir.actions.act_window">-->
+<!--        <field name="name">License Activity</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">license.activity</field>-->
+<!--        <field name="view_mode">tree</field>-->
+<!--    </record>-->
+<!--    <menuitem id="license_activity_menu" name="License Activity"-->
+<!--              parent="contacts.res_partner_menu_config"-->
+<!--              action="licenses_activity_action" sequence="50"/>-->
+</odoo>

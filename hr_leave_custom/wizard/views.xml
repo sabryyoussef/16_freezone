@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_leave_past_date_wizard_form" model="ir.ui.view">
+        <field name="name">hr.leave.past.date.wizard.form</field>
+        <field name="model">hr.leave.past.date.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirm Past Date Leave">
+                <sheet>
+                    <group>
+                        <field name="leave_id" invisible="1"/>
+                        <field name="message"/>
+                    </group>
+                    <footer>
+                        <button name="action_send_notification" string="Send Notification" type="object" class="btn-primary"/>
+                        <button name="action_save_only" string="Save Only" type="object" class="btn-default"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,130 @@
+.o_hr_attendance_kiosk_mode .o_hr_attendance_pin_pad [class*="col-"] .o_hr_attendance_PINbox {    
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #dee2e6 !important;
+}
+.o_hr_attendance_kiosk_mode{
+    top: 60px !important;
+}
+.o_hr_attendance_kiosk_backdrop{
+    height: 100vh;
+}
+.o_geofence_container{
+    width: 100%;    
+    min-height: 450px;
+    height: calc(100vh - 132px);
+}
+.o_geofence_draw_container{
+    width: 100%;
+    min-height: 450px;
+    height: calc(100vh - 400px);
+}
+.gmap_kisok_container{
+    margin-top: 10px;
+}
+.gmap_kisok_container h3{
+    padding:2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+.gmap_kisok_view{
+    width: 100%;
+    height: 200px;
+    padding-top: 3px;
+    position: relative;
+    
+}
+.gmap_kisok_view span{
+    font-size: 13px;
+}
+.gmap_kisok_toggle{
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;    
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+.gmap_kisok_toggle::before{
+    position: relative;
+    right: 20px;
+}
+.gmap_clear_button{
+    background-color: white; 
+    margin-bottom: 5px;
+    padding: 1px 8px 2px 8px;
+} 
+
+.gip_kisok_container{
+    margin-top: 10px;
+}
+.gip_kisok_container h3{
+    padding:2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+.gip_kisok_view{
+    width: 100%;
+    height: 30px;
+    padding-top: 3px;
+    position: relative;
+    
+}
+.gip_kisok_view span{
+    font-size: 13px;
+}
+.gip_kisok_toggle{
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;    
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+.gip_kisok_toggle::before{
+    position: absolute;
+    right: 10px;
+}
+
+
+.glocation_kisok_container{
+    margin-top: 10px;
+}
+.glocation_kisok_container h3{
+    padding:2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+.glocation_kisok_view{
+    width: 100%;
+    height: 30px;
+    padding-top: 3px;
+    position: relative;
+    
+}
+.glocation_kisok_view span{
+    font-size: 13px;
+}
+.glocation_kisok_toggle{
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;    
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+.glocation_kisok_toggle::before{
+    position: absolute;
+    right: 10px;
+}
+
+.ol-clear {
+    top: 72px;
+    left: .5em;
+}
+.ol-draw{
+    top: 94px;
+    left: .5em;
+}

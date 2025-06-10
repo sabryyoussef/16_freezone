@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+
+        <record id="hr_deductions_dispute_wizard_form_view" model="ir.ui.view">
+            <field name="name">hr_deductions_dispute_wizard_form_view</field>
+            <field name="model">hr.deductions.dispute.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Deductions">
+                    <sheet>
+                        <group>
+                            <field name="deduction_id" string="Disciplinary"/>
+                            <field name="dispute" string="Dispute"/>
+                            <field name="dispute_to" string="Dispute To"/>
+                        </group>
+                        <footer>
+                            <button name="submit" string="Submit Dispute" type="object" class="oe_highlight"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

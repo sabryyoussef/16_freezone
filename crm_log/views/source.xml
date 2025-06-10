@@ -1,0 +1,12 @@
+<odoo>
+    <record id="source_tree" model="ir.ui.view">
+        <field name="name">utm.source</field>
+        <field name="model">utm.source</field>
+        <field name="inherit_id" ref="utm.utm_source_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_required_referred"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

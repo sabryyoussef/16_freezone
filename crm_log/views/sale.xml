@@ -1,0 +1,16 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="sales_order_discount_group" model="ir.ui.view">
+        <field name="name">sale.order.group.discount</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_salesman_all_leads</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="sale.sale_menu_root" model="ir.ui.menu">
+    <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman_all_leads'))]"/>
+</record>
+</odoo>

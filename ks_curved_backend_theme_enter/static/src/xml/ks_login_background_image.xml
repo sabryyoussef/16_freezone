@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="ks_login_background_image_template">
+        <!-- For loop -->
+        <t t-foreach="ks_login_image" t-as="ks_image" t-key="ks_image.id">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image ks_login_background_image_non_owl">
+                    <input type="radio" t-att-id="'ks_login_bg_img_' + '#' + ks_image.id"
+                           t-att-data-value="ks_image.id"
+                           data-model="ks.login.background.image"
+                           data-field-save="ks_login_background_image_save"
+                           name="ks_login_background_setting"
+                           t-att-checked="ks_image.ks_active ? 'checked' : None"
+                           class="custom-control-input ks_login_background_color ks_binary_field ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="'ks_login_bg_img_' + '#' + ks_image.id">
+                        <img class="ks_image_hover" t-att-src="ks_image.ks_image"
+                             t-att-data-zoom-image="ks_image.ks_image"/>
+                    </label>
+                    <i class="fa fa-trash ks_login_background_image_del"
+                       t-att-data-id="'ks_login_bg_img_' + '#' + ks_image.id"/>
+                </div>
+            </div>
+        </t>
+        <div class="row no-gutters align-items-center mb-3">
+            <div class="col d-flex align-items-center ks_global_binary_field ks-file-upload">
+                <input type="file" class="ks_binary_field ks_login_background_image"
+                       name="ks_login_background_image"
+                       t-att-id="ks_image_add"
+                       t-att-name="ks_image_save" accept="image/*"/>
+                <!-- <span>fileName</span> -->
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+    <t t-name="ks_login_background_image_template_1" owl="1">
+        <!-- For loop -->
+        <t t-foreach="ks_login_image" t-key="ks_image.id" t-as="ks_image">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image">
+                    <input t-on-change="_onInputChange" type="radio" t-att-id="'ks_login_bg_img_' + '#' + ks_image.id"
+                           t-att-data-value="ks_image.id"
+                           data-model="ks.login.background.image"
+                           data-field-save="ks_login_background_image_save"
+                           name="ks_login_background_setting"
+                           t-att-checked="ks_image.ks_active ? 'checked' : None"
+                           class="custom-control-input ks_login_background_color ks_binary_field ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="'ks_login_bg_img_' + '#' + ks_image.id">
+                        <img class="ks_image_hover" t-att-src="ks_image.ks_image"
+                             t-att-data-zoom-image="ks_image.ks_image"/>
+                    </label>
+                    <i class="fa fa-trash ks_login_background_image_del" t-on-click="_ksDelLoginBackgroundImage"
+                       t-att-data-id="'ks_login_bg_img_' + '#' + ks_image.id"/>
+                </div>
+            </div>
+        </t>
+        <div class="row no-gutters align-items-center mb-3">
+            <div class="col d-flex align-items-center ks_global_binary_field ks-file-upload">
+                <input t-on-change="_onInputChange" type="file" class="ks_binary_field ks_login_background_image"
+                       t-att-id="ks_image_add"
+                       t-att-name="ks_image_save" accept="image/*"/>
+                <!-- <span>fileName</span> -->
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+</templates>

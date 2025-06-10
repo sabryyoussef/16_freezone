@@ -1,0 +1,590 @@
+<odoo>
+    <record id="act_project_project_3_project_task_all" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+        <field name="domain">[('display_project_id', '=', active_id),('user_ids', 'in', uid)]</field>
+        <field name="context">{
+            'default_project_id': active_id,
+            'show_project_update': True,
+            }
+        </field>
+        <field name="search_view_id" ref="project.view_task_search_form"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tasks found. Let's create one!
+            </p>
+            <p>
+                Keep track of the progress of your tasks from creation to completion.
+                <br/>
+                Collaborate efficiently by chatting in real-time or via email.
+            </p>
+        </field>
+    </record>
+
+    <record id="project_stages_kanban" model="ir.ui.view">
+        <field name="name">project_stages_kanban</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="mode">extension</field>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="action"/>
+            </xpath>
+            <xpath expr="//span[@t-if='record.partner_id.value']" position='after'>
+                <field name="state" invisible="1"/>
+                <field name="sale_payment_status" invisible="1"/>
+                <widget name="web_ribbon" title="Not Paid"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Not Paid')]}"/>
+                <widget name="web_ribbon" title="Paid"
+                        bg_color="bg-success"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Paid')]}"/>
+                <widget name="web_ribbon" title="Partially Paid"
+                        bg_color="bg-warning"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Partially Paid')]}"/>
+                <widget name="web_ribbon" title="In Payment"
+                        bg_color="bg-info"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'In Payment')]}"/>
+                <widget name="web_ribbon" title="Reversed"
+                        bg_color="bg-success"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Reversed')]}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="projects_project" model="ir.ui.view">
+        <field name="name">project.project</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="is_current_user_project_manager" invisible="1"/>
+                <field name="is_current_user_project_admin" invisible="1"/>
+                <field name="is_project_template" invisible="1"/>
+                <button name="create_documents" type="object" string="Create Documents" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="is_check_current_user" invisible="1"/>
+                <field name="is_current_user_project_task_assignee" invisible="1"/>
+                <field name="is_current_user_project_manager" invisible="1"/>
+                <field name="is_current_user_project_admin" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='description']" position="replace">
+                <page name="tasks" string="Tasks">
+                    <field name="filtered_task_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="project_id"/>
+                            <field name="user_ids" widget="many2many_avatar_user"/>
+                            <field name="stage_id"/>
+                            <button name="move_stage" type="object" invisible="1"
+                                    context="{'default_project_id': id}"
+                                    string="Move Stage" class="oe_highlight"/>
+                            <button string="Next" invisible="1" name="next_stage" type="object" icon="fa-arrow-right"/>
+                            <button string="Previous" invisible="1" name="previous_stage" type="object"
+                                    icon="fa-arrow-left"/>
+                            <button name="action_assignees" type="object" icon="fa-user" string="Assignees"
+                                    context="{'default_user_ids': user_ids}"/>
+                            <button name="action_view_task" type="object" icon="fa-eye" string="View Task"/>
+                        </tree>
+
+                    </field>
+                </page>
+                <page name="products" string="Products" invisible="1">
+                    <field name="product_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="project_products" string="Products">
+                    <field name="project_product_ids">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="remarks_ids" widget="many2many_tags" force_save="1" readonly="1"/>
+                            <button name="action_add_remarks" type="object" string="Add Remarks"/>
+                        </tree>
+                    </field>
+                </page>
+
+                <page name="new_required_documents" string="Required Document">
+                    <group>
+                        <group>
+                            <field name="is_complete_required" invisible="1"/>
+                            <field name="is_update_required_check" invisible="1"/>
+
+                            <button name="action_complete_required" type="object" string="Complete"
+                                    confirm="Please ensurance required documents notes is complete to avoid future setbacks."
+                                    attrs="{'invisible': ['|', '|', '|',
+                      ('is_complete_required', '=', True),
+                      ('is_confirm_required', '=', True),
+                      ('is_complete_return_required', '=', True),
+                      '&amp;', ('is_current_user_project_manager', '=', False),
+                      ('is_current_user_project_admin', '=', False)
+                     ]}"
+
+                                    class="btn btn-success"/>
+                            <button name="action_confirm_required" type="object" string="Confirm"
+                                    confirm="Please double check before you Confirm"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_required', '=', False), ('is_confirm_required', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_repeat_required" type="object" string="Repeat"
+                                    class="btn btn-danger"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_required', '=', False), ('is_confirm_required', '=', False),
+                                            ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_return_required" type="object" string="Return"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_required', '=', False), ('is_confirm_required', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_update_required" type="object" string="Update"
+                                    confirm="Please ensurance required documents notes is update to avoid future setbacks."
+                                    class="btn btn-warning"
+                                    attrs="{'invisible': [('is_update_required_check', '=', False)]}"
+                            />
+
+                            <!--                                                        -->
+                            <!--                            <button name="action_confirm_required" type="object" string="Confirm"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '|',-->
+                            <!--        ('is_confirm_required', '=', True),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_required', '=', False),-->
+                            <!--        ('is_second_complete_required_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                            <button name="action_return_required" type="object" string="Return"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_required', '=', False),-->
+                            <!--        ('is_second_complete_required_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                            -->
+
+                            <button name="action_request_required_documents" type="object"
+                                    string="Request Documents"
+                                    icon="fa-plus"
+                                    class="create-documents"/>
+                        </group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" invisible="1"/>
+                            <div class="o_row" style=" position: absolute;right: 10px;">
+                                <field name="is_complete_required" readonly="1" class="oe_inline"/>
+                                <field name="is_confirm_required" readonly="1" class="oe_inline"/>
+                                <field name="is_complete_return_required" readonly="1" class="oe_inline"/>
+
+                                <field name="is_second_complete_required_check"
+                                       invisible="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="project_partner_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="required_documents_ids" widget="many2many"
+                           attrs="{'readonly':[('is_complete_required','=', True)]}"
+                           domain="[('partner_id', 'in', project_partner_ids)]"
+                           context="{'default_required_project_id': id, 'default_folder_id': documents_folder_id,'default_partner_id': partner_id}">
+                        <tree editable="bottom">
+                            <field name="partner_ids" invisible="1"/>
+                            <field name="name"/>
+                            <field name="datas" widget="binary" string="Upload"/>
+                            <field name="partner_id" required="1" domain="[('id', 'in', partner_ids)]"/>
+                            <field name="type_id"/>
+                            <field name="issue_date"/>
+                            <field name="expiration_date"/>
+                            <field name="activity_ids" widget="list_activity"/>
+                        </tree>
+                    </field>
+                </page>
+
+                <page name="new_deliverable_documents" string="Deliverable Document">
+                    <group>
+                        <group>
+                            <field name="is_complete_deliverable" invisible="1"/>
+                            <field name="is_update_deliverable_check" invisible="1"/>
+
+                             <button name="action_complete_deliverable" type="object" string="Complete"
+                                    confirm="Please ensurance deliverable documents notes is complete to avoid future setbacks."
+                                    attrs="{'invisible': ['|', '|', '|',
+                      ('is_complete_deliverable', '=', True),
+                      ('is_confirm_deliverable', '=', True),
+                      ('is_complete_return_deliverable', '=', True),
+                      '&amp;', ('is_current_user_project_task_assignee', '=', False),
+                      ('is_current_user_project_admin', '=', False)
+                     ]}"
+
+                                    class="btn btn-success"/>
+                            <button name="action_confirm_deliverable" type="object" string="Confirm"
+                                    confirm="Please double check before you Confirm"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_deliverable', '=', False), ('is_confirm_deliverable', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_repeat_deliverable" type="object" string="Repeat"
+                                    class="btn btn-danger"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_deliverable', '=', False), ('is_confirm_deliverable', '=', False),
+                                            ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_return_deliverable" type="object" string="Return"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_deliverable', '=', False), ('is_confirm_deliverable', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_update_deliverable" type="object" string="Update"
+                                    confirm="Please ensurance deliverable documents notes is update to avoid future setbacks."
+                                    class="btn btn-warning"
+                                    attrs="{'invisible': [('is_update_deliverable_check', '=', False)]}"
+                            />
+                            <!--                            <button name="action_confirm_deliverable" type="object" string="Confirm"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '|',-->
+                            <!--        ('is_confirm_deliverable', '=', True),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_deliverable', '=', False),-->
+                            <!--        ('is_second_complete_deliverable_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                            <button name="action_return_deliverable" type="object" string="Return"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_deliverable', '=', False),-->
+                            <!--        ('is_second_complete_deliverable_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+
+                            <button name="action_request_required_documents" type="object"
+                                    string="Request Documents"
+                                    icon="fa-plus"
+                                    class="create-documents"/>
+                        </group>
+                        <group>
+                            <div class="o_row" style=" position: absolute;right: 10px;">
+                                <field name="is_complete_deliverable" readonly="1" class="oe_inline"/>
+                                <field name="is_confirm_deliverable" readonly="1" class="oe_inline"/>
+                                <field name="is_complete_return_deliverable" readonly="1" class="oe_inline"/>
+
+                                <field name="is_second_complete_deliverable_check" invisible="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="deliverable_documents_ids" widget="many2many"
+                           attrs="{'readonly':[('is_complete_deliverable','=', True)]}"
+                           domain="[('partner_id', 'in', project_partner_ids)]"
+                           context="{'default_deliverable_project_id': id, 'default_folder_id': documents_folder_id,'default_partner_id': partner_id}">
+                        <tree editable="bottom">
+                            <field name="partner_ids" invisible="1"/>
+                            <field name="name"/>
+                            <field name="datas" widget="binary" string="Upload"/>
+                            <field name="partner_id" required="1" domain="[('id', 'in', partner_ids)]"/>
+                            <field name="type_id"/>
+                            <field name="issue_date"/>
+                            <field name="expiration_date"/>
+                            <field name="activity_ids" widget="list_activity"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="partner_fields" string="Partner Related Fields">
+                    <group>
+                        <group>
+                            <field name="is_complete_partner_fields" invisible="1"/>
+                            <field name="is_update_partner_fields_check" invisible="1"/>
+
+                             <button name="action_complete_partner_fields" type="object" string="Complete"
+                                    confirm="Please ensurance partner fields notes is complete to avoid future setbacks."
+                                    attrs="{'invisible': ['|', '|', '|',
+                      ('is_complete_partner_fields', '=', True),
+                      ('is_confirm_partner_fields', '=', True),
+                      ('is_complete_return_partner_fields', '=', True),
+                      '&amp;', ('is_current_user_project_task_assignee', '=', False),
+                      ('is_current_user_project_admin', '=', False)
+                     ]}"
+
+                                    class="btn btn-success"/>
+                            <button name="action_confirm_partner_fields" type="object" string="Confirm"
+                                    confirm="Please double check before you Confirm"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_partner_fields', '=', False), ('is_confirm_partner_fields', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_repeat_partner_fields" type="object" string="Repeat"
+                                    class="btn btn-danger"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_partner_fields', '=', False), ('is_confirm_partner_fields', '=', False),
+                                            ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_return_partner_fields" type="object" string="Return"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_partner_fields', '=', False), ('is_confirm_partner_fields', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_update_partner_fields" type="object" string="Update"
+                                    confirm="Please ensurance partner fields notes is update to avoid future setbacks."
+                                    class="btn btn-warning"
+                                    attrs="{'invisible': [('is_update_partner_fields_check', '=', False)]}"
+                            />
+                            <!--                            <button name="action_confirm_partner_fields" type="object" string="Confirm"-->
+                            <!--    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '|',-->
+                            <!--        ('is_confirm_partner_fields', '=', True),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_partner_fields', '=', False),-->
+                            <!--        ('is_second_complete_partner_fields_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                            <button name="action_return_partner_fields" type="object" string="Return"-->
+                            <!--    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_partner_fields', '=', False),-->
+                            <!--        ('is_second_complete_partner_fields_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                        </group>
+                        <group>
+                            <div class="o_row" style=" position: absolute;right: 10px;">
+                                <field name="is_complete_partner_fields" readonly="1" class="oe_inline"/>
+                                <field name="is_confirm_partner_fields" readonly="1" class="oe_inline"/>
+                                <field name="is_complete_return_partner_fields" readonly="1" class="oe_inline"/>
+
+
+                                <field name="is_second_complete_partner_fields_check" invisible="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="project_field_ids"
+                           attrs="{'readonly':[('is_complete_partner_fields','=', True)]}">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="partner_id" invisible="1" force_save="1"/>
+                            <field name="field_id" required="1" force_save="1"/>
+                            <field name="field_name" invisible="1"/>
+                            <field name="is_required" force_save="1"/>
+                            <field name="current_value"/>
+                            <field name="update_value" attrs="{'readonly': [('is_line_readonly', '=',True)]}"/>
+                            <field name="is_line_readonly" invisible="1"/>
+                            <field name="field_type" invisible="1"/>
+                            <button name="action_update_lines" type="object" class="fa fa-refresh" string=""/>
+                            <!--                            <button name="action_update_normal_fields" type="object" class="fa fa-refresh" string=""-->
+                            <!--                                    attrs="{'invisible': [('field_type', 'in',['many2one','many2many'])]}"/>-->
+                            <button name="action_retain_value" type="object" class="fa fa-check" string="Retain"
+                                    attrs="{'invisible': [('is_line_readonly', '=',True)]}"/>
+                            <button name="action_reset" type="object" class="fa fa-undo" string=""
+                                    attrs="{'invisible': [('is_line_readonly', '=',False)]}"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace">
+                <field name="user_id" string="Project Manager" widget="many2one_avatar_user"
+                       domain="[('share', '=', False)]"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" name="action_view_document" type="object"
+                        attrs="{'invisible':[('document_ids','=',[]),('required_documents_ids','=',[]),('deliverable_documents_ids','=',[])]}"
+                        string="View Documents"
+                        icon="fa-file-text-o">
+                    <field name="document_ids" invisible="1"/>
+                </button>
+                <button class="oe_stat_button" name="action_view_subtasks" type="object"
+                        icon="fa-edit" attrs="{'invisible':[('sub_tasks_ids','=',[])]}">
+                    <field string="Sub Tasks" name="subtasks_count" widget="statinfo"/>
+                    <field name="sub_tasks_ids" invisible="1"/>
+                </button>
+            </div>
+            <xpath expr="//div[@name='button_box']" position="after">
+                <!--                <field name="payment_state" invisible="1"/>-->
+                <!--                <widget name="web_ribbon" title="Paid VISA"-->
+                <!--                        attrs="{'invisible': [('payment_state', '!=', 'paid_visa')]}"/>-->
+                <!--                <widget name="web_ribbon" title="Paid BANK"-->
+                <!--                        attrs="{'invisible': [('payment_state', '!=', 'paid_bank')]}"/>-->
+                <!--                <widget name="web_ribbon" title="Partial"-->
+                <!--                        attrs="{'invisible': [('payment_state', '!=', 'partial')]}"/>-->
+                <!--                <widget name="web_ribbon" title="Partial"-->
+                <!--                        attrs="{'invisible': [('payment_state', '!=', 'in_payment')]}"/>-->
+                <!--                <widget name="web_ribbon" title="Not Paid" bg_color="bg-danger"-->
+                <!--                        attrs="{'invisible': [('payment_state', 'in', ['paid_bank','paid_visa','partial','in_payment'])]}"/>-->
+                <field name="sale_payment_status" invisible="1"/>
+                <widget name="web_ribbon" title="Not Paid"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Not Paid')]}"/>
+                <widget name="web_ribbon" title="Paid"
+                        bg_color="bg-success"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Paid')]}"/>
+                <widget name="web_ribbon" title="Partially Paid"
+                        bg_color="bg-warning"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Partially Paid')]}"/>
+                <widget name="web_ribbon" title="In Payment"
+                        bg_color="bg-info"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'In Payment')]}"/>
+                <widget name="web_ribbon" title="Reversed"
+                        bg_color="bg-success"
+                        attrs="{'invisible': [('sale_payment_status', '!=', 'Reversed')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="replace">
+                <field name="state" widget="statusbar"
+                       statusbar_visible="b_new,c_in_progress,d_done,on_hold,e_cancel"/>
+            </xpath>
+            <xpath expr="//button[@name='%(project.project_share_wizard_action)d']" position="replace"/>
+            <xpath expr="//button[@name='%(project.project_share_wizard_action)d']" position="replace"/>
+            <xpath expr="//header" position='inside'>
+                <button name="action_done_project" type="object"
+                        string="Project Done"
+                        groups="freezoner_custom.project_done_button_group"
+                        attrs="{'invisible': [('state', 'not in', ['c_in_progress','b_new'])]}"
+                        class="oe_highlight"/>
+                <button name="action_template" groups="freezoner_custom.template_project_button_group" type="object"
+                        string="Go To Template" states="b_new,c_in_progress,d_done,on_hold,e_cancel"
+                        class="oe_highlight"/>
+                <button name="action_new" type="object"
+                        string="Go To New Projects" states="a_template" class="oe_highlight"/>
+
+            </xpath>
+
+            <!--                            <button name="action_new" type="object" string="New" states="a_template,c_in_progress,done"-->
+            <!--                        class="oe_highlight"/>-->
+            <!--                <button name="action_in_progress" type="object" string="In Progress" states="b_new,on_hold"-->
+            <!--                        class="oe_highlight"/>-->
+            <!--                <button name="action_onhold" type="object" string="On Hold"-->
+            <!--                        attrs="{'invisible': [('state', 'in', ['on_hold','e_cancel'])]}" class="oe_highlight"/>-->
+            <!--                <button name="action_done" type="object" string="Done" states="c_in_progress" class="oe_highlight"/>-->
+            <!--                <button name="action_cancel" type="object" string="Cancel" states="c_in_progress,d_done"-->
+            <!--                        class="oe_highlight"/>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="project_search" model="ir.ui.view">
+        <field name="name">project.search</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="replace">
+                <field name="state"/>
+            </xpath>
+            <xpath expr="//filter[@name='groupby_stage']" position="replace">
+                <filter string="Stage" name="groupby_stage" context="{'group_by': 'state'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_type_stages" model="ir.ui.view">
+        <field name="name">project.task.type</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fold']" position="before">
+                <field name="is_done"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project.open_view_project_all_group_stage" model="ir.actions.act_window">
+        <field name="domain">[('state', '!=','a_template'),('user_id', '=', uid)]</field>
+    </record>
+    <record id="project.action_view_all_task" model="ir.actions.act_window">
+        <field name="domain">[('parent_id', '=', False),('user_ids', 'in', uid)]</field>
+    </record>
+
+    <record id="all_project_action" model="ir.actions.act_window">
+        <field name="name">All project</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.project</field>
+        <field name="context">{'default_allow_billable': True, 'search_default_groupby_stage': 1}</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,activity</field>
+    </record>
+    <menuitem id="all_project_menu" name="All Projects" parent="project.menu_main_pm"
+              groups="freezoner_custom.template_project_button_group"
+              action="all_project_action" sequence="6"/>
+
+    <record id="my_project_action" model="ir.actions.act_window">
+        <field name="name">My Project Tasks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.project</field>
+        <field name="context">{'default_allow_billable': True, 'search_default_groupby_stage': 1}</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,activity</field>
+        <field name="domain">[('tasks.user_ids', 'in', [uid])]</field>
+    </record>
+    <menuitem id="my_project_menu" name=" My Project Tasks" parent="project.menu_main_pm"
+              action="my_project_action" sequence="1"/>
+
+    <record id="all_sales_project_action" model="ir.actions.act_window">
+        <field name="name">Sales Projects</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.project</field>
+        <field name="domain">[('user_id.sale_team_id', '=', 1)]</field>
+        <field name="context">{'default_allow_billable': True, 'search_default_groupby_stage': 1}</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,activity</field>
+    </record>
+    <menuitem id="all_sales_project_menu" name="Sales Projects"
+              parent="project.menu_project_report"
+              action="all_sales_project_action" sequence="6"/>
+
+    <record id="all_operations_project_action" model="ir.actions.act_window">
+        <field name="name">Operations Projects</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.project</field>
+        <field name="domain">[('user_id.sale_team_id', '=', 7)]</field>
+        <field name="context">{'default_allow_billable': True, 'search_default_groupby_stage': 1}</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,activity</field>
+    </record>
+    <menuitem id="all_operations_project_menu" name="Operations Projects"
+              parent="project.menu_project_report"
+              action="all_operations_project_action" sequence="6"/>
+
+    <record id="all_accounts_project_action" model="ir.actions.act_window">
+        <field name="name">Accounts Projects</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.project</field>
+        <field name="domain">[('user_id.sale_team_id', '=', 6)]</field>
+        <field name="context">{'default_allow_billable': True, 'search_default_groupby_stage': 1}</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,activity</field>
+    </record>
+    <menuitem id="all_accounts_project_menu" name="Accounts Projects"
+              parent="project.menu_project_report"
+              action="all_accounts_project_action" sequence="6"/>
+
+
+    <record id="all_tasks_action" model="ir.actions.act_window">
+        <field name="name">All Tasks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,tree,form,gantt,calendar,map,pivot,graph,activity</field>
+    </record>
+    <menuitem id="all_tasks_menu" name="All Tasks" parent="project.menu_main_pm"
+              groups="freezoner_custom.template_project_button_group"
+              action="all_tasks_action" sequence="7"/>
+
+
+    <!--    <record id="project_client_kanban" model="ir.ui.view">-->
+    <!--            <field name="name">project_client_kanban</field>-->
+    <!--            <field name="model">project.project</field>-->
+    <!--            <field name="inherit_id" ref="project.view_project_kanban"/>-->
+    <!--            <field name="mode">extension</field>-->
+    <!--            <field name="arch" type="xml">-->
+    <!--                <xpath expr="//span[@t-if='record.partner_id.value']" position='after'>-->
+    <!--                    <field name="documents_fulfilment" invisible="1"/>-->
+    <!--                    <span t-if="!record.documents_fulfilment.raw_value" style="color: red">-->
+    <!--                        <p>Client's Documents Are Not Fulfilled</p>-->
+    <!--                    </span>-->
+    <!--                </xpath>-->
+    <!--            </field>-->
+    <!--        </record>-->
+</odoo>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="ks_login_background_color_template">
+        <!-- For loop -->
+        <t t-foreach="ks_login_colors" t-as="ks_color" t-key="ks_color">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block" t-att-title="ks_color.ks_color">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image ks_login_background_color_1">
+                    <input type="radio" t-att-id="'ks_login_bg_color_' + '#' + ks_color.id"
+                           t-att-data-value="ks_color.id"
+                           name="ks_login_background_setting"
+                           t-att-checked="ks_color.ks_active ? 'checked' : None"
+                           class="custom-control-input ks_login_background_color    ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="'ks_login_bg_color_' + '#' + ks_color.id">
+                        <div t-attf-style="background: #{ks_color.ks_color}; height: 25px; width:34px;">
+                        </div>
+                    </label>
+                    <i class="fa fa-trash ks_login_background_color_del"
+                       t-att-data-id="'ks_login_bg_color_' + '#' + ks_color.id"/>
+                </div>
+            </div>
+        </t>
+        <!-- color picker modal -->
+        <div class="modal fade" id="ksCustomColorPicker" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--                        <h5 class="modal-title" id="ksLoginColorHead"></h5>-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Select color</span>
+                        <input type="color" class=""
+                               id="ks_login_bg_color_add"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary ks_add_login_color">Add color</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="ks-file-upload">
+                <button type="button" class="ks_binary_field ks_login_background_image" data-bs-toggle="modal" data-bs-target="#ksCustomColorPicker">
+                    Add color
+                </button>
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+    <t t-name="ks_login_background_color_template_1"  owl="1">
+        <!-- For loop -->
+        <t t-foreach="ks_login_colors" t-as="ks_color" t-key="ks_color.id">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block" t-att-title="ks_color.ks_color">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image">
+                    <input t-on-change="_onInputChange" type="radio" t-att-id="'ks_login_bg_color_' + '#' + ks_color.id"
+                           t-att-data-value="ks_color.id"
+                           name="ks_login_background_setting"
+                           t-att-checked="ks_color.ks_active ? 'checked' : None"
+                           class="custom-control-input ks_login_background_color    ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="'ks_login_bg_color_' + '#' + ks_color.id">
+                        <div t-attf-style="background: #{ks_color.ks_color}; height: 25px; width:34px;">
+                        </div>
+                    </label>
+                    <i class="fa fa-trash ks_login_background_color_del" t-on-click="_ksDelLoginBackgroundColor"
+                       t-att-data-id="'ks_login_bg_color_' + '#' + ks_color.id"/>
+                </div>
+            </div>
+        </t>
+        <!-- color picker modal -->
+        <div class="modal fade" id="ksCustomColorPicker_1" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--                        <h5 class="modal-title" id="ksLoginColorHead"></h5>-->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Select color</span>
+                        <input type="color" class=""
+                               id="ks_login_bg_color_add"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary ks_add_login_color" t-on-click="_ksLoginPageBgColor" >Add color</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="ks-file-upload">
+                <button type="button" class="ks_binary_field ks_login_background_image" data-bs-toggle="modal" data-bs-target="#ksCustomColorPicker_1">
+                    Add color
+                </button>
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+</templates>

@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem id="partner_custom_configuration_menu"
+              name="Custom Configuration"
+              parent="contacts.res_partner_menu_config"
+              sequence="500"/>
+</odoo>

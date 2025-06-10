@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_equipment_request_form" model="ir.ui.view">
+        <field name="name">equipment.request.form</field>
+        <field name="model">equipment.request</field>
+        <field name="arch" type="xml">
+            <form string="Equipment Request">
+                <header>
+                    <button name="action_submit" string="Submit to Manager" type="object" states="draft,reject" class="btn-primary"/>
+                    <button name="action_approve" string="Approve" type="object" states="submitted" class="btn-success" groups="bi_hr_equipment_asset_management.group_aequipement_request_approval"/>
+                    <button name="action_reject" string="Reject" type="object" states="submitted" class="btn-danger" groups="bi_hr_equipment_asset_management.group_aequipement_request_approval"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="submitted,draft,approved,reject,done" class="btn-danger"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" statusbar_visible="draft,submitted,approved,reject,done,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="employee_id"/>
+                        <field name="request_date"/>
+                        
+                    </group>
+
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_equipment_request_tree" model="ir.ui.view">
+        <field name="name">equipment.request.tree</field>
+        <field name="model">equipment.request</field>
+        <field name="arch" type="xml">
+            <tree string="Equipment Request">
+                
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="request_date"/>
+                    
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_equipment_request" model="ir.actions.act_window">
+        <field name="name">Equipment Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">equipment.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<menuitem id="menu_equipment_request_menu" name="Equipment Requests"
+              parent="maintenance.menu_equipment_form" sequence="3">
+            <menuitem id="menu_equipment_request" action="action_equipment_request"/>
+    </menuitem>
+
+    
+    <!-- <menuitem id="menu_equipment_request" name="Equipment Requests"
+              parent="maintenance.mrp_workorder" action="action_equipment_request" sequence="3"/> -->
+</odoo>

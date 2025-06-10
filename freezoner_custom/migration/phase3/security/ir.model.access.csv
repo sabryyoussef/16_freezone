@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_sov_user,sale.sov.user,model_sale_sov,base.group_user,1,1,1,0
+access_sale_sov_manager,sale.sov.manager,model_sale_sov,sales_team.group_sale_manager,1,1,1,1
+access_sale_sov_accountant,sale.sov.accountant,model_sale_sov,account.group_account_user,1,1,1,0
+access_sale_sov_accountant_manager,sale.sov.accountant.manager,model_sale_sov,account.group_account_manager,1,1,1,1
+access_project_products_user,project.project.products.user,model_project_project_products,base.group_user,1,1,1,0
+access_project_products_manager,project.project.products.manager,model_project_project_products,project.group_project_manager,1,1,1,1
+access_project_products_remarks_user,project.project.products.remarks.user,model_project_project_products_remarks,base.group_user,1,1,1,0
+access_project_products_remarks_manager,project.project.products.remarks.manager,model_project_project_products_remarks,project.group_project_manager,1,1,1,1 

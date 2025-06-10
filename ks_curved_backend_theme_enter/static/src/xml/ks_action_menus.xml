@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="ks_action_menu_templates" xml:space="preserve">
+    <t t-name="ks_curved_backend_theme_enter.ks_controlpanel_inherit" t-inherit-mode="extension" t-inherit="web.Legacy.ControlPanel"
+       owl="1">
+
+        <xpath expr="//ol[@t-if='props.withBreadcrumbs']" position="attributes">
+            <attribute name="class"></attribute>
+            <attribute name="t-attf-class">breadcrumb ks_custom_breadcrumb</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_cp_bottom_left')]" position="replace">
+            <div class="o_cp_bottom_left">
+                <div class="o_cp_buttons" role="toolbar" aria-label="Control panel buttons" t-ref="buttons">
+                        <t t-slot="buttons"/>
+                    </div>
+                <t t-if="ksIsMobileDevice()">
+                    <KsActionMenus t-if="props.actionMenus and props.actionMenus.items"
+                                   t-props="props.actionMenus"
+                    />
+                    </t>
+                <t t-else="">
+                          <ActionMenus t-if="props.actionMenus and props.actionMenus.items"
+                                       t-props="props.actionMenus"
+                          />
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="ks_curved_backend_theme_enter.KsActionMenus" owl="1">
+        <div class="o_cp_action_menus" t-on-item-selected.stop="_onItemSelected">
+            <KsDropdownMenu t-if="ks_all_items.length"
+                            title="env._t('Action')"
+                            items="ks_all_items"
+                            icon="'fa fa-cog'"
+                            closeOnSelected="true"
+                            ks_all_data="ks_all_data"
+            />
+        </div>
+    </t>
+    <t t-name="ks_curved_backend_theme_enter.KsDropdownMenu" owl="1">
+    <div class="btn-group o_dropdown" t-att-class="{ show: state.open }">
+        <button type="button"
+                class="o_dropdown_toggler_btn btn btn-secondary"
+                t-att-aria-expanded="state.open ? 'true' : 'false'"
+                tabindex="-1"
+                t-on-click="state.open = !state.open"
+                t-on-keydown="_onButtonKeydown"
+        >
+            <i t-if="icon" t-att-class="icon"/>
+            <span class="o_dropdown_title" t-esc="title"/>
+            <i t-if="displayCaret" t-attf-class="o_dropdown_caret fa fa-caret-{{ state.open ? 'down' : 'right' }}"/>
+            <i t-elif="displayChevron"
+               t-attf-class="fa fa-chevron-{{ state.open ? 'down' : 'right' }} float-right mt4"/>
+        </button>
+        <ul t-if="state.open" class="o_dropdown_menu dropdown-menu show" role="menu"
+            t-on-item-selected="_onItemSelected"
+        >
+            <t t-foreach="Object.keys(props.ks_all_data)" t-as="key" t-key="key">
+                <t t-if="props.ks_all_data[key].length">
+                    <div style="pointer-events: none;">
+                        <h6 class="dropdown-header" style="pointer-events: none;">
+                            <t t-if="key == 'actions'">Actions</t>
+                            <t t-else="">Print Actions</t>
+                        </h6>
+                    </div>
+                    <t t-set="currentGroup" t-value="null"/>
+                    <t t-foreach="props.ks_all_data[key]" t-as="item" t-key="item.key || item.id || ('item-' + item_index)">
+                    <li t-if="currentGroup !== null and currentGroup !== item.groupNumber" class="dropdown-divider"
+                        role="separator"/>
+                        <t t-if="item.Component" t-component="item.Component" t-props="item.props"/>
+                        <DropdownMenuItem t-else="" t-props="item"/>
+                        <t t-set="currentGroup" t-value="item.groupNumber"/>
+                    </t>
+                </t>
+            </t>
+        </ul>
+    </div>
+</t>
+<!--    <t t-name="ks_curved_backend_theme.ListRowInherit" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="extension"-->
+<!--       owl="1">-->
+<!--        <xpath expr="//tr[hasclass('o_data_row')]" position="after">-->
+<!--            <t t-if="this.ks_list.ks_list_density == 'Attachment'">-->
+<!--                <t t-if="this.rec_id.includes(record.resId)">-->
+<!--                    <div class="ks_attachment_data_outer">-->
+<!--                    <div class="ks_attachment_data" t-att-id="record.id" t-on-click="(ev) =>this._onksAttachmentDivClicked(ev)">-->
+<!--                        <t t-foreach="this.ks_data[record.resId]" t-as="data" t-key="data.att_id">-->
+<!--                        <div class="ks_attachment_id" t-att-data-id="data['att_id']" t-on-click="(ev) => this.download_attachment(ev)"-->
+<!--                             t-att-data-name="data['att_name']"-->
+<!--                             t-att-data-mime="data['att_mime']"-->
+<!--                             t-att-data-ks-rec-id="record.resId">-->
+<!--                            <div t-att-data-mimetype="data['att_mime']" class="o_image"></div>-->
+<!--                            <div-->
+<!--                                    class="ks_attachment_name"><span t-esc="data['att_name']"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--    </t>-->
+</templates>

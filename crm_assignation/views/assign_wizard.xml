@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <record id="crm_lead_assign_and_notify_wizard" model="ir.ui.view">
+            <field name="name">CRM Assign And Notify</field>
+            <field name="model">crm.lead.assign</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="lead_id" readonly="True"/>
+                            <field name="partner_id" readonly="True" string="Client"/>
+                            <field name="user_id" string="Consultant"/>
+                        </group>
+                        <footer>
+                            <button name="assign_and_notify" string="Assign &amp; Notify" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

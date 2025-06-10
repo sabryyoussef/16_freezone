@@ -1,0 +1,17 @@
+<odoo>
+    <template id="custom_sign_doc_sign" inherit_id="sign._doc_sign">
+        <xpath expr="//div[2]" position="replace">
+            <div class="o_sign_cp d-none" t-if="not no_sign_cp">
+            <div class="o_sign_cp_buttons">
+                <button t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state == 'sent' and sign_request.refusal_allowed" type="button" class="o_sign_refuse_document_button btn btn-secondary">Refuse Document</button>
+                <button t-if="current_request_item and current_request_item.state == 'sent' and sign_request.state == 'sent' and sign_request.nb_closed == 0" type="button" class="o_sign_edit_button btn btn-secondary mobile-tablet-hide d-none" >Edit</button>
+                <a  t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/completed" class="btn btn-primary o_sign_download_document_button">Download Document</a>
+                <a  t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/log" class="btn btn-secondary o_sign_download_log_button">Download Certificate</a>
+            </div>
+            <div class="o_sign_cp_pager">
+                <t t-call="sign.signer_status_wrapper"/>
+            </div>
+        </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bwa_survey.portal_my_rating_request_new" name="rating  Request: Submit a EmployeeRating">
+        <t t-call="portal.portal_layout">
+            <div class="card card-info">
+                <form action="/my/rating/new" method="post" class="container-fluid mt32" id="pd_form"
+                      enctype="multipart/form-data">
+                    <style>
+                        .rating {
+                        display: flex;
+                        justify-content: center;
+                        font-size: 100px;
+                        cursor: pointer;
+                        border : 2px;
+                        }
+                        .star {
+
+                        color: #ccc;
+                        margin: 0 5px;
+                        }
+                        .star:hover,
+                        .star.active {
+                        color: #bd9009;
+                        }
+                        .header {
+                        text-align: center;
+                        }
+                    </style>
+                    <div class="header" style="margin-top:-60px;">
+                        <img alt="Survey"
+                             src="/bwa_survey/static/description/img/reviews.png"
+                             title="Survey" height="150" width="1100"/>
+                    </div>
+                    <div style="margin-left:50px;">
+                        <p>Hello there,</p>
+                        <p>Please take a moment to rate our services related to Golden VISA.</p>
+                    </div>
+                    <div class="rating">
+                        <span class="star" data-rating="1">&#9733;</span>
+                        <span class="star" data-rating="2">&#9733;</span>
+                        <span class="star" data-rating="3">&#9733;</span>
+                        <span class="star" data-rating="4">&#9733;</span>
+                        <span class="star" data-rating="5">&#9733;</span>
+                    </div>
+                    <input type="hidden" name="feedback_rating" class="rating-value" value="0" required="required"/>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="card-body">
+                        <div class="row" style="text-align:center;">
+                            <div class="form-group col-md-12">
+                                <textarea style="border: 2px solid #929292;" class="form-control" name="feedback"
+                                          rows="6" required="required"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-left:50px;">
+                        <p>We appreciate your feedback. It helps us to improve continuously.</p>
+                    </div>
+                    <input type="text" name="customer_id" t-att-value="request.env.user.id"
+                           style="display: none;" class="form-control"/>
+                    <select style="display: none;" class="form-control" name="task_id">
+                        <t t-foreach="request.env['project.task'].sudo().search([('id','=', request.env.user.partner_id.survey_task_id.id)])"
+                           t-as="task">
+                            <option t-att-value="task.id">
+                                <t t-esc="task.name"/>
+                            </option>
+                        </t>
+                    </select>
+                    <div class="card-footer" style="text-lign:center;">
+                        <button type="submit" class="btn btn-warning" style="background-color:#bd9009;">
+                            <i class="fa fa-paper-plane"></i>
+                            Send
+                        </button>
+                    </div>
+                    <div class="header">
+                        <img alt="Survey"
+                             src="/bwa_survey/static/description/img/infos.png"
+                             title="Survey" height="150" width="300"/>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                        const stars = document.querySelectorAll(".star");
+                        const ratingValue = document.querySelector(".rating-value");
+
+                        stars.forEach((star, index) => {
+                        star.addEventListener("click", function () {
+                        const rating = this.getAttribute("data-rating");
+                        ratingValue.value = rating;
+
+                        // Loop through stars and add/remove "active" class based on the index
+                        stars.forEach((s, i) => {
+                        if (i &lt;= index) {
+                        s.classList.add("active");
+                        } else {
+                        s.classList.remove("active");
+                        }
+                        });
+                        });
+                        });
+                        });
+
+                    </script>
+                </form>
+            </div>
+        </t>
+    </template>
+    <template id="bwa_survey.portal_my_rating_request_submit" name="rating  Request: Submit a EmployeeRating">
+        <t t-call="portal.portal_layout">
+            <div class="card card-info">
+                <form action="/my/rating" method="post" class="container-fluid mt32" id="pd_form"
+                      enctype="multipart/form-data">
+                    <header class="site-header" style="text-align:center;">
+                        <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU !!!</h1>
+                    </header>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <record id="certificate_name_tree" model="ir.ui.view">
+        <field name="name">certificate.name.tree</field>
+        <field name="model">certificate.name</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="report_ids" widget="many2many_tags" required="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="certificate_name_action" model="ir.actions.act_window">
+        <field name="name">Certificate Name</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">certificate.name</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="certificate_name_menu" name="Certificate Name"
+              parent="hr.menu_human_resources_configuration"
+              action="certificate_name_action"
+              sequence="10"/>
+</odoo>

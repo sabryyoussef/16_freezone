@@ -1,0 +1,217 @@
+<odoo>
+    <record id="seq_crm_lead" model="ir.sequence">
+        <field name="name">crm lead Seq</field>
+        <field name="code">crm.lead</field>
+        <field name="prefix">Lead/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="lead_search" model="ir.ui.view">
+        <field name="name">crm.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="lead_ref" string="Lead Ref"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_lead_log" model="ir.ui.view">
+        <field name="name">crm.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_sale_quotations_new']" position="replace">
+                <field name="is_quotation_expired" invisible="1"/>
+                <field name="is_hide_quotation_button" invisible="1"/>
+                <button string="New Quotation" name="action_sale_quotations_new" type="object" class="oe_highlight"
+                        data-hotkey="q"
+                        title="Create new quotation"
+                        attrs="{'invisible': ['|', '|', '|', ('type', '=', 'lead'),  '&amp;', ('probability', '=', 0), ('active', '=', False), ('is_hide_quotation_button', '=', True), ('is_quotation_expired', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//h1" position="before">
+                <h1>
+                    <field class="text-break" name="lead_ref" readonly="1"/>
+                </h1>
+            </xpath>
+            <xpath expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="replace">
+                <button name="action_convert_opportunity"
+                        string="Convert to Opportunity" type="object" help="Convert to Opportunity"
+                        class="oe_highlight"
+                        groups="crm_log.crm_lead_convert_lead_group"
+                        attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('active', '=', False)]}"
+                        data-hotkey="v"/>
+            </xpath>
+            <xpath expr="//group[@name='opportunity_partner']/div" position="after">
+                <field name="employee_id"/>
+                <field name="country_code"/>
+                <label for="business_proposal"
+                       string="Business Proposal"/>
+                <div class="o_row">
+                    <field name="business_proposal" class="oe_inline"
+                           domain="[('partner_id','=', partner_id)]"
+                           context="{'default_partner_id': partner_id,
+                     'default_folder_id': 1,
+                     'default_issue_date': datetime.date.today().strftime('%Y-%m-%d'),
+                     'default_type_id': %(crm_log.crm_lead_business_proposal)s}"/>
+                    <button class="oe_stat_button"
+                            name="action_view_document"
+                            type="object"
+                            icon="fa-file-text-o"
+                            attrs="{'invisible':[('business_proposal','=',False)]}"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='phone']" position="replace">
+                <div class="o_address_format">
+                    <field name="code" invisible="1" placeholder="Code..." class="o_address_street"/>
+                    <field name="mobile_country_code" placeholder="Country..." class="o_address_street"/>
+                    <field name="custom_phone" placeholder="Phone..." class="o_address_street"/>
+                    <field name="phone" placeholder="Phone..." class="o_address_street" readonly="1"/>
+                </div>
+                <br/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="stage_name" invisible="1"/>
+                <field name="customer_status" readonly="1"
+                       attrs="{'invisible': [('stage_name', '!=', 'Negotiation')]}"/>
+                <!--                'required': [('stage_name', '=', 'Negotiation')]-->
+
+                <field name="salesperson_notes"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_stage" type="object" string="Move Stage" class="oe_highlight"
+                        attrs="{'invisible': [('type', '=', 'lead')]}"/>
+                <!--                <button name="open_call" type="object" string="Schedule Call" class="oe_highlight"-->
+                <!--                        />-->
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="date_conversion"/>
+            </xpath>
+            <!--                 <field name="priority" widget="priority" readonly="1"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//field[@name='stage_id']" position="replace">
+                <field name="stage_id" widget="statusbar" class="o_field_statusbar"
+                       domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
+                       attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'lead')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="service"/>
+                <field name="nationality_id"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="service"/>
+                <field name="nationality_id"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']/group/group[3]/field[@name='referred']" position="replace">
+                <field name="referred_id" attrs="{'required': [('is_required_referred', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="replace">
+                <page name="extra" string="Extra Info">
+                    <group>
+                        <group string="Email" groups="base.group_no_one">
+                            <field name="message_bounce" readonly="1"/>
+                        </group>
+                        <group string="Marketing" name="categorization">
+                            <field name="source_id"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="campaign_id" options="{'create_name_field': 'title', 'always_reload': True}"/>
+                            <field name="medium_id"/>
+                            <field name="source_id" options="{'no_create': True,'no_open': True}"/>
+                            <field name="is_required_referred" invisible="1"/>
+                            <field name="referred_id" attrs="{'required': [('is_required_referred', '=', True)]}"/>
+                        </group>
+                        <group string="Analysis">
+                            <field name="date_open"/>
+                            <field name="date_closed"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_stage_quotation_form" model="ir.ui.view">
+        <field name="name">crm.stage.quotation</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fold']" position="after">
+                <field name="is_hide_quotation_button"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stage_view_kanban">
+        <field name="name">inherit.crm.lead.view.kanban</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="lead_tree" model="ir.ui.view">
+        <field name="name">crm.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="employee_id" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="before">
+                <field name="date_conversion" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='my_activity_date_deadline']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="lost_reasons_action" model="ir.actions.act_window">
+        <field name="name">Lost Reasons</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lost.reason</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="lost_reasons_menu" name="Lost Reasons" parent="crm.crm_menu_config"
+              action="lost_reasons_action" sequence="50"/>
+</odoo>

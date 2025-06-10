@@ -1,0 +1,208 @@
+<odoo>
+    <record id="res_partner_project_data_form" model="ir.ui.view">
+        <field name="name">res.partner.project.data</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='compliance_shareholder_ids']" position="after">
+                <group attrs="{'invisible':[('company_type','=', 'person')]}">
+                    <group>
+                        <field name="price_per_share"/>
+                    </group>
+                    <group>
+                        <field name="total_number_shares"/>
+                        <field name="total_share_value"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='main_documents']/field[@name='residency']" position="before">
+                <field name="passport" attrs="{'invisible':[('company_type','!=', 'person')]}"
+                       domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                       context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_630_426ff16a)s}"/>
+                <field name="current_visa"
+                       context="{'default_partner_id': id,'default_type_id': %(project_custom.res_partner_document_type_tourist_visa)s}"
+                       domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                       attrs="{'invisible':['|',('company_type','!=', 'person'),('residency','=', True)]}"/>
+                <field name="entry_stamp"
+                       context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_607_42a0b1db)s}"
+                       domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                       attrs="{'invisible':['|',('company_type','!=', 'person'),('residency','=', True)]}"/>
+                <field name="residence_visa_id"
+                       context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_526_f6c7bc14)s}"
+                       domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                       attrs="{'invisible':['|',('company_type','!=', 'person'),('residency','=', True)]}"/>
+
+            </xpath>
+            <xpath expr="//field[@name='risk_assessment_ids']" position="after">
+                <field name="hand_legal_type" invisible="1"/>
+                <field name="hand_legal_type_id"
+                       domain="[('license_authority_ids', 'in', license_authority_id)]"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                <field name="visa_eligibility"/>
+                <field name="channel_plan_id"
+                       domain="[('license_authority_ids', 'in', license_authority_id)]"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                <field name="visa_eligibility"/>
+                <field name="hand_country_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="permanent_address_id"/>
+                <field name="all_license_activity_ids" widget="many2many_tags" invisible="1"/>
+                <field name="license_activity_ids" attrs="{'invisible':[('company_type','!=', 'company')]}"
+                       context="{'default_license_authority_id':license_authority_id}">
+                    <tree editable="bottom">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </tree>
+                    <form>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="license_authority_id"
+                                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                            </group>
+                        </group>
+                    </form>
+                </field>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string="Visa Application">
+                    <field name="contact_visa_application_ids">
+                        <tree>
+                            <field name="parent_id" invisible="1"/>
+                            <field name="partner_id"/>
+                            <field name="visa_type"/>
+                            <field name="eid_no"/>
+                            <field name="is_active"/>
+                            <field name="visa_start_date"/>
+                            <field name="visa_expiry_date"/>
+                            <field name="eid_document"/>
+                            <!--                            <field name="existing_uae_visa"/>-->
+                            <!--                            <field name="apply_visa"/>-->
+
+                            <!--                            <field name="inside"/>-->
+                            <!--                            <field name="vip_medical"/>-->
+                            <!--                            <field name="vip_biometric"/>-->
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="parent_id" invisible="1"/>
+                                    <field name="partner_id" required="1"/>
+                                    <field name="visa_type"/>
+                                    <!--                                    <field name="is_visa_active"/>-->
+                                    <!--                                    <field name="eid_link"/>-->
+                                    <!--                                    <field name="existing_uae_visa"/>-->
+                                    <!--                                    <field name="apply_visa"/>-->
+                                    <!--                                    <field name="inside"/>-->
+                                    <!--                                    <field name="vip_medical"/>-->
+                                    <!--                                    <field name="vip_biometric"/>-->
+                                </group>
+                                <group>
+                                    <field name="eid_no" required="1"/>
+                                    <field name="is_active"/>
+                                    <field name="visa_start_date"/>
+                                    <field name="visa_expiry_date"/>
+                                    <field name="eid_document"/>
+                                </group>
+                            </group>
+
+
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="license_activity_tree" model="ir.ui.view">
+        <field name="name">license.activity.tree</field>
+        <field name="model">license.activity</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="license_authority_id"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="license_activity_search" model="ir.ui.view">
+        <field name="name">license.activity.search</field>
+        <field name="model">license.activity</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name_code"/>
+            </search>
+        </field>
+    </record>
+    <record id="license_activity_action" model="ir.actions.act_window">
+        <field name="name">License Activity</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">license.activity</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="license_activity_search"/>
+    </record>
+    <menuitem id="license_activity_menu" name="License Activity"
+              parent="contacts.res_partner_menu_config"
+              action="license_activity_action" sequence="50"/>
+
+    <record id="channel_partner_plan_tree" model="ir.ui.view">
+        <field name="name">channel.partner.plan.tree</field>
+        <field name="model">channel.partner.plan</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="license_authority_ids" widget="many2many_tags"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="channel_partner_plan_action" model="ir.actions.act_window">
+        <field name="name">Channel Partner Plan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">channel.partner.plan</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="channel_partner_plan_menu" name="Channel Partner Plan"
+              parent="contacts.res_partner_menu_config"
+              action="channel_partner_plan_action" sequence="52"/>
+
+    <record id="res_partner_action_customers" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('customer_rank','>',0)]</field>
+        <field name="context">{'search_default_customer': 1,'res_partner_search_mode': 'customer', 'default_is_company':
+            True, 'default_customer_rank': 1}
+        </field>
+    </record>
+    <record id="res_partner_action_vendors" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('supplier_rank','>',0)]</field>
+        <field name="context">{'search_default_supplier': 1,'res_partner_search_mode': 'supplier', 'default_is_company':
+            True, 'default_supplier_rank': 1}
+        </field>
+    </record>
+
+    <delete model="ir.ui.menu" id="contacts.res_partner_menu_contacts"/>
+    <menuitem id="res_partner_menu_contacts" name="Contacts"
+              parent="contacts.menu_contacts"
+              sequence="1"/>
+    <menuitem id="res_partner_menu_all_contacts" name="ALl Contacts"
+              action="contacts.action_contacts"
+              parent="project_custom.res_partner_menu_contacts"
+              sequence="1"/>
+    <menuitem id="res_partner_menu_customers" name="Customers"
+              parent="project_custom.res_partner_menu_contacts"
+              action="res_partner_action_customers" sequence="2"/>
+    <menuitem id="res_partner_menu_vendors" name="Vendors"
+              parent="project_custom.res_partner_menu_contacts"
+              action="res_partner_action_vendors" sequence="3"/>
+</odoo>

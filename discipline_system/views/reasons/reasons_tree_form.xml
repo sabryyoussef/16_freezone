@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+
+        <record id="hr_deductions_reasons_tree_view" model="ir.ui.view">
+            <field name="name">hr_deductions_reasons_tree_view</field>
+            <field name="model">hr.deductions.reasons</field>
+            <field name="arch" type="xml">
+
+                <tree string="Disciplinary Reasons">
+                    <field name="reason"/>
+                    <field name="rate" string="Action Rate"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="hr_deductions_reasons_form_view" model="ir.ui.view">
+            <field name="name">hr_deductions_reason_form_view</field>
+            <field name="model">hr.deductions.reasons</field>
+            <field name="arch" type="xml">
+                <form string="Disciplinary Reasons">
+
+                    <sheet>
+                        <group>
+                            <field name="reason"/>
+                            <field name="rate" string="Action Rate"/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

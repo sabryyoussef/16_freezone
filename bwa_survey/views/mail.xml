@@ -1,0 +1,101 @@
+<odoo>
+    <record id="rating_project_custom_template" model="mail.template">
+        <field name="name">Task Survey Rating</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="model">project.task</field>
+        <field name="subject">Task Survey</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{(object.company_id.email)}}</field>
+        <field name="email_to">{{object.partner_id.email }}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="description">Set this template on a project stage to request feedback from your customers. Enable
+            the "customer ratings" feature on the project
+        </field>
+        <field name="body_html" type="html">
+            <div>
+                <t t-set="access_token" t-value="object._rating_get_access_token()"/>
+                <t t-set="partner" t-value="object._rating_get_partner()"/>
+                <table border="0" cellpadding="0" cellspacing="0" width="100" style="width:100%; margin:0px auto;">
+                    <tbody>
+                        <tr>
+                            <td valign="top" style="font-size: 13px;">
+                                <t t-if="partner.name">
+                                    Hello <t t-out="partner.name or ''">Brandon Freeman</t>,
+                                    <br/>
+                                    <br/>
+                                </t>
+                                <t t-else="">
+                                    Hello,
+                                    <br/>
+                                    <br/>
+                                </t>
+                                Please take a moment to rate our services related to the task "<strong
+                                    t-out="object.name or ''">Planning and budget</strong>"
+                                <t t-if="object._rating_get_operator().name">
+                                    assigned to <strong t-out="object._rating_get_operator().name or ''">Mitchell
+                                    Admin</strong>.
+                                    <br/>
+                                </t>
+                                <t t-else="">
+                                    .
+                                    <br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="50"
+                                       summary="o_mail_notification" style="width:300%; margin: 32px 0px 32px 0px;">
+                                    <tr>
+                                        <td style="font-size: 13px;">
+                                            <table style="width:30%;text-align:center;margin-top:2rem;">
+                                                <tr>
+                                                    <td>
+                                                        <h1>
+                                                            <a
+                                                                    href="/my/rating/new">
+                                                                <button class="btn btn-warning"
+                                                                        style="background-color:#bd9009;">
+                                                                    Go To Rating
+                                                                </button>
+                                                            </a>
+                                                        </h1>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" style="font-size: 13px;">
+                                We appreciate your feedback. It helps us to improve continuously.
+                                <t t-if="object.project_id.rating_status == 'stage'">
+                                    <br/>
+                                    <br/>
+                                    <span style="margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;">
+                                        This customer survey has been sent because your task has been moved to the stage
+                                        <b t-out="object.stage_id.name or ''">In progress</b>
+                                    </span>
+                                </t>
+                                <t t-if="object.project_id.rating_status == 'periodic'">
+                                    <br/>
+                                    <span style="margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;">
+                                        This customer survey is sent <b
+                                            t-out="object.project_id.rating_status_period or ''">Weekly
+                                    </b> as long as the task is in the <b t-out="object.stage_id.name or ''">In
+                                        progress
+                                    </b> stage.
+                                    </span>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+        <field name="lang">{{ object._rating_get_partner().lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

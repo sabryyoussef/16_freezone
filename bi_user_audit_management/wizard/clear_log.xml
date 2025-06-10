@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <record id="user_audit_clear_log_view" model="ir.ui.view">
+        <field name="name">clear.log.form.view</field>
+        <field name="model">clear.log</field>
+        <field name="arch" type="xml">
+            <form string="Configuration">
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="all_log"/>
+                        </group>
+                        <group attrs="{'invisible': [('all_log', '=', True)]}">
+                            <field name="read_log"/>
+                            <field name="write_log"/>
+                            <field name="create_log"/>
+                            <field name="delete_log"/>
+                        </group>
+                    </group>
+
+                    <div style="background-color: #dee2e6;" attrs="{'invisible': [('all_log', '=', True)]}">
+                        <h2 style="color:purple; margin-left:2px;">Objects</h2>
+                    </div>
+                    <field name="model_ids" nolabel="1" attrs="{'invisible': [('all_log', '=', True)]}"/>
+
+                <footer>
+                    <button string="Delete" name="log_delete" type="object" class="oe_highlight"/>
+                </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="user_audit_clear_log_tree_view" model="ir.ui.view">
+        <field name="name">user.audit.clear.log.tree.view</field>
+        <field name="model">clear.log</field>
+        <field name="arch" type="xml">
+            <tree string="Multi Scrap Orders">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="user_audit_clear_action_view" model="ir.actions.act_window">
+        <field name="name">Clear Log</field>
+        <field name="res_model">clear.log</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="user_audit_clear_log"
+        name="Clear Log"
+        action="user_audit_clear_action_view"
+        groups="bi_user_audit_management.bi_group_manager"
+        sequence="2" parent="bi_user_audit_management.user_audit_menu_root">
+    </menuitem>
+
+
+</odoo>

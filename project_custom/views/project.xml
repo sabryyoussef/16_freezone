@@ -1,0 +1,400 @@
+<odoo>
+    <record id="projects_project_custom" model="ir.ui.view">
+        <field name="name">project.project</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='tasks']" position="after">
+                <page string="Handover Notes">
+                    <group>
+                        <group>
+                            <field name="is_update_hand_check" invisible="1"/>
+                            <field name="is_check_current_user" invisible="1"/>
+                            <field name="is_complete_hand" invisible="1"/>
+                            <button name="action_complete_hand" type="object" string="Complete"
+                                    confirm="Please ensurance handover notes is complete to avoid future setbacks."
+                                    attrs="{'invisible': ['|', '|', '|',
+                      ('is_complete_hand', '=', True),
+                      ('is_confirm_hand', '=', True),
+                      ('is_complete_return_hand', '=', True),
+                      '&amp;', ('is_current_user_project_manager', '=', False),
+                      ('is_current_user_project_admin', '=', False)
+                     ]}"
+
+                                    class="btn btn-success"/>
+                            <button name="action_confirm_hand" type="object" string="Confirm"
+                                    confirm="Please double check before you Confirm"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_hand', '=', False), ('is_confirm_hand', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_repeat_hand" type="object" string="Repeat"
+                                    class="btn btn-danger"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_hand', '=', False), ('is_confirm_hand', '=', False),
+                                            ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_return_hand" type="object" string="Return"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_hand', '=', False), ('is_confirm_hand', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_update_hand" type="object" string="Update"
+                                    confirm="Please ensurance handover notes is update to avoid future setbacks."
+                                    class="btn btn-warning"
+                                    attrs="{'invisible': [('is_update_hand_check', '=', False)]}"
+                            />
+
+                            <!--                            <button name="action_confirm_hand" type="object" string="Confirm"-->
+                            <!--    attrs="{'invisible': ['|', ('is_check_current_user', '=', False), '|', ('is_confirm_hand', '=', True), '&amp;', ('is_complete_return_hand', '=', False), ('is_second_complete_hand_check', '!=', 2)]}"/>-->
+
+                            <!--                            <button name="action_return_hand" type="object" string="Return"-->
+                            <!--                                    attrs="{'invisible': ['&amp;', ('is_check_current_user', '=', False), '&amp;', ('is_complete_return_hand', '=', False), ('is_second_complete_hand_check', '!=', 2)]}"/>-->
+                            <!--                            -->
+                        </group>
+                        <group>
+                            <div class="o_row" style=" position: absolute;right: 10px;">
+                                <field name="is_complete_hand" readonly="1" class="oe_inline"/>
+                                <field name="is_confirm_hand" readonly="1" class="oe_inline"/>
+                                <field name="is_complete_return_hand" readonly="1" class="oe_inline"/>
+
+                                <field name="is_update_hand" invisible="1" class="oe_inline"/>
+                                <field name="is_second_complete_hand_check" invisible="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="General Information">
+                            <field name="hand_partner_company_type" widget="radio"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'horizontal': true}"/>
+                            <field name="hand_partner_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="hand_partner_id" string="Company Name"
+                                   attrs="{'invisible':[('hand_partner_company_type','=', 'person')],'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"
+                                   context="{'default_company_type': 'hand_partner_company_type', 'default_first_name': full_name if initial_company_info else ''}"
+                                   domain="[('id', 'in', hand_partner_ids)]"/>
+                            <field name="hand_partner_id" string="Individual Name"
+                                   attrs="{'invisible':[('hand_partner_company_type','=', 'company')],'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"
+                                   context="{'default_company_type': 'hand_partner_company_type', 'default_first_name': full_name if initial_company_info else ''}"
+                                   domain="[('id', 'in', hand_partner_ids)]"/>
+                            <field name="is_visa_application"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="apply_visa" widget="boolean_toggle"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)],'invisible':['|',('hand_partner_company_type','!=', 'person'),('is_visa_application','!=', True)]}"/>
+                        </group>
+                        <group string="General Information">
+                            <field name="correspondence_email_address"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <label for="preferred_mobile_number" string="Preferred Mobile Number"/>
+                            <div class="o_row">
+                                <field name="mobile_country_id" class="oe_inline" placeholder="Add mobile country name"
+                                       attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                                <field name="preferred_mobile_number" widget="phone" placeholder="Add mobile number"
+                                       attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                       class="oe_inline"/>
+                            </div>
+                            <field name="channel_plan_id" attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   domain="[('license_authority_ids', 'in', license_authority_id)]"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                        </group>
+                        <group string="Company Details"
+                               attrs="{'invisible':[('hand_partner_company_type','=', 'person')]}">
+                            <field name="initial_company_info"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="proposed_name1"
+                                   attrs="{'invisible':[('initial_company_info','=', False)],'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="proposed_name2"
+                                   attrs="{'invisible':[('initial_company_info','=', False)],'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="proposed_name3"
+                                   attrs="{'invisible':[('initial_company_info','=', False)],'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="full_name" invisible="1"/>
+                            <field name="hand_legal_type" invisible="1"/>
+                            <field name="license_authority_id" invisible="1"/>
+                            <field name="price_per_share" attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="total_number_shares"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="shareholding_total"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="total_share_value"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                        </group>
+                        <group string="Company Details"
+                               attrs="{'invisible':[('hand_partner_company_type','=', 'person')],'readonly':[('is_complete_hand','=', True)]}">
+                            <field name="license_authority_id"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                            <field name="hand_legal_type_id"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"
+                                   domain="[('license_authority_ids', 'in', license_authority_id)]"/>
+                            <field name="license_validity"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_country_ids" widget="many2many_tags"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                            <field name="visa_eligibility"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                        </group>
+
+                        <group string="Individual Details"
+                               attrs="{'invisible':[('hand_partner_company_type','!=', 'person')]}">
+                            <field name="individual_full_name" invisible="1"/>
+                            <field name="is_create_individual_profile" widget="boolean_toggle"
+                                   attrs="{'invisible':[('hand_partner_id','!=', False)],'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_first_name"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_middle_name"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_last_name"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                        </group>
+                        <group string="Individual Details"
+                               attrs="{'invisible':[('hand_partner_company_type','!=', 'person')]}">
+                            <field name="hand_partner_nationality_id"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_birthday"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_place_of_birth"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                            <field name="hand_partner_gender"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="License Activity">
+                            <field name="all_license_activity_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="license_activity_ids"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}"
+                                   context="{'default_license_authority_id':license_authority_id}">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="code"/>
+                                        </group>
+                                        <group>
+                                            <field name="license_authority_id"
+                                                   options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Visa Application" attrs="{'invisible': [('is_visa_application', '=', False)]}">
+                            <button name="sync_visa_applications" type="object" string="Update"
+                                    class="btn btn-success"/>
+                            <field name="project_visa_application_ids"
+                                   attrs="{'readonly':[('is_complete_hand','=', True)]}">
+                                <tree create="0" delete="0">
+                                    <field name="project_id" invisible="1"/>
+                                    <field name="partner_id"/>
+                                    <field name="existing_uae_visa"/>
+                                    <field name="apply_visa"/>
+                                    <field name="visa_type"/>
+                                    <field name="inside"/>
+                                    <field name="vip_medical"/>
+                                    <field name="vip_biometric"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </page>
+                <page string="Compliance">
+                    <group>
+                        <group>
+                            <field name="is_complete_compliance" invisible="1"/>
+                            <field name="is_update_compliance_check" invisible="1"/>
+
+                            <button name="action_complete_compliance" type="object" string="Complete"
+                                    confirm="Please ensurance compliance notes is complete to avoid future setbacks."
+                                    attrs="{'invisible': ['|', '|', '|',
+                      ('is_complete_compliance', '=', True),
+                      ('is_confirm_compliance', '=', True),
+                      ('is_complete_return_compliance', '=', True),
+                      '&amp;', ('is_current_user_project_manager', '=', False),
+                      ('is_current_user_project_admin', '=', False)
+                     ]}"
+
+                                    class="btn btn-success"/>
+                            <button name="action_confirm_compliance" type="object" string="Confirm"
+                                    confirm="Please double check before you Confirm"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_compliance', '=', False), ('is_confirm_compliance', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_repeat_compliance" type="object" string="Repeat"
+                                    class="btn btn-danger"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_compliance', '=', False), ('is_confirm_compliance', '=', False),
+                                            ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_return_compliance" type="object" string="Return"
+                                    attrs="{'invisible': ['|',
+                                            '|', ('is_complete_compliance', '=', False), ('is_confirm_compliance', '=', True),
+                                            '&amp;', ('is_current_user_project_task_assignee', '=', False), ('is_current_user_project_admin', '=', False)
+                                        ]}"
+                            />
+                            <button name="action_update_compliance" type="object" string="Update"
+                                    confirm="Please ensurance compliance notes is update to avoid future setbacks."
+                                    class="btn btn-warning"
+                                    attrs="{'invisible': [('is_update_compliance_check', '=', False)]}"
+                            />
+                            <!--                           -->
+                            <!--                            <button name="action_confirm_compliance" type="object" string="Confirm"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '|',-->
+                            <!--        ('is_confirm_compliance', '=', True),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_compliance', '=', False),-->
+                            <!--        ('is_second_complete_compliance_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                            <button name="action_return_compliance" type="object" string="Return"-->
+                            <!--                                    attrs="{'invisible': [-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_check_current_user', '=', False),-->
+                            <!--        '&amp;',-->
+                            <!--        ('is_complete_return_compliance', '=', False),-->
+                            <!--        ('is_second_complete_compliance_check', '!=', 2)-->
+                            <!--    ]}"/>-->
+                            <!--                           -->
+                        </group>
+                        <group>
+                            <div class="o_row" style="position: absolute;right: 10px;">
+                                <field name="is_complete_compliance" readonly="1" class="oe_inline"/>
+                                <field name="is_confirm_compliance" readonly="1" class="oe_inline"/>
+                                <field name="is_complete_return_compliance" readonly="1" class="oe_inline"/>
+
+                                <field name="is_update_compliance" invisible="1" class="oe_inline"/>
+                                <field name="is_second_complete_compliance_check" invisible="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="compliance_shareholder_ids"
+                           attrs="{'readonly':[('is_complete_compliance','=', True)]}"
+                           context="{'default_project_id': id,'default_documents_folder_id': documents_folder_id,'default_partner_id': hand_partner_id}">
+                        <tree>
+                            <field name="project_id" invisible="1"/>
+                            <field name="customer_id" invisible="1"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="contact_id"/>
+                            <field name="ubo_id"/>
+                            <field name="shareholding"/>
+                            <field name="relationship_ids" widget="many2many_tags" required="1"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="project_id" invisible="1"/>
+                                    <field name="customer_id" invisible="1"/>
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="contact_id"/>
+                                    <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                                    <field name="shareholding"/>
+                                </group>
+                                <group>
+                                    <field name="ubo_id"/>
+                                    <field name="relationship_ids" widget="many2many_tags" required="1"/>
+                                    <field name="email"/>
+                                    <field name="mobile"/>
+                                </group>
+                                <group attrs="{'invisible': [('company_type', '=', 'company')]}"
+                                       string="Shareholder Information">
+                                    <field name="first_name"/>
+                                    <field name="middle_name"/>
+                                    <field name="last_name"/>
+                                    <field name="nationality_id"/>
+                                    <field name="birthday"/>
+                                    <field name="place_of_birth"/>
+                                    <field name="gender"/>
+                                    <field name="documents_folder_id" invisible="1"/>
+                                </group>
+                                <group attrs="{'invisible': [('company_type', '=', 'company')]}"
+                                       string="Shareholder Information">
+                                    <field name="passport" options="{'no_quick_create':True}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_630_426ff16a)s}"/>
+                                    <field name="uae_resident" widget="boolean_toggle"/>
+                                    <field name="eid_copy" options="{'no_quick_create':True}"
+                                           attrs="{'invisible': [('uae_resident', '!=', True)]}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_525_86b2c880)s}"/>
+
+                                    <field name="residence_visa_copy" options="{'no_quick_create':True}"
+                                           attrs="{'invisible': [('uae_resident', '!=', True)]}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_526_f6c7bc14)s}"/>
+                                    <field name="current_visa" options="{'no_quick_create':True}"
+                                           attrs="{'invisible': [('uae_resident', '=', True)]}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(project_custom.res_partner_document_type_tourist_visa)s}"/>
+                                    <field name="entry_stamp" options="{'no_quick_create':True}"
+                                           attrs="{'invisible': [('uae_resident', '=', True)]}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_607_42a0b1db)s}"/>
+                                    <field name="apply_visa" widget="boolean_toggle"/>
+                                    <!--                                    <field name="emirates_no_id" options="{'no_quick_create':True}"-->
+                                    <!--                                           attrs="{'invisible': [('apply_visa', '=', False)]}"-->
+                                    <!--                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id':  %(__export__.res_partner_document_type_525_86b2c880)s}"/>-->
+                                    <!--                                    <field name="residence_visa_id" options="{'no_quick_create':True}"-->
+                                    <!--                                           attrs="{'invisible': [('apply_visa', '=', False)]}"-->
+                                    <!--                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id':  %(__export__.res_partner_document_type_526_f6c7bc14)s}"/>-->
+
+                                </group>
+                            </group>
+                            <group attrs="{'invisible': [('company_type', '!=', 'company')]}">
+                                <group string="Corporate Shareholder Information">
+                                    <field name="license_authority_id"/>
+                                    <field name="incorporation_date"/>
+                                    <field name="license_number"/>
+                                    <field name="license_validity"/>
+                                </group>
+                                <group string="Corporate Shareholder Information">
+                                    <field name="trade_license" options="{'no_quick_create':True}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_729_a8a3728b)s}"/>
+                                    <field name="memorandum_association" options="{'no_quick_create':True}"
+                                           context="{'default_project_id': project_id,'default_folder_id': documents_folder_id,'default_partner_id': contact_id, 'default_type_id': %(__export__.res_partner_document_type_816_d205684b)s}"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Address">
+                                    <field name="address_ids">
+                                        <tree editable="bottom">
+                                            <field name="type"/>
+                                            <field name="country_id" placeholder="Country" required="1"
+                                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                            <field name="street" placeholder="Street..."/>
+                                            <field name="street2" placeholder="Street 2..."/>
+                                            <field name="city" placeholder="City"/>
+                                            <field name="state_id" placeholder="State"
+                                                   options="{'no_open': True, 'no_quick_create': True}"/>
+                                            <field name="zip" placeholder="ZIP"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_sale" class="oe_stat_button" icon="fa-line-chart" type="object"
+                        attrs="{'invisible':[('sale_id','=',[])]}" string="View Sale">
+                    <field name="sale_id" invisible="1"/>
+                </button>
+                <button name="action_view_invoices" class="oe_stat_button" icon="fa-edit" type="object"
+                        attrs="{'invisible':[('invoice_ids','=',[])]}" string="Invoices">
+                    <field name="invoice_ids" invisible="1"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

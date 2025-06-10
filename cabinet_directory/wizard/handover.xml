@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="handover_wizard_form_view">
+        <field name="name">handover.wizard.wizard.form.view</field>
+        <field name="model">handover.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Document Handover">
+                <group>
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline" required="1"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Add Documents" type="object" name="action_add_attachments" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

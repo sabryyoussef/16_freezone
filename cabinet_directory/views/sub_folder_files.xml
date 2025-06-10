@@ -1,0 +1,92 @@
+<odoo>
+    <record id="sub_folder_files_form" model="ir.ui.view">
+        <field name="name">sub.folder.files.form</field>
+        <field name="model">sub.folder.files</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_handed_over" class="oe_highlight mr-1" states="on_file" type="object"
+                            string="Handed Over"/>
+                    <button name="action_on_file" class="oe_highlight mr-1" states="handed" type="object"
+                            string="On File"/>
+                    <button name="open_create_activity_popup"
+                            string="Schedule Activity"
+                            type="object"
+                            class="oe_highlight"
+                            icon="fa-calendar-plus-o"/>
+                    <button string="Send Email" type="object" name="send_email_activity"
+                            class="btn-secondary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="on_file,handed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_schedule_meeting" type="object"
+                                class="oe_stat_button" icon="fa-calendar"
+                                context="{'partner_id': partner_id}"
+                                string="Meetings"
+                        >
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="user_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="lead_id"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="folder_id" required="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <field name="document_ids">
+                                <tree decoration-success="is_verify == True">
+                                    <field name="name"/>
+                                    <field name="issue_date"/>
+                                    <field name="expiration_date"/>
+                                    <field name="type_id"/>
+                                    <field name="category_id"/>
+                                    <field name="expiration_reminder"/>
+                                    <field name="partner_id"/>
+                                    <field name="create_uid"/>
+                                    <field name="is_verify"/>
+                                    <field name="create_uid"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Document Handover">
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="sub_folder_files_tree" model="ir.ui.view">
+        <field name="name">sub.folder.files.tree</field>
+        <field name="model">sub.folder.files</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="lead_id"/>
+                <field name="partner_id"/>
+                <field name="folder_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="sub_folder_files_action" model="ir.actions.act_window">
+        <field name="name">Sub Folder Files</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sub.folder.files</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="sub_folder_files_menu" name="Sub Folder Files"
+              parent="directory_main_menu" action="sub_folder_files_action" sequence="3"/>
+</odoo>

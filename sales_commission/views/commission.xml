@@ -1,0 +1,268 @@
+<odoo>
+    <record id="sales_commission_tree" model="ir.ui.view">
+        <field name="name">Sales Commission Tree View</field>
+        <field name="model">crm.commission</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="member_id" width="20%"/>
+                <field name="team_id"/>
+                <field name="type_commission"/>
+                <field name="target"/>
+                <field name="net_achievement"/>
+                <field name="target_percentage"/>
+                <field name="achieving_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="sales_commission_manager_from" model="ir.ui.view">
+        <field name="name">Sales Commission Form View Manager</field>
+        <field name="model">crm.commission</field>
+        <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_manager')])]"/>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" class="oe_highlight mr-1" states="draft" type="object"
+                            string="Submit"/>
+                    <button name="action_approve" class="oe_highlight mr-1" states="submitted" type="object"
+                            groups="sales_commission.commission_supervisor,sales_commission.commission_admin"
+                            string="Approve"/>
+                    <button name="action_draft" class="oe_highlight mr-1" states="submitted,approved" type="object"
+                            groups="sales_commission.commission_admin"
+                            string="Reset To Draft"/>
+                    <button name="action_posted" class="oe_highlight mr-1" states="approved" type="object"
+                            groups="sales_commission.commission_admin" string="Post"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,posted"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_entry" class="oe_stat_button" icon="fa-bars" type="object"
+                                attrs="{'invisible':[('move_ids','=',[])]}" string="Journal Entries">
+                            <field name="move_ids" invisible="1"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="member_id" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="team_id" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="finance_team_ids" widget="many2many_tags"
+                                   attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="target" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="revenue" string="Revenue"/>
+                            <field name="sov_revenue" string="Sov Revenue"/>
+                            <field name="planned_expenses" string="Planned Expenses"/>
+                            <field name="team_name" invisible="1"/>
+                            <field name="net_achievement" string="Achievement Net"/>
+                            <field name="deductions" groups="sales_commission.commission_deduction"
+                                   attrs="{'invisible': [('team_name', 'in', ['Accounts', 'Operations'])]}"/>
+                            <field name="commission_perc"
+                                   attrs="{'invisible': [('team_name', 'in', ['Accounts', 'Operations'])],'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="net"
+                                   attrs="{'invisible': [('team_name', 'in', ['Accounts', 'Operations'])]}"/>
+                            <field name="journal_id"
+                                   attrs="{'invisible': [('state', 'in', ['draft','submitted'])],'readonly': [('state', 'in', ['posted'])]}"/>
+                        </group>
+                        <group>
+                            <field name="type_commission" groups="sales_commission.commission_admin"
+                                   attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            <field name="target_percentage" string="Achievement Percentage"/>
+                            <label for="years" string="Date"/>
+                            <div class="o_row"
+                                 style="display: flex; align-items: center; gap: -100px;">
+                                <field name="years" class="oe_inline" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                                <field name="months" class="oe_inline" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}"/>
+                            </div>
+                            <field name="achieving_date"  invisible="1"/>
+                            <label for="license" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="license" class="oe_inline"/>
+                                <span>6%</span>
+                                <field name="license2" nolabel="1"/>
+                            </div>
+                            <label for="value" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="value" class="oe_inline"/>
+                                <span>5%</span>
+                                <field name="value2" nolabel="1"/>
+                            </div>
+                            <label for="renewals" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="renewals" class="oe_inline"/>
+                                <span>3%</span>
+                                <field name="renewals2" nolabel="1"/>
+                            </div>
+                            <label for="network" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="network" class="oe_inline"/>
+                                <span>7%</span>
+                                <field name="network2" nolabel="1"/>
+                            </div>
+                            <label for="annual" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="annual" class="oe_inline"/>
+                                <span>20%</span>
+                                <field name="annual2" nolabel="1"/>
+                            </div>
+                            <label for="bank" groups="account.group_account_manager"
+                                   attrs="{'invisible': [('team_name', '!=', 'Accounts')]}"/>
+                            <div class="o_row"
+                                 style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', '!=', 'Accounts')]}">
+                                <field name="bank" class="oe_inline"/>
+                                <span>10%</span>
+                                <field name="bank2" nolabel="1"/>
+                            </div>
+                            <label for="accounting"
+                                   attrs="{'invisible': [('team_name', '!=', 'Accounts')]}"/>
+                            <div class="o_row"
+                                 style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', '!=', 'Accounts')]}">
+                                <field name="accounting" class="oe_inline"/>
+                                <span>7.5%</span>
+                                <field name="accounting2" nolabel="1"/>
+                            </div>
+                            <label for="misc" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="misc" class="oe_inline"/>
+                                <field name="misc_perc" style="width: 5px;margin-left: 5px;"/>
+                                <field name="misc2" style="width: 5px;margin-left: -80px;"/>
+                            </div>
+                            <label for="total" attrs="{'invisible': [('team_name', 'in', ['Sales'])]}"/>
+                            <div class="o_row" style="display: flex; align-items: center; gap: 10px;"
+                                 attrs="{'invisible': [('team_name', 'in', ['Sales'])]}">
+                                <field name="total" class="oe_inline"/>
+                                %
+                                <field name="total_profit" nolabel="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="sov" string="SOV Data">
+                            <field name="sov_ids" attrs="{'readonly': [('state', 'in', ['approved','posted'])]}">
+                                <tree editable="bottom">
+                                    <field name="commission_member_uid" invisible="1"/>
+                                    <field name="sale_id" string="Invoice Number" optional="show" groups="sales_commission.commission_admin"/>
+                                    <field name="sov_ids" widget="many2many_tags" invisible="1"/>
+                                    <field name="sov_id" string="Description" optional="show"/>
+                                    <field name="name" optional="show" invisible="1"/>
+                                    <field name="date_order" string="Invoice Date" optional="show"/>
+                                    <field name="partner_id" string="Client Name" optional="show"/>
+                                    <field name="revenue" sum="Revenue" optional="show"/>
+                                    <field name="planned_expenses" sum="Expenses" optional="show"/>
+                                    <field name="tax" sum="Tax" optional="show"/>
+                                    <field name="profit" sum="Profit" optional="show"/>
+                                    <field name="net" sum="Net Achievement" optional="show"/>
+                                    <field name="commission_attribute" optional="hide"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="sales_commission_user_from" model="ir.ui.view">
+        <field name="name">Sales Commission Form View User</field>
+        <field name="model">crm.commission</field>
+        <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_salesman')])]"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="member_id" readonly="1"/>
+                            <field name="team_id" readonly="1"/>
+                            <field name="target" readonly="1"/>
+                            <field name="revenue" string="Revenue"/>
+                            <field name="planned_expenses" string="Planned Expenses"/>
+                            <field name="net_achievement" string="Net Achievement"/>
+                        </group>
+                        <group>
+                            <field name="type_commission" readonly="1"/>
+                            <field name="target_percentage" string="Achievement Percentage" readonly="1"/>
+                            <field name="achieving_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="act_crm_commissions" model="ir.actions.act_window">
+        <field name="name">CRM Commission</field>
+        <field name="res_model">crm.commission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="commission_sale_sov_tree" model="ir.ui.view">
+        <field name="name">commission.sale.sov.tree</field>
+        <field name="model">commission.sale.sov</field>
+        <field name="arch" type="xml">
+            <tree create="1" edit="0" delete="0">
+                <field name="commission_id"/>
+                <field name="sale_id"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="revenue"/>
+                <field name="planned_expenses"/>
+                <field name="profit"/>
+                <field name="tax"/>
+                <field name="commission_attribute"/>
+            </tree>
+        </field>
+    </record>
+    <record id="commission_sale_sov_search" model="ir.ui.view">
+        <field name="name">commission.sale.sov.search</field>
+        <field name="model">commission.sale.sov</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="commission_id"/>
+                <field name="sale_id"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="commission_attribute"/>
+                <group string="Group By">
+                    <filter string="Commission" name="commission_id" context="{'group_by': 'commission_id'}"/>
+                    <filter string="Proforma Invoice" name="sale_id" context="{'group_by': 'sale_id'}"/>
+                    <filter string="Customer" name="partner_id" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Date Order" name="date_order" context="{'group_by': 'date_order'}"/>
+                    <filter string="Commission Attribute" name="commission_attribute"
+                            context="{'group_by': 'commission_attribute'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="act_sov_crm_commissions" model="ir.actions.act_window">
+        <field name="name">Sov Commissions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">commission.sale.sov</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="sales_commission_menu_root"
+              name="Sales Commissions"
+              parent="sale.sale_menu_root"
+              sequence="31"
+              action="act_crm_commissions"/>
+    <menuitem id="sales_commission_menu"
+              name="Commissions"
+              parent="sales_commission.sales_commission_menu_root"
+              sequence="1"
+              action="act_crm_commissions"/>
+    <menuitem id="sales_sov_commission_menu"
+              name="Sov Commissions"
+              parent="sales_commission.sales_commission_menu_root"
+              sequence="2"
+              action="act_sov_crm_commissions"/>
+</odoo>

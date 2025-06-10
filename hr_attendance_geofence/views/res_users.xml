@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="inheirt_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">inheirt.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']//field[@name='user_id']" position="after">
+                    <field name="attendance_geolocation"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+    <record id="action_simple_attendance_geolocation" model="ir.actions.act_window">
+        <field name="name">Attendance Geolocation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.users</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record id="action_simple_attendance_geolocation_view" model="ir.actions.act_window.view">
+        <field eval="10" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="inheirt_hr_employee_view_form"/>
+        <field name="act_window_id" ref="action_simple_attendance_geolocation"/>
+    </record>
+</odoo>

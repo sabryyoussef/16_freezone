@@ -1,0 +1,221 @@
+<odoo>
+    <record id="res_partner_shareholder_tree" model="ir.ui.view">
+        <field name="name">res.partner.shareholder</field>
+        <field name="model">res.partner.shareholder</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="contact_id"/>
+                <field name="ubo_id"/>
+                <field name="shareholding"/>
+                <field name="relationship_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="crm_lead_compliance" model="ir.ui.view">
+        <field name="name">crm.leads</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="is_compliance" invisible="1"/>
+                <button name="action_compliance" type="object"
+                        attrs="{'invisible':['|',('is_compliance','=','compliance'),('type', '=', 'lead')]}"
+                        string="Submit To Screening"
+                        class="oe_highlight mr-1"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button name="action_view_compliance" class="oe_stat_button" icon="fa-bars" type="object"
+                        attrs="{'invisible':[('is_compliance','=',False)]}" string="compliance">
+                </button>
+            </div>
+        </field>
+    </record>
+    <record id="compliance_compliance_wizard_form" model="ir.ui.view">
+        <field name="name">compliance.ticket.form</field>
+        <field name="model">crm.lead</field>
+        <field name="priority" eval="82"/>
+        <field name="arch" type="xml">
+            <form string="" create="0">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="compliance_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_compliance" required="1" widget="radio"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="user_company_ids" invisible="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="nationality_id" required="1"/>
+                            <field name="current_address" required="1"/>
+                            <field name="passport_copy" required="1"/>
+                            <field name="uae_resident"/>
+                        </group>
+                        <group>
+                            <field name="user_id" required="1"/>
+                            <field name="mobile" required="1"/>
+                            <field name="email_from" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="compliance_compliance_form" model="ir.ui.view">
+        <field name="name">compliance.ticket.form</field>
+        <field name="model">crm.lead</field>
+        <field name="priority" eval="82"/>
+        <field name="arch" type="xml">
+            <form string="" create="0">
+                <header>
+                    <button name="action_confirm" class="oe_highlight mr-1"
+                            type="object"
+                            attrs="{'invisible':[('compliance_state','!=','sent')]}"
+                            string="Confirm"/>
+                    <button name="action_send" class="oe_highlight mr-1"
+                            type="object"
+                            attrs="{'invisible':[('compliance_state','!=','submit')]}"
+                            string="Send"/>
+                    <button name="action_submit" class="oe_highlight mr-1" states="draft"
+                            type="object"
+                            attrs="{'invisible':[('compliance_state','!=','draft')]}"
+                            string="Submit"/>
+                    <button name="action_cancel" class="oe_highlight mr-1"
+                            attrs="{'invisible':[('compliance_state','not in',['submit','sent','confirm'])]}"
+                            type="object" string="Cancel"/>
+                    <button name="action_draft" class="oe_highlight mr-1"
+                            states="cancel"
+                            attrs="{'invisible':[('compliance_state','!=','cancel')]}"
+                            type="object" string="Reset"/>
+                    <field name="compliance_state" widget="statusbar"
+                           statusbar_visible="draft,submit,sent,confirm,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="compliance_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_compliance" invisible="1" widget="radio"/>
+
+                            <field name="company_id" invisible="1"/>
+                            <field name="user_company_ids" invisible="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="nationality_id"/>
+                            <field name="current_address"/>
+                            <field name="passport_copy" required="1"/>
+                            <field name="uae_resident" required="1"/>
+                        </group>
+                        <group>
+                            <field name="user_id" required="1"/>
+                            <field name="mobile"/>
+                            <field name="email_from"/>
+                        </group>
+                        <group string="Client Initial Screening">
+                            <field name="with_hit"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="source" string="Source">
+                            <group>
+                                <group string="Marketing">
+                                    <field name="campaign_id"/>
+                                    <field name="medium_id"/>
+                                    <field name="source_id"/>
+                                    <field name="referred_id"/>
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="initial" string="Initial Screening Result">
+                            <field name="document_type_ids">
+                                <tree editable="bottom">
+                                    <field name="attachment_ids" widget="many2many_binary" class="oe_inline"
+                                           required="1"/>
+                                    <field name="document_id" required="1"/>
+                                    <field name="name" required="1"/>
+                                    <field name="issue_date" required="1"/>
+                                    <field name="is_required_expiration"/>
+                                    <field name="expiration_date"
+                                           attrs="{'required': [('is_required_expiration', '=', True)]}"/>
+                                    <field name="is_required"/>
+                                    <field name="is_verify"/>
+                                    <field name="is_ready" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="compliance_compliance_tree" model="ir.ui.view">
+        <field name="name">compliance.ticket.tree</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <tree string="" create="0">
+                <field name="compliance_name"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="nationality_id" optional="show"/>
+                <field name="mobile" optional="show"/>
+                <field name="email_from" optional="show"/>
+                <field name="campaign_id" optional="show"/>
+                <field name="medium_id" optional="show"/>
+                <field name="source_id" optional="show"/>
+                <field name="referred_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+    <record id="compliance_compliance_search" model="ir.ui.view">
+        <field name="name">crm.lead.compliance</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="compliance_name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <group string="Group By">
+                    <filter string="Partner" name="group_by_partner_id" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Salesperson" name="group_by_user_id" context="{'group_by': 'user_id'}"/>
+                    <filter string="Status" name="group_by_compliance_state"
+                            context="{'group_by': 'compliance_state'}"/>
+                    <separator/>
+                </group>
+                <searchpanel>
+                    <field name="compliance_state" string="Status" icon="fa-cube" color="#af9433" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+    <record id="compliance_compliance_action" model="ir.actions.act_window">
+        <field name="name">Compliance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.lead</field>
+        <field name="domain">[('is_compliance','=','compliance')]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="compliance_cycle.compliance_compliance_tree"/>
+        <field name="search_view_id" ref="compliance_compliance_search"/>
+    </record>
+    <menuitem id="compliance_root_menu" name="Compliance"
+              web_icon="compliance_cycle,static/description/icon.png"
+              sequence="3"/>
+    <menuitem id="compliance_menu" name="Compliance"
+              parent="compliance_cycle.compliance_root_menu" action="compliance_compliance_action"
+              sequence="2"/>
+</odoo>

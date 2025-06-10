@@ -1,0 +1,29 @@
+<odoo>
+    <record id="res_partner_support_fields" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_risk_assessment.inherit_res_partner_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='assessment_group']/group" position="inside">
+                <field name="primary_support_id"/>
+                <field name="secondary_support_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_fields" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='misc']" position="after">
+                <group string="Accounts">
+                    <field name="accountant1_id"/>
+                    <field name="accountant2_id"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="string">VAT Number</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

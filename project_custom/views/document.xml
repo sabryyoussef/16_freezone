@@ -1,0 +1,25 @@
+<odoo>
+    <record id="check_partner_document" model="ir.ui.view">
+        <field name="name">res.partner.document</field>
+        <field name="model">res.partner.document</field>
+        <field name="inherit_id" ref="client_documents.client_documents_form_views"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type_id']" position="before">
+                <field name="type_is_closed" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='type_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('type_is_closed','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="form_documents_document" model="ir.ui.view">
+        <field name="name">documents.document</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="replace">
+                <field name="tag_ids" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

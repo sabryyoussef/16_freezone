@@ -1,0 +1,76 @@
+<odoo>
+    <record id="business_structure_tree" model="ir.ui.view">
+        <field name="name">business.structure.tree</field>
+        <field name="model">business.structure</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="bottom">
+                <field name="name"/>
+                <field name="relationships_ids" widget="many2many_tags"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="business_structure_action" model="ir.actions.act_window">
+        <field name="name">Business Structure</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">business.structure</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="business_structure_menu" name="Business Structure" parent="contacts.res_partner_menu_config"
+              action="compliance_cycle.business_structure_action" sequence="20"/>
+
+    <record id="business_relationships_tree" model="ir.ui.view">
+        <field name="name">business.relationships.tree</field>
+        <field name="model">business.relationships</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="business_relationships_action" model="ir.actions.act_window">
+        <field name="name">Business Relationships</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">business.relationships</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="business_relationships_menu" name="Business Relationships" parent="contacts.res_partner_menu_config"
+              action="compliance_cycle.business_relationships_action" sequence="21"/>
+
+    <record id="business_ubo_tree" model="ir.ui.view">
+        <field name="name">res.partner.ubo.tree</field>
+        <field name="model">res.partner.ubo</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="business_ubo_action" model="ir.actions.act_window">
+        <field name="name">UBO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.ubo</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="business_ubo_menu" name="UBO" parent="contacts.res_partner_menu_config"
+              action="compliance_cycle.business_ubo_action" sequence="22"/>
+
+    <record id="res_nationality_tree" model="ir.ui.view">
+        <field name="name">res.nationality.tree</field>
+        <field name="model">res.nationality</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="res_nationality_action" model="ir.actions.act_window">
+        <field name="name">Nationality</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.nationality</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="res_nationality_menu" name="Nationalities" parent="contacts.res_partner_menu_config"
+              action="compliance_cycle.res_nationality_action" sequence="23"/>
+
+</odoo>

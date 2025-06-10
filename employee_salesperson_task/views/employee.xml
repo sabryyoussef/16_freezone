@@ -1,0 +1,12 @@
+<odoo>
+    <record id="hr_employee_tasks" model="ir.ui.view">
+        <field name="name">hr.employee</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="is_salesperson_task"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

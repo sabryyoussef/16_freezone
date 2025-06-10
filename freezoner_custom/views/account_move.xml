@@ -1,0 +1,22 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="account_moves" model="ir.ui.view">
+        <field name="name">account.move</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_vendor_bill_id']" position="after">
+                <field name="payment_method" widget="radio" attrs="{'readonly': [('state', '!=','draft')]}"/>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon'][1]" position="replace">
+
+                <widget name="web_ribbon" title="Paid (VISA)"
+                        attrs="{'invisible': ['|','&amp;', ('payment_state', '!=', 'paid'), ('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')), ('payment_method', '=', 'bank')]}"
+                />
+                <widget name="web_ribbon" title="Paid (BANK)"
+                        attrs="{'invisible': [ '|','&amp;', ('payment_state', '!=', 'paid'), ('move_type', 'not in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')), ('payment_method', '=', 'visa')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

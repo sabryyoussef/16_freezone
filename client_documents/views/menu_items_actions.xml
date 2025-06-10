@@ -1,0 +1,89 @@
+<odoo>
+    <!--    Document Managers-->
+    <record id="contacts_documents_action" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">res.partner.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="contacts_documents_category_action" model="ir.actions.act_window">
+        <field name="name">Documents Categories</field>
+        <field name="res_model">res.partner.document.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="contacts_documents_type_action" model="ir.actions.act_window">
+        <field name="name">Documents Types</field>
+        <field name="res_model">res.partner.document.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            id="contacts.main_menu_documents"
+            name="Documents Managers"
+            parent="contacts.menu_contacts"
+            groups="client_documents.document_managers_group"
+            sequence="2">
+        <menuitem
+                id="contacts.menu_documents"
+                name="Documents"
+                action="contacts_documents_action"
+                sequence="1"
+        />
+        <menuitem
+                id="contacts.menu_documents_category"
+                name="Documents Categories"
+                action="contacts_documents_category_action"
+                sequence="2"
+        />
+        <menuitem
+                id="contacts.menu_documents_type"
+                name="Documents Types"
+                action="contacts_documents_type_action"
+                sequence="3"
+        />
+    </menuitem>
+
+    <!--    Document Users-->
+    <record id="contacts_documents_action_user" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">res.partner.document</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="client_documents_tree_view_user"/>
+    </record>
+    <record id="contacts_documents_category_action_user" model="ir.actions.act_window">
+        <field name="name">Documents Categories</field>
+        <field name="res_model">res.partner.document.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="client_documents_tree_category_view_user"/>
+    </record>
+    <record id="contacts_documents_type_action_user" model="ir.actions.act_window">
+        <field name="name">Documents Types</field>
+        <field name="res_model">res.partner.document.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="client_documents_tree_type_view_user"/>
+    </record>
+    <menuitem
+            id="contacts_main_menu_documents"
+            name="Documents Users"
+            parent="documents.menu_root"
+            sequence="13"/>
+    <menuitem
+            id="contacts_menu_documents"
+            name="Documents"
+            parent="client_documents.contacts_main_menu_documents"
+            action="contacts_documents_action_user"
+            sequence="2"
+    />
+    <menuitem
+            id="contacts_menu_documents_category"
+            name="Documents Categories"
+            parent="client_documents.contacts_main_menu_documents"
+            action="contacts_documents_category_action_user"
+            sequence="2"
+    />
+    <menuitem
+            id="contacts_menu_documents_type"
+            name="Documents Types"
+            parent="client_documents.contacts_main_menu_documents"
+            action="contacts_documents_type_action_user"
+            sequence="3"
+    />
+</odoo>

@@ -1,0 +1,37 @@
+<odoo>
+
+    <record id="model_sale_action" model="ir.actions.server">
+        <field name="name">Update Expiration Date</field>
+        <field name="model_id" ref="freezoner_custom.model_sale_order"/>
+        <field name="binding_model_id" ref="freezoner_custom.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.compute_validity_date()
+        </field>
+    </record>
+    <record id="model_project_action" model="ir.actions.server">
+        <field name="name">Update Old Documents</field>
+        <field name="model_id" ref="freezoner_custom.model_project_project"/>
+        <field name="binding_model_id" ref="freezoner_custom.model_project_project"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.update_required_document()
+                records.update_deliverable_document()
+        </field>
+    </record>
+    <record id="model_project_stages_action" model="ir.actions.server">
+        <field name="name">Update Projects</field>
+        <field name="model_id" ref="freezoner_custom.model_project_task_type"/>
+        <field name="binding_model_id" ref="freezoner_custom.model_project_task_type"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                records.get_project_ids()
+        </field>
+    </record>
+</odoo>

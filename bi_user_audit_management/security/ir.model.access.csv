@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_audit_configuration,access_user_audit_configuration,model_user_audit_configuration,base.group_user,1,1,1,1
+access_user_audit_log,access_user_audit_log,model_user_audit_log,base.group_user,1,0,0,0
+access_clear_log,access_clear_log,model_clear_log,base.group_user,1,1,1,1

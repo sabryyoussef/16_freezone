@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="sale_crm_wizard_form_view">
+            <field name="name">sale.crm.wizard.form.view</field>
+            <field name="model">sale.crm.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet string="">
+                        <group>
+                            <group string="Move opportunity stage to payment">
+                                <field name="payment_type" widget="radio" />
+                                <field name="sale_id" invisible="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="submit" string="Move" type="object" default_focus="1" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+</odoo>

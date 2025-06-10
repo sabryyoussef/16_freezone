@@ -1,0 +1,35 @@
+<odoo>
+    <record id="res_partner_fields" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div/h1" position="replace">
+                <field id="company" class="text-break" name="name" default_focus="1" placeholder="e.g. Lumber Inc"
+                       attrs="{'required' : [('type', '=', 'contact')], 'invisible': [('is_company','=', False)]}"/>
+                <div class="o_row" attrs="{'invisible': [('company_type', '=', 'company')]}">
+                    <field name="first_name" placeholder="First Name" class="oe_inline" style="width: 20px;"
+                           attrs="{'required' : [('company_type', '=', 'person')]}"/>
+                    <field name="middle_name" placeholder="Middle Name" class="oe_inline" style="margin-left: -112px;"/>
+                    <field name="last_name" placeholder="Last Name" class="oe_inline" style="margin-left: -112px;"
+                           attrs="{'required' : [('company_type', '=', 'person')]}"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='mobile']" position="replace">
+                <div class="o_row">
+                    <field name="mobile_country_id" placeholder="Add mobile country name" class="oe_inline"
+                           style="width: 100px;"/>
+                    <field name="mobile" widget="phone" placeholder="Add mobile number" class="oe_inline"
+                           style="width: 100px;"/>
+                </div>
+            </xpath>
+            <xpath expr="//span[@name='address_name']" position="replace">
+                <span class="o_form_label o_td_label" name="address_name">
+                    <field name="type" required="1"
+                           class="fw-bold"/>
+                    <b>Address</b>
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

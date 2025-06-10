@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="project_client_action_window">
+            <field name="name">Client's Projects</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('project_count', '>', 0)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('project_by_client.res_partner_kanban_view_project')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('project_by_client.view_partner_form_project')})]"/>
+            <field name="view_mode">kanban,form</field>
+        </record>
+        <!--project_by_client.res_partner_kanban_view_project-->
+        <menuitem name="Clients" id="project_by_client.main" parent="project.menu_main_pm"
+                  action="project_client_action_window" sequence="0"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+.ks-right-content{
+	 display: flex;
+	 align-items: flex-start;
+	 border-color: var(--drk-border);
+	 flex-direction: row;
+}
+ .ks-right-content.o_form_view .o_form_sheet_bg {
+	 width: 60%;
+	 flex-shrink:0;
+	 border-bottom: none;
+	 border-color: var(--drk-border);
+	 border-width: 1px;
+   /*min-width: 500px;
+   max-width: 800px;*/
+}
+ .ks-right-content.o_form_view .o_form_sheet_bg .o_form_sheet {
+	 margin: 16px;
+}
+ .ks-right-content.o_form_view .o_form_sheet_bg .o_statusbar_status {
+	 margin-right: 2px;
+}
+ .ks-right-content.o_form_view .o_FormRenderer_chatterContainer {
+	 min-width: 30%;
+	 flex-grow: 1;
+   max-width: 100%;
+}
+/*For large Screen view only Form view*/
+/*@media screen and (min-width: 1680px){
+   .ks-right-content.o_form_view .o_form_sheet_bg {
+      max-width: 1200px;
+  }
+}
+*/
+@media screen and (max-width: 1200px){
+   .ks-right-content.o_form_view .o_form_sheet_bg{
+      min-width: 300px;
+      max-width: 600px;
+   }
+}
+.custom_seperator {
+    cursor: col-resize;
+    width: 10px;
+    margin: 0 0 0 10px;
+    background: var(--ks-border) url(/ks_curved_backend_theme_enter/static/src/images/resize_icon.svg) no-repeat center !important;
+    background-size: 9px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: auto;
+    position: sticky;
+    top: 0;
+}
+
+.ks-right-content.o_form_view .o_form_sheet_bg .o_form_sheet {
+     max-width: calc(100% - 18px);
+
+}
+.o_form_view.o_xxl_form_view.ks-right-content > .o_form_sheet_bg{
+    -webkit-box-flex: inherit;
+    -webkit-flex: inherit;
+    flex: inherit;
+}

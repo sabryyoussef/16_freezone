@@ -1,0 +1,31 @@
+<odoo>
+    <record id="crm_lead_notes" model="ir.ui.view">
+        <field name="name">crm.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='source_id']" position="replace"/>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="source_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,'no_create': True}" required="1"/>
+            </xpath>
+            <xpath expr="//group[@name='lead_priority']/field[@name='tag_ids']" position="after">
+                <field name="source_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,'no_create': True}" required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="utm_source_action" model="ir.actions.act_window">
+        <field name="name">Sources</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">utm.source</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="crm_menu_lists" name="Crm Lists" parent="crm.crm_menu_config" sequence="50"/>
+    <menuitem id="crm_menu_campaigns" name="Campaigns" parent="freezoner_custom.crm_menu_lists"
+              action="mass_mailing.action_view_utm_campaigns" sequence="1"/>
+    <menuitem id="crm_menu_mediums" name="Mediums" parent="freezoner_custom.crm_menu_lists"
+              action="utm.utm_medium_action" sequence="2"/>
+    <menuitem id="crm_menu_sources" name="Sources" parent="freezoner_custom.crm_menu_lists"
+              action="freezoner_custom.utm_source_action" sequence="2"/>
+</odoo>

@@ -1,0 +1,184 @@
+<odoo>
+    <record id="freezoner_account_opened_mail_template" model="mail.template">
+        <field name="name">Account Opened</field>
+        <field name="model_id" ref="freezoner_custom.model_task_wizard"/>
+        <field name="model">task.wizard</field>
+        <field name="subject">Account Opened</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{(object.task_id.company_id.email)}}</field>
+        <field name="email_to">{{object.task_id.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin-left: 20px;">
+                <p style="font-size: 13px;">
+                    <br/>
+                    <br/>
+                    <p style="text-align:left ;">Dear :
+                        <strong t-out="object.task_id.partner_id.name"/>
+                        <br/>
+                        <strong>CONGRATULATIONS!!!</strong>
+                    </p>
+                    <p>
+                        Your account has been successfully opened and is now active. We're so happy for you.<br/>
+                        Your account details have been sent to your registered email address.<br/>The bank will contact
+                        you
+                        within a week to arrange the delivery of your Debit card. <br/>Please make sure to have your Emirates
+                        ID available for verification when collecting your card.
+                        <br/>
+                        Thank you for trusting Freezoner with your UAE business journey. If you require any assistance,
+                        <br/>
+                        please don't hesitate to contact me any time via email or my cell.
+                        <br/>
+                        <br/>
+                        Yours Sincerely,
+                    </p>
+
+                </p>
+            </div>
+        </field>
+    </record>
+    <record id="freezoner_bank_evaluation_ongoing_mail_template" model="mail.template">
+        <field name="name">Bank Evaluation Ongoing</field>
+        <field name="model_id" ref="freezoner_custom.model_task_wizard"/>
+        <field name="model">task.wizard</field>
+        <field name="subject">Bank Evaluation Ongoing</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{(object.task_id.company_id.email)}}</field>
+        <field name="email_to">{{object.task_id.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin-left: 20px;">
+                <p style="font-size: 13px;">
+                    <br/>
+                    <br/>
+                    <p style="text-align:left ;">Dear :
+                        <strong t-out="object.task_id.partner_id.name"/>
+                    </p>
+                    <p>
+                        Greetings from Freezoner,
+                        We’re excited to have your account opening process reach its final stage.
+                         <br/>
+                        However, to ensure a smooth transition and timely activation of your account,
+                        <br/>
+                        we require a few
+                        additional details from you, sent to your registered email address.  <br/>
+                        We kindly ask you to respond to the banks’ email within the next 2 working days.
+                        <br/>
+                        Your prompt
+                        cooperation will help us finalize your account setup efficiently.
+                        <br/>
+                        Looking forward to your reply, If you require any clarification, please don't hesitate to
+                        contact me any time via email or my cell.
+                        <br/>
+                        <br/>
+                        Yours Sincerely,
+                    </p>
+
+                </p>
+            </div>
+        </field>
+    </record>
+    <record id="freezoner_document_completion_ongoing_mail_template" model="mail.template">
+        <field name="name">Document Completion and Review</field>
+        <field name="model_id" ref="freezoner_custom.model_task_wizard"/>
+        <field name="model">task.wizard</field>
+        <field name="subject">Document Completion and Review</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{(object.task_id.company_id.email)}}</field>
+        <field name="email_to">{{object.task_id.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin-left: 20px;">
+                <p style="margin-left: 20px; font-size: 13px;">
+                    <br/>
+                    <br/>
+                    <p style="text-align:left ;">Dear :
+                        <strong t-out="object.task_id.partner_id.name"/>
+                    </p>
+                    <p>
+                        Greetings from Freezoner,
+                        <br/>
+                        We are excited to have you with us. I'm here to navigate you through the banking processes in
+                        the UAE, ensuring your account setup is seamless and straightforward.
+                        <br/>
+                        To initiate your corporate banking process, the following documents are required. Kindly provide
+                        us with:
+                        <br/>
+                        <ol>
+                            <li>
+                                <strong style="font-weight: 1000;">Corporate Documents:</strong>
+                                <br/>
+                                Company License, Memorandum of Association, Certificate of Incorporation, Share
+                                Certificate, Office Lease Agreement…etc.
+                            </li>
+                            <li>
+                                <strong style="font-weight: 1000;">Shareholder(s) Personal Documents:</strong>
+                                <br/>
+                                Passport, Residence Visa and Emirates ID of all shareholders.
+                            </li>
+                            <li>
+                                <strong style="font-weight: 1000;">Latest 6-month Bank Statements (Personal or
+                                    Business).
+                                </strong>
+                            </li>
+                            <li>
+                                <strong style="font-weight: 1000;">Company Profile / Business Profile / Company Website
+                                    / CV
+                                </strong>
+                                if any.
+                            </li>
+
+                        </ol>
+                        <br/>
+                        <p>
+                            Upon receipt of the complete set of documents, we will proceed with their evaluation. You
+                            can expect to hear back from us with an update or any further steps required within 2
+                            working days.
+                        </p>
+                        <p>
+                            Thank you for trusting Freezoner with your UAE business journey. If you require any
+                            clarification, please don't hesitate to contact me any time via email or my cell.
+                            <br/>
+                            <br/>
+                            Yours Sincerely,
+                        </p>
+                    </p>
+
+                </p>
+            </div>
+        </field>
+    </record>
+    <record id="freezoner_bank_submitted_mail_template" model="mail.template">
+        <field name="name">Bank Application Submitted</field>
+        <field name="model_id" ref="freezoner_custom.model_task_wizard"/>
+        <field name="model">task.wizard</field>
+        <field name="subject">Bank Application Submitted</field>
+        <field eval="0" name="auto_delete"/>
+        <field name="email_from">{{(object.task_id.company_id.email)}}</field>
+        <field name="email_to">{{object.task_id.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="margin-left: 20px;">
+                <p style="font-size: 13px;">
+                    <br/>
+                    <br/>
+                    <p style="text-align:left ;">Dear :
+                        <strong t-out="object.task_id.partner_id.name"/>
+                        <br/>
+                        <strong style="font-weight: 1000;">
+                            Congratulations! Your bank application has been successfully submitted.
+                        </strong>
+                    </p>
+                    <p>
+                        Please be advised that our credit team will thoroughly review all your submitted documents.
+                    </p>
+                    <p>
+                        They will contact you directly through the email address you've registered with us, within 4-5 working days.
+                    </p>
+                    <p>
+                       Thank you for trusting Freezoner with your UAE business journey. If you require any clarification, please don't hesitate to contact me any time via email or my cell.
+                    </p>
+                    <p>
+                       Yours Sincerely,
+                    </p>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* kw_project_assign_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-29 19:57+0000\n"
+"PO-Revision-Date: 2022-07-29 19:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__assign_executor
+msgid "Assign Executor"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__assign_stage
+msgid "Assign Stage"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.actions.act_window,name:kw_project_assign_wizard.act_kw_project_assign_wizard
+msgid "Assign wizard"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model,name:kw_project_assign_wizard.model_kw_project_assign_wizard
+msgid "Assign wizard "
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model_terms:ir.ui.view,arch_db:kw_project_assign_wizard.kw_project_assign_wizard_view
+msgid "Cancel"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__comment
+msgid "Comment"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model_terms:ir.ui.view,arch_db:kw_project_assign_wizard.kw_project_assign_wizard_view
+msgid "Confirm"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__user_id
+msgid "Executor"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__is_confirm_possible
+msgid "Is Confirm Possible"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__stage_id
+msgid "Stage"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model:ir.model.fields,field_description:kw_project_assign_wizard.field_kw_project_assign_wizard__task_ids
+msgid "Task"
+msgstr ""
+
+#. module: kw_project_assign_wizard
+#: model_terms:ir.ui.view,arch_db:kw_project_assign_wizard.kw_project_assign_wizard_view
+msgid "You should select correct parameters for assign"
+msgstr ""

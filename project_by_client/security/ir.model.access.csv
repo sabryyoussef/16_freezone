@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_client,project_by_client.project_client,model_project_client,project.group_project_manager,1,1,1,1

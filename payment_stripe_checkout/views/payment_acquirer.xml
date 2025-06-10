@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="acquirer_form_stripe_checkout" model="ir.ui.view">
+        <field name="name">acquirer.form.stripe_checkout</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <field name="allow_tokenization" position="attributes">
+                <attribute name="attrs">{'readonly':[('tx_do','=','on_same_page')]}</attribute>
+            </field>
+            <group name="provider_credentials" position='inside'>
+                <group attrs="{'invisible': [('code', '!=', 'stripe_checkout')]}">
+                    <field name="stripe_checkout_client_secret_key" password="True"/>
+                    <field name="stripe_checkout_publishable_key" password="True"/>
+                </group>
+            </group>
+             <group name="provider_config" position="inside">
+                <group attrs="{'invisible':[('code','!=','stripe_checkout')]}">
+                    <field name="tx_do" widget="radio"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

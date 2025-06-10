@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="email_template_equipment_request_APPROVED" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ object.employee_id.work_email or '' }}</field>
+            <field name="subject">Request Approved Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello <t t-esc="object.employee_id.name"/>,
+                <br/><br/>
+                Your Equipment Request Is Approved.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_equipment_request_APPROVED_user" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ user.work_email or '' }}</field>
+            <field name="subject">Request Approved Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello <t t-esc="user.name"/>,
+                <br/><br/>
+                Employee <t t-esc="object.employee_id.name"/> Equipment Request Is Approved.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_equipment_request_APPROVED_manager" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ object.employee_id.parent_id.work_email}}</field>
+            <field name="subject">Request Approved Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello Manager<t t-esc="object.employee_id.parent_id.name"/>,
+                <br/><br/>
+                Your Team Member <t t-esc="object.employee_id.name"/> Equipment Request Is Approved.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+
+
+
+
+        <record id="email_template_equipment_request_REJECTED" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ object.employee_id.work_email or '' }}</field>
+            <field name="subject">Request Rejected Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello <t t-esc="object.employee_id.name"/>,
+                <br/><br/>
+                Your Equipment Request Is Rejected.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+
+
+        <record id="email_template_equipment_request_REJECTED_manager" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ object.employee_id.parent_id.work_email}}</field>
+            <field name="subject">Request Rejected Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello Manager <t t-esc="object.employee_id.parent_id.name"/>,
+                <br/><br/>
+                Your Team Member <t t-esc="object.employee_id.name"/> Equipment Request Is Rejected.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+
+
+        <record id="email_template_equipment_request_REJECTED_user" model="mail.template">
+            <field name="name">Equipment Request</field>
+            <field name="model_id" ref="model_equipment_request"/>
+            <field name="email_from">{{ user.name or '' }}</field>
+            <field name="email_to">{{ user.work_email or '' }}</field>
+            <field name="subject">Request Rejected Notification</field>
+            <field name="body_html" type="html">
+
+                <div style="margin:0px; padding:0px;">
+                Hello <t t-esc="user.name"/>,
+                <br/><br/>
+                Employee <t t-esc="object.employee_id.name"/> Equipment Request Is Rejected.
+                <br/><br/>
+                Thank you,<br/>
+                <t t-esc="user.name"/>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

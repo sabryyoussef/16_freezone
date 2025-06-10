@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_deductions_user,discipline_system.hr_deductions,model_hr_deductions,group_deductions_user,1,1,0,0
+access_hr_deductions_reasons_user,discipline_system.hr_deductions_reasons,model_hr_deductions_reasons,group_deductions_user,1,1,0,0
+access_hr_deductions_wizard,discipline_system.hr_deductions_dispute_wizard,model_hr_deductions_dispute_wizard,,1,1,1,1
+
+access_hr_deductions_manager,discipline_system.hr_deductions,model_hr_deductions,group_deductions_manager,1,1,1,1
+access_hr_deductions_reasons_manager,discipline_system.hr_deductions_reasons,model_hr_deductions_reasons,group_deductions_manager,1,1,1,1

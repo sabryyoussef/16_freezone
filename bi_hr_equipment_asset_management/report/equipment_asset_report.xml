@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_asset_equipment_asset_document">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<t t-foreach="docs" t-as="doc">
+							<div class="row" style="margin-top:30px;">
+								<div class="col-12">
+									<table class="table table-bordered" style="table-layout: fixed">
+										<thead style="display: table-row-group">
+											<tr>
+												<th class="text-center" style="width: 30%; background-color: #A0A0A0;" scope="col"><h3>Equipment :</h3></th>
+													<td class="text-center" style="font-size: 22px; background-color: #C0C0C0;">
+														<t t-esc="doc.name"/>
+													</td>
+												
+											</tr>
+
+											<tr>
+												<th class="text-center" style="width: 30%; background-color:#C7C9CE;" scope="col"><h5>Equipment Code :</h5></th>
+													<td  class="text-center" style="font-size: 18px; background-color:#E9EAEC;">
+														<t t-if="doc.equipment_code" t-esc="doc.equipment_code"/>
+														<t t-else="">False</t>
+													</td>
+											</tr>
+
+											<tr>
+												<th class="text-center" style="width: 30%; background-color:#C7C9CE;" scope="col"><h5>Assigned Employee :</h5></th>
+												
+													<td class="text-center" style="font-size: 18px; background-color:#E9EAEC;">
+														<t t-if="doc.sudo().employee_id" t-esc="doc.sudo().employee_id.name"/>
+														<t t-else="">False</t>
+													</td>
+												
+											</tr>
+
+											<tr>
+												<th class="text-center" style="width: 30%; background-color:#C7C9CE;" scope="col"><h5>Assigned Date :</h5></th>
+													<td class="text-center" style="font-size: 18px; background-color:#E9EAEC;">
+														<t t-if ="doc.assign_date" t-esc="doc.assign_date"/>
+														<t t-else="">False</t>
+													</td>
+											</tr>
+
+											<tr>
+												<th class="text-center" style="width: 20%; background-color:#C7C9CE;" scope="col"><h5>Status :</h5></th>
+												<td class="text-center" style="font-size: 18px; background-color:#E9EAEC;"><t t-esc="doc.state"/></td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>	
+		
+		<record id="action_report_equipment" model="ir.actions.report">
+			<field name="name">Equipment Asset Report</field>
+			<field name="model">maintenance.equipment</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">bi_hr_equipment_asset_management.report_asset_equipment_asset_document</field>
+			<field name="report_file">bi_hr_equipment_asset_management.report_asset_equipment_asset_document</field>
+			<field name="print_report_name">'Equipment Asset Document - %s' % (object.id)</field>
+			<field name="binding_model_id" ref="model_maintenance_equipment"/>
+			<field name="binding_type">report</field>
+		</record>
+
+	</data>
+</odoo>

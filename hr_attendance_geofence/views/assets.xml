@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="google_geofence assets backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            
+            <link rel="stylesheet" type="text/css" href="/hr_attendance_geofence/static/src/js/lib/ol-6.12.0/ol.css"/>
+            <link rel="stylesheet" type="text/css" href="/hr_attendance_geofence/static/src/js/lib/ol-ext/ol-ext.css"/>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/lib/ol-6.12.0/ol.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/lib/ol-ext/ol-ext.js"></script>
+            
+            <link rel="stylesheet" type="text/css" href="/hr_attendance_geofence/static/src/css/style.css"/>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/user_menu.js"></script>
+
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_drawing.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_model.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_controller.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_renderer.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_view.js"></script>
+
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/geofence_common.js"></script>
+            <script type="text/javascript" src="/hr_attendance_geofence/static/src/js/my_attendances.js"></script>
+
+        </xpath>
+   </template>
+</odoo>

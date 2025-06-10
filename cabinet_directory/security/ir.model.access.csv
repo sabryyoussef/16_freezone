@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cabinet_directory,cabinet_directory,model_cabinet_directory,,1,1,1,1
+access_directory_folder,directory_folder,model_directory_folder,,1,1,1,1
+access_sub_folder_files,sub_folder_files,model_sub_folder_files,,1,1,1,1
+access_files_activity_wizard,files_activity_wizard,model_files_activity_wizard,,1,1,1,1
+access_handover_wizard,handover_wizard,model_handover_wizard,,1,1,1,1

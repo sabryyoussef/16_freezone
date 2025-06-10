@@ -1,0 +1,30 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="documents_request_wizard_forms" model="ir.ui.view">
+        <field name="name">documents.request_wizard</field>
+        <field name="model">documents.request_wizard</field>
+        <field name="inherit_id" ref="documents.documents_request_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="replace">
+                <field name="partner_id" options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+                <field name="project_id" invisible="1"/>
+                <field name="partner_ids" widget="many2many_tags" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='folder_id']" position="before">
+                <field name="type_id" options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='folder_id']" position="attributes">
+                <attribute name="options">{'no_quick_create':True,'no_create_edit':True,'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="options">{'no_quick_create':True,'no_create_edit':True,'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='owner_id']" position="attributes">
+                <attribute name="options">{'no_quick_create':True,'no_create_edit':True,'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_type_id']" position="attributes">
+                <attribute name="options">{'no_quick_create':True,'no_create_edit':True,'no_create': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

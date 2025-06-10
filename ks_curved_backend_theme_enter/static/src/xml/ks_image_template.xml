@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="ks_theme_image_template">
+        <!-- For loop -->
+        <t t-foreach="ks_image_data" t-as="bg" t-key="bg.id">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image">
+                    <input type="radio" t-att-id="ks_image_save + '#' + bg.id"
+                           t-att-data-value="bg.id"
+                           t-att-name="ks_image_for" data-model="ks.body.background"
+                           t-att-checked="bg.ks_active ? 'checked' : None"
+                           t-att-data-field-save="ks_image_save"
+                           class="custom-control-input ks_background_image ks_binary_field ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="ks_image_save + '#' + bg.id">
+                        <img class="ks_image_hover" t-att-src="bg.value"
+                             t-att-data-zoom-image="bg.value"/>
+                    </label>
+                    <i t-att-class="'fa fa-trash ' + ks_image_del"
+                       t-att-data-id="ks_image_save + '#' + bg.id"/>
+                </div>
+            </div>
+        </t>
+        <p t-att-class="'alert alert-danger ks_bck_img' + ks_image_add + ' d-none'"
+           role="alert">
+            Image Is Uploaded Please Click on apply button to save the image
+        </p>
+        <div class="row no-gutters align-items-center mb-3">
+            <div class="col d-flex align-items-center ks_global_binary_field ks-file-upload">
+                <input type="file" class="ks_binary_field ks_background_image"
+                       t-att-id="ks_image_add"
+                       t-att-name="ks_image_save" accept="image/*"/>
+                <!-- <span>fileName</span> -->
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+
+    <t t-name="ks_theme_image_template_1" owl="1">
+        <!-- For loop -->
+        <t t-foreach="ks_image_data" t-as="bg" t-key="bg.id">
+            <div class="quick-card-sec mr-1 mb-3 d-inline-block">
+                <div class="custom-control custom-radio custom-control-align-center ks-bg-image">
+                    <input t-on-change="_onInputChange" type="radio" t-att-id="ks_image_save + '#' + bg.id"
+                           t-att-data-value="bg.id"
+                           t-att-name="ks_image_for" data-model="ks.body.background"
+                           t-att-checked="bg.ks_active ? 'checked' : None"
+                           t-att-data-field-save="ks_image_save"
+                           class="custom-control-input ks_background_image ks_binary_field ks_radio_list"/>
+                    <label class="custom-control-label ks_back_img_hover"
+                           t-att-for="ks_image_save + '#' + bg.id">
+                        <img class="ks_image_hover" t-att-src="bg.value"
+                             t-att-data-zoom-image="bg.value"/>
+                    </label>
+                    <i t-att-class="'fa fa-trash ' + ks_image_del"
+                       t-att-data-id="ks_image_save + '#' + bg.id"
+                       t-on-click="_ksDelBackgroundImage"/>
+                </div>
+            </div>
+        </t>
+        <p t-att-class="'alert alert-danger ks_bck_img' + ks_image_add + ' d-none'"
+           role="alert">
+            Image Is Uploaded Please Click on apply button to save the image
+        </p>
+        <div class="row no-gutters align-items-center mb-3">
+            <div class="col d-flex align-items-center ks_global_binary_field ks-file-upload">
+                <input t-on-change="_onInputChange" type="file" class="ks_binary_field ks_background_image"
+                       t-att-id="ks_image_add"
+                       t-att-name="ks_image_save" accept="image/*"/>
+                <!-- <span>fileName</span> -->
+            </div>
+        </div>
+        <!-- color col / end -->
+    </t>
+
+
+</templates>

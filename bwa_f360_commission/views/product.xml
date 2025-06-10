@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="product_profit_margin" model="ir.ui.view">
+            <field name="name">Product Profit Margin</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="before">
+                    <field name="profit_margin"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

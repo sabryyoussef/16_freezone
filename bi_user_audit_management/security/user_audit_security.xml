@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    	<record model="ir.module.category" id="user_audit_management">
+            <field name="name">User Audit</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="bi_group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="bi_user_audit_management.user_audit_management"/>
+        </record>
+
+        <record id="bi_group_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="bi_user_audit_management.user_audit_management"/>
+            <field name="implied_ids" eval="[(4, ref('bi_user_audit_management.bi_group_user'))]"/>
+        </record>
+
+        <record id="bi_user_rule" model="ir.rule">
+            <field name="name">User Rights</field>
+            <field name="model_id" ref="bi_user_audit_management.model_user_audit_configuration"/>
+            <field name="global" eval="True"/>
+            <field name="groups" eval="[(4, ref('bi_user_audit_management.bi_group_user'))]"/>
+        </record>
+
+        <record id="bi_manager_rule" model="ir.rule">
+            <field name="name">Manager Rights</field>
+            <field name="model_id" ref="bi_user_audit_management.model_user_audit_configuration"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('bi_user_audit_management.bi_group_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+
+        <record id="hr_deductions_tree_view" model="ir.ui.view">
+            <field name="name">hr_deductions_tree_view</field>
+            <field name="model">hr.deductions</field>
+            <field name="arch" type="xml">
+                <tree string="Deductions">
+                    <field name="active" invisible="1"/>
+                    <field name="employee_id"/>
+                    <field name="reason"/>
+                    <field name="rate"/>
+                    <field name="deduction_date" string="Action Date"/>
+                    <field name="state"/>
+                    <field name="creator"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_deductions_form_view" model="ir.ui.view">
+            <field name="name">hr_deductions_form_view_manager</field>
+            <field name="model">hr.deductions</field>
+            <field name="arch" type="xml">
+                <form edit="0">
+                    <header>
+                        <button name="confirm" string="Confirm" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|',('state', '!=', 'Draft'),('manager','=',False)]}"/>
+                        <button name="accept" string="Accept" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|',('state', 'in', ('Accepted','Draft')),('manager','=',False)]}"/>
+                        <button name="dispute" string="Dispute" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|',('state', '!=', 'Confirmed'),('manager','=',False)]}"/>
+                        <button name="cancel" string="Cancel" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|',('state', '=', 'Cancel'),('manager','=',False)]}"
+                                groups="discipline_system.group_deductions_manager"/>
+                        <button name="reset" string="Reset to draft" type="object"
+                                attrs="{'invisible': [('state', 'in', ('Confirmed','Draft',))]}"
+                                groups="discipline_system.group_deductions_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed,Accepted"/>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="manager" invisible="1"/>
+                                <field name="active" invisible="1"/>
+                                <field name="employee_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="reason"/>
+                                <field name="rate" force_save="1" string="Action Rate"/>
+                            </group>
+                            <group>
+                                <field name="deduction_date" string="Action Date"/>
+                                <field name="creator"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_deductions_form_view_manager" model="ir.ui.view">
+            <field name="name">hr_deductions_form_view_manager</field>
+            <field name="model">hr.deductions</field>
+            <field name="inherit_id" ref="discipline_system.hr_deductions_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <t groups="discipline_system.group_deductions_manager">
+                        <attribute name="edit">1</attribute>
+                    </t>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

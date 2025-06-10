@@ -1,0 +1,19 @@
+<odoo>
+    <record id="seq_document_seq" model="ir.sequence">
+        <field name="name">Document Seq</field>
+        <field name="code">res.partner.document</field>
+        <field name="prefix">DOC/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_documents_seq" model="ir.sequence">
+        <field name="name">Documents Seq</field>
+        <field name="code">documents.document</field>
+        <field name="prefix">DOC/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

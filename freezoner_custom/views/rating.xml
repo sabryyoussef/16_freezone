@@ -1,0 +1,12 @@
+<odoo>
+    <record id="rating_form" model="ir.ui.view">
+        <field name="name">rating.form</field>
+        <field name="model">rating.rating</field>
+        <field name="inherit_id" ref="rating.rating_rating_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='res_name']" position="after">
+                <field name="priority" widget="priority"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

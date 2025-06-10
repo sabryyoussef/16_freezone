@@ -1,0 +1,22 @@
+<odoo>
+   <record id="partner_products" model="ir.ui.view">
+       <field name="name">res.partner.products.from</field>
+       <field name="model">res.partner</field>
+       <field name="inherit_id" ref="base.view_partner_form"/>
+       <field name="arch" type="xml">
+           <xpath expr="//page[@name='internal_notes']" position="after">
+               <page string="Products">
+                   <field name="project_product_ids">
+                       <tree>
+                           <field name="project_id"/>
+                           <field name="product_id"/>
+                           <field name="date_start"/>
+                           <field name="date_end"/>
+                           <field name="remarks_ids" widget="many2many_tags"/>
+                       </tree>
+                   </field>
+               </page>
+           </xpath>
+       </field>
+   </record>
+</odoo>

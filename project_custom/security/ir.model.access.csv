@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_license_activity,license_activity,model_license_activity,,1,1,1,1
+access_res_partner_shareholder_address,res_partner_shareholder_address,model_res_partner_shareholder_address,,1,1,1,1
+access_project_visa_application,project_visa_application,model_project_visa_application,,1,1,1,1
+access_contact_visa_application,contact_visa_application,model_contact_visa_application,,1,1,1,1
+access_reached_checkpoint,reached.checkpoint,model_reached_checkpoint,,1,1,1,1
+access_project_task_checkpoint,project_task_checkpoint,model_project_task_checkpoint,,1,1,1,1
+access_hand_legal_type,hand_legal_type,model_hand_legal_type,,1,1,1,1
+access_channel_partner_plan,channel_partner_plan,model_channel_partner_plan,,1,1,1,1

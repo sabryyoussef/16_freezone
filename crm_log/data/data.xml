@@ -1,0 +1,5 @@
+<odoo>
+    <record id="crm_lead_business_proposal" model="res.partner.document.type">
+        <field name="name">Business Proposal</field>
+    </record>
+</odoo>

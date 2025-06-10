@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--Email template -->
+        <record id="email_template_edi_statement" model="mail.template">
+            <field name="name">Partner: Statement</field>
+            <field name="email_from">{{ (user.email_formatted or '') }}</field>
+            <field name="subject">Statement</field>
+            <field name="partner_to">{{ object.id }}</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="auto_delete" eval="True" />
+            <field name="report_template" ref="partner_statement_knk.partner_statement_pdf" />
+            <field name="report_name">Statement_{{ (object.name) }}</field>
+            <field name="lang">{{ object.lang }}</field>
+            <field name="body_html" type="html">
+<div>
+    <p>Dear
+        <t t-out="object.name"></t><br />
+        Please find attachment of Your Statement<br />
+        If you have any questions, please do not hesitate to contact us.
+        <br />
+        Best regards
+        <t>
+            <t t-out="object.user_id.signature or ''"></t>
+        </t>
+    </p>
+</div>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,70 @@
+.custom-control.custom-checkbox .custom-control-label::before, .custom-control.custom-checkbox .custom-control-label::after {
+  border-radius: 2px;
+  background-color: var(--primary);
+  content: "";
+}
+.custom-control.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+  background-color: var(--primary);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgOSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMSA1TDMuNSA3LjVMOCAxIiBzdHJva2U9IiNGRkY3RjciIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==");
+  background-size: 10px;
+  content: "";
+}
+
+
+.form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after {
+  border-radius: 2px;
+  background-color: #ddd;
+    content: "";
+    width: 15px;
+    height: 15px;
+}
+.form-check.o-checkbox .form-check-input:checked ~ .form-check-label::after {
+  background-color: #ddd;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgOSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMSA1TDMuNSA3LjVMOCAxIiBzdHJva2U9IiNGRkY3RjciIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==");
+  background-size: 10px;
+    content: "";
+    display: block;
+    background-repeat:no-repeat;
+    background-position: center;
+}
+.form-check.o-checkbox .form-check-label::before, .form-check-label::after{
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    content: "";
+    }
+ .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label,.form-check.o-checkbox .form-check-input{
+ transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+ }
+ .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after, .form-check.o-checkbox .form-check-label::before, .form-check.o-checkbox .form-check-label::after{
+     left: -2rem;
+    top: 0.2rem;
+    }
+  .form-check.o-checkbox .form-check-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    }
+    .form-check.o-checkbox .form-check-input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    }
+   .form-check.o-checkbox {
+    padding-left: 2rem;
+    word-break: break-all;
+    position: relative;
+    display: block;
+    }
+
+
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-input {
+    z-index: 0 !important;
+    opacity: 1 !important;
+}
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-label::before {
+     display:none;
+}
+.o_field_boolean_toggle .form-check.o-checkbox .form-check-label::after {
+     display:none !important;
+}

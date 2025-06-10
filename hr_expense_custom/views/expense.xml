@@ -1,0 +1,28 @@
+<odoo>
+    <record id="hr_expense_view_custom" model="ir.ui.view">
+        <field name="name">HR Expense Custom</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='analytic_distribution']" position="after">
+                <field name="vendor_id" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                       options="{'no_open': True,'no_create':True,'no_create_edit':True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_expense_sheet_view_custom" model="ir.ui.view">
+        <field name="name">HR Expense Sheet Custom</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='accounting_date']" position="after">
+                <field name="vendor_id" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                       options="{'no_open': True,'no_create':True,'no_create_edit':True}"/>
+            </xpath>
+            <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="after">
+                <field name="vendor_id" options="{'no_open': True,'no_create':True,'no_create_edit':True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

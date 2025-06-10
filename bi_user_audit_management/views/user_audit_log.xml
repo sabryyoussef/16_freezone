@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="user_audit_log_form_view" model="ir.ui.view">
+		<field name="name">user.audit.log.form.view</field>
+		<field name="model">user.audit.log</field>
+		<field name="arch" type="xml">
+			<form string="Configuration">
+				<sheet>
+
+					<group>
+						<group>
+							<field name="model_id"/>
+							<field name="record_id"/>
+							<field name="name"/>
+						</group>
+						<group>
+							<field name="log_type"/>
+							<field name="user_id"/>
+							<field name="date"/>
+						</group>
+						<group style="margin-top:20px;" attrs="{'invisible': [('log_type', '!=', 'Write')]}">
+							<field name="updated_id"/>
+							<field name="updated_value"/>
+							<field name="old_value"/>
+						</group>
+					</group>
+
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="user_audit_log_tree_view" model="ir.ui.view">
+		<field name="name">user.audit.log.tree.view</field>
+		<field name="model">user.audit.log</field>
+		<field name="arch" type="xml">
+			<tree string="User Audit Log">
+				<field name="name"/>
+				<field name="user_id"/>
+				<field name="record_id"/>
+				<field name="model_id"/>
+				<field name="log_type"/>
+				<field name="date"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="view_audit_log_filter" model="ir.ui.view">
+        <field name="name">user.audit.log</field>
+        <field name="model">user.audit.log</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Audit Types">
+            	<filter string="Users" name="Users" domain="[]" context="{'group_by': 'user_id'}"/>
+            	<filter string="Objects" name="Objects" domain="[]" context="{'group_by': 'model_id'}"/>
+                <filter string="Type" name="Type" domain="[]" context="{'group_by': 'log_type'}"/>
+            </search>
+        </field>
+    </record>
+
+
+
+	<record id="user_audit_log_action_view" model="ir.actions.act_window">
+		<field name="name">User Audit Log</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">user.audit.log</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="user_audit_log_tree_view"/>
+	</record>
+
+</odoo>

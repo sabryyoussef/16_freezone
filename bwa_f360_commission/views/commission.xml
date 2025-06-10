@@ -1,0 +1,83 @@
+<odoo>
+
+    <record id="partner_commission_form" model="ir.ui.view">
+        <field name="name">partner.commission.form</field>
+        <field name="model">partner.commission</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_approve" class="oe_highlight mr-1" states="draft" type="object"
+                            string="Approve"/>
+                    <button name="action_cancel" class="oe_highlight mr-1" states="draft,approved"
+                            type="object" string="Cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancel"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_entry" class="oe_stat_button" icon="fa-bars" type="object"
+                                attrs="{'invisible':[('move_ids','=',[])]}" string="Vendor Bill">
+                            <field name="move_ids" invisible="1"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="amount"/>
+                        </group>
+                        <group>
+                            <field name="invoice_id"/>
+                            <field name="create_date"/>
+                        </group>
+                        <field name="notes" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="partner_commission_tree" model="ir.ui.view">
+        <field name="name">partner.commission.tree</field>
+        <field name="model">partner.commission</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="partner_id"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="views_partner_commission_search" model="ir.ui.view">
+        <field name="name">views.partner.commission.search</field>
+        <field name="model">partner.commission</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <group>
+                    <filter name="partner_id" string="Partner" context="{'group_by' : 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="partner_commission_action" model="ir.actions.act_window">
+        <field name="name">Partner Commission</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.commission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="partner_commission_menu" name="Commissions"
+              parent="sale.menu_sale_config" action="partner_commission_action" sequence="20"/>
+
+</odoo>

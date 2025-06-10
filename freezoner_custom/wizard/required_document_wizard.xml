@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="project_required_documents_wizard_form_view">
+        <field name="name">required.documents.wizard.form.view</field>
+        <field name="model">required.documents.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="">
+                    <group>
+                        <group>
+                            <field name="project_id" invisible="1"/>
+                            <field name="name" required="1" placeholder="e.g. Missing Expense"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_request" string="Request" type="object" default_focus="1"
+                            class="oe_highlight"
+                    />
+<!--                    <button name="action_upload" string="Upload" type="object" default_focus="1" class="oe_highlight"/>-->
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

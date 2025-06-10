@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_kw_project_assign_wizard,access_kw_project_assign_wizard,model_kw_project_assign_wizard,project.group_project_user,1,1,1,1

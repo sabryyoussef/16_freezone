@@ -1,0 +1,248 @@
+<odoo>
+    <template id="custom_report_footer">
+        <div style="text-align: center; font-family: Arial, sans-serif; font-size: 12px; margin-top: 20px;height: 100px;">
+            <p style="font-weight: bold; margin-bottom: 10px;">
+                THE COMPANY FORMATION EXPERTS
+            </p>
+            <div style="position: relative; width: 100%; text-align: center; font-size: 14px;">
+                <!-- Left section -->
+                <div style="position: absolute; left: 0; top: 0; text-align: left;">
+                    <p style="margin: 2px 10px;">📞 +971 4 244 2279</p>
+                    <p style="margin: 2px 10px;">✉︎ info@freezoner.net</p>
+                    <p style="margin: 2px 10px;">📬 191412</p>
+                </div>
+
+                <!-- Center section -->
+                <div style="display: inline-block; white-space: nowrap;">
+                    <p style="margin: 2px 0;">
+                        <img src="/hr_salary_certificate/static/description/footer1.png"
+                             style="height: 140px;width:150px;" alt="Logo"/>
+                    </p>
+                    <p style="margin: 2px 0;">Scan Our Website</p>
+                </div>
+
+                <!-- Right section -->
+                <div style="position: absolute; right: 0; top: 0; text-align: right;">
+                    <p style="margin: 2px 10px;">📍 Business Central Towers</p>
+                    <p style="margin: 2px 10px;">“BCT”, Tower B, 20th Floor,</p>
+                    <p style="margin: 2px 10px;">Office 2001, Dubai, UAE</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="custom_1_external_layout_standard">
+        <div class="header" style="width:100%;">
+            <div align="left">
+                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                     style="height: 120px;width:160px;" alt="Logo"/>
+            </div>
+        </div>
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+        <div t-attf-class="footer"
+             style="text-align: center; font-family: Arial, sans-serif; font-size: 12px; margin-top: 20px;height: 100px;">
+
+        </div>
+    </template>
+    <template id="custom_1_externl_layout">
+        <t t-if="not o">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="not company">
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="hr_salary_certificate.custom_1_external_layout_standard">
+            <t t-out="0"/>
+        </t>
+    </template>
+    <template id="report_salary_certificate_documents">
+        <t t-call="hr_salary_certificate.custom_1_externl_layout">
+            <div class="page">
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class="oe_structure"/>
+                <div class="container">
+                    <br/>
+                    <div class="content" style="width:100%;color:black;">
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            <t t-if="doc.issued_date">
+                                <span t-field="doc.issued_date"/>
+                            </t>
+                        </span>
+                        <p/>
+                        <span t-if="doc.type == 'generic'"
+                              style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            To whom it may concern,
+                        </span>
+                        <span t-if="doc.type == 'specific'"
+                              style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            To :
+                            <strong>
+                                <t t-esc="doc.partner_id.name"/>
+                            </strong>
+                            <br/>
+                            &#160;&#160;&#160;&#160;&#160;&#160;
+                            <t t-esc="doc.partner_id.street"/>
+                            <t t-if="doc.partner_id.street2">
+                                ,
+                                <br/>
+                                &#160;&#160;&#160;&#160;&#160;&#160;
+                                <t t-esc="doc.partner_id.street2"/>
+                            </t>
+                            <t t-if="doc.partner_id.state_id">
+                                ,
+                                <br/>
+                                &#160;&#160;&#160;&#160;&#160;&#160;
+                                <t t-esc="doc.partner_id.state_id.name"/>
+                            </t>
+                            <t t-if="doc.partner_id.country_id">
+                                ,
+                                <br/>
+                                &#160;&#160;&#160;&#160;&#160;&#160;
+                                <t t-esc="doc.partner_id.country_id.name"/>
+                            </t>
+                        </span>
+                        <p/>
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            Subject :
+                            <t t-esc="doc.certificate_id.name"/>
+                        </span>
+                        <p></p>
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            This is to certify that
+                            <t t-if="doc.employee_id.gender == 'male'">
+                                <strong style="font-size:18px;font-family: 'Times New Roman', Times, serif;">Mr.
+                                </strong>
+                            </t>
+                            <t t-if="doc.employee_id.gender == 'female'">
+                                <strong style="font-size:18px;font-family: 'Times New Roman', Times, serif;">Ms.
+                                </strong>
+                            </t>
+                            <strong>
+                                <span t-field='doc.employee_id.name'/>
+                            </strong>
+                            ,&#160; holding passport number
+                            <strong>
+                                <span t-field='doc.employee_id.passport_id'/>
+                            </strong>
+                            is working with our company
+                            <strong>
+                                <span t-field='doc.company_id.name'/>
+                            </strong>
+                            as
+                            <strong>
+                                <span t-field='doc.employee_id.job_id.name'/>
+                            </strong>
+                        </span>
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+
+                            <t t-if="doc.employee_id.joining_date">
+                                since
+                                <t t-esc="doc.employee_id.joining_date.strftime('%B %d, %Y')"/>
+                            </t>
+
+                        </span>
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            with monthly basic salary of
+                            <strong>
+                                <span t-field='doc.currency_id.name'/>
+                            </strong>
+                            <strong>
+                                <span t-field="doc.salary"/>
+                            </strong>
+                            plus monthly commission.
+                        </span>
+                        <p/>
+                        <span style="font-size:18px;font-family: 'Times New Roman', Times, serif !important;">
+                            We are issuing this letter at the specific request of our employee for
+                            <t t-if="doc.employee_id.gender == 'male'">
+                                <span style="font-size:18px;font-family: 'Times New Roman', Times, serif;">his</span>
+                            </t>
+                            <t t-if="doc.employee_id.gender == 'female'">
+                                <span style="font-size:18px;font-family: 'Times New Roman', Times, serif;">her</span>
+                            </t>
+                            <strong>
+                                <span t-field="doc.purpose_of_certificate"/>
+                            </strong>
+                            without accepting any liability on behalf
+                            of this letter or part of this letter on our company.
+                        </span>
+
+                        <p></p>
+                    </div>
+                    <!-- Right-aligned Thank You and Signature Section -->
+                    <div style="text-align: left; margin-top: 20px; color: black; margin-top:60px;">
+                        <p style="margin: 2px 0;">
+                            <img src="/hr_salary_certificate/static/description/Signature.png"
+                                 style="height: 80px;width:150px;" alt="Logo"/>
+                        </p>
+                        <span t-field="doc.director_id.name"
+                              style="font-size:18px;font-family: 'Times New Roman', Times, serif;"></span>
+                        <br/>
+                        <t t-if="doc.director_id.job_id.name">
+                            <span t-esc="doc.director_id.job_id.name"
+                                  style="font-size:18px;font-family: 'Times New Roman', Times, serif;"></span>
+                            <br/>
+                        </t>
+                    </div>
+
+                </div>
+                <div class="oe_structure"/>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <t t-call="hr_salary_certificate.custom_report_footer"/>
+        </t>
+    </template>
+    <template id="report_salary_certificates">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_salary_certificate.report_salary_certificate_documents"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="action_report_salary_certificate_letters"
+            string="Salary Certificate"
+            model="salary.certificate.master"
+            report_type="qweb-pdf"
+            name="hr_salary_certificate.report_salary_certificates"
+            file="hr_salary_certificate.report_salary_certificates"
+            print_report_name="'Salary-Certificate - %s' % (object.name)"
+            paperformat="hr_salary_certificate.salary_certificate_paper_format"
+            menu="False"
+    />
+</odoo>

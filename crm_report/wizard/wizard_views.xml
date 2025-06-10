@@ -1,0 +1,43 @@
+<odoo>
+
+        <record id="lead_report_wizard_form_views" model="ir.ui.view">
+            <field name="name">Lead Reports</field>
+            <field name="model">crm.lead.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Items Report">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="start_date" required="1" />
+                                <field name="end_date" required="1" />
+                                <field name="marketing_budget" attrs="{'invisible':[('report_type','=','details')]}" />
+                            </group>
+                            <group>
+                                <field name="report_type" required="1" widget="radio"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Print" name="print_xlsx_report" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="action_lead_wizard_reports" model="ir.actions.act_window">
+            <field name="name">Lead Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="lead_report_wizard_form_views"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="menu_wizard_lead_reports" name="Lead Reports"
+                  parent="crm.crm_menu_report"
+                  action="action_lead_wizard_reports" sequence="2"/>
+
+</odoo>

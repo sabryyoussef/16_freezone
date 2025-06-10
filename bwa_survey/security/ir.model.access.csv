@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_resource_portal,resource_portal,resource.model_resource_resource,base.group_portal,1,0,0,0
+access_survey_rating_portal,access_survey_rating_portal,model_survey_rating,base.group_portal,1,1,1,1
+access_survey_rating,access_survey_rating,model_survey_rating,,1,1,1,1

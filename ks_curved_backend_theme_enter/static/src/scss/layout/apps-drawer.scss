@@ -1,0 +1,763 @@
+.ks_customize_icon{
+      @extend .d-none;
+}
+
+.o_cp_action_menus{
+    @extend %empty;
+}
+
+@keyframes menu_apps_effect {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+%app_dropw_list{
+    @extend .d-flex;
+    @extend .flex-wrap;
+
+    .dropdown-item{
+         @extend .d-flex;
+         @extend .flex-column;
+         @extend .align-items-center;
+         @include app_transition;
+         @extend .p-4;
+         transform-origin: left top;
+         max-width: calc(100% / 6);
+         min-height: 100px;
+
+         .ks-search-icon-app,
+         .o-app-icon{
+             position: relative;
+             transition: all ease-in-out 0.3s;
+             box-shadow: 0 7px 16px -10px $black;
+             margin-bottom: 1rem;
+         }
+
+         .o-app-icon{
+            max-width: 98px;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            width:75px;
+         }
+
+         .o-app-name {
+            max-width: 80px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+         &:hover{
+            .ks-search-icon-app,
+            .o-app-icon{
+                box-shadow: 0 14px 16px -10px $black;
+                transform: translateY(-6px);
+                ~ {
+                  .o-app-name{
+                    color: var(--color);
+                  }
+                }
+            }
+         }
+         .apps_ic{
+            @include flex-center-justify();
+            flex-direction: column;
+            .o-app-name{
+                color: var(--color);
+            }
+         }
+    }
+}
+
+// o_menu_apps
+.o_menu_toggle{
+
+    div.dropdown{
+        a.full{
+            .logo-bg-primary{
+                fill: var(--primary) !important;
+            }
+            .logo-bg-secondary{
+                fill: var(--app-drawar) !important;
+            }
+            &:hover{
+                @extend %bg-transparent;
+            }
+        }
+    }
+    .dropdown-menu.ks_appdrawer_div{
+        display: flex !important;
+        flex-direction:  column;
+        padding: 0.5rem;
+        box-shadow: none;
+
+        @media(min-width: 992px){
+            padding-left: 20vw;
+            padding-right: 20vw;
+        }
+        width: 100vw;
+       // z-index: 1002;
+        top: 45px !important;
+        position: fixed !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: none;
+        transform: scale(0);
+        transform-origin: top left;
+        background: transparent;
+
+        .ks_appdrawer-tab-content{
+            overflow-x: hidden;
+            overflow-y: auto;
+            //display: flex !important;
+            .ks_appdrawer_panel{
+                .ks_appdrawer_inner_app_div{
+                    @extend %app_dropw_list;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .apps-drawer-nav{
+            @extend .justify-content-center;
+
+            .nav-link {
+                border: 1px solid $ks_border    ;
+                margin: 0 0.5rem;
+                border-radius: 30px;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        .ks_user_pic{
+            @extend %full_width;
+            @include align-center();
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 1rem;
+
+            .ks_user_name{
+                font-size: 1.875rem;
+                font-weight: 600;
+                margin: 1.5rem 0;
+                color: var(--color);
+            }
+        }
+        .ks_menu_search{
+            @extend %full_width;
+
+            .ks_menu_search_box{
+                 box-shadow: 0 10px 15px rgba($black, 0.1);
+                 border: 1px solid rgba($black, 0.05);
+                 border-radius: 40px;
+                 overflow: hidden;
+                 padding: 0 2rem 0 0rem;
+                 background: $white;
+
+                 .input-box-text{
+                    @include position(absolute, $top: 50%, $right: 1.8rem);
+                    transform: translateY(-50%);
+                    color: var(--dark);
+                 }
+
+                 .ks_search_input{
+                    border: none;
+                    height: 44px;
+                    padding-left: 1.5rem;
+                 }
+            }
+        }
+        // END - ks_menu_search
+
+        .ks-search-values{
+            height: 100%;
+            overflow: auto;
+            @extend %empty;
+            .ks_o_apps{
+                @extend %app_dropw_list;
+                @extend .mb-4;
+                .dropdown-item{
+                  &:hover{
+                    background-color: transparent;
+                  }
+                }
+            }
+            .ks_o_menuitems{
+                .ks-menu-search-value{
+                    font-weight: 600;
+                    span.o_menuitem_parents{
+                        font-weight : 300;
+                    }
+                }
+            }
+        }
+        // End -  ks-search-values
+    }
+}
+
+//ks_app_drawer_arrow
+.ks_app_drawer_arrow{
+   @extend .d-none;
+}
+.o_home_menu_background{
+    background: var( --list-background);
+
+    .o_main_navbar{
+        background: transparent;
+    }
+    .o_action_manager{
+        margin-left: 0px !important;
+        margin-right :0px !important;
+    }
+
+    .ks_customize_icon{
+       @extend .d-block;
+    }
+
+    .o_menu_brand,
+    .o_menu_sections,
+    .ks_app_drawer_logo{
+        @extend .d-none;
+    }
+
+    .ks_app_drawer_arrow{
+        @extend .d-inline-block;
+    }
+
+    .ks_right_sidebar_panel,
+    .ks_left_sidebar_panel{
+        display: none;
+    }
+    .o_menu_toggle .dropdown-menu.ks_appdrawer_div{
+        transform: scale(1);
+        animation: menu_apps_effect 0.4s ease-in-out;
+        height: calc(100vh - 45px);
+        max-height: calc(100vh - 45px);
+    }
+
+    // Top menubar  autohide
+    &.ks_menubar_autohide{
+        > header{
+            transform: translateY(-1rem) !important;
+            opacity: 1 !important;
+            background: transparent;
+        }
+        .ks_left_sidebar_panel{
+            transform: translateX(0%) !important;
+            opacity: 1 !important;
+        }
+    }
+
+    // Vertical view show app drawer
+    &.ks_vertical_body_panel{
+      .o_menu_toggle .dropdown-menu.ks_appdrawer_div{
+        width: calc(100vw - 95px);
+      }
+        .ks_vertical_menus{
+            @extend .d-none;
+        }
+        .ks_left_sidebar_panel{
+             display: block;
+            .ks_company_short_logo_outer{
+                 @extend .d-none;
+            }
+            .ks_favt_apps{
+                .ks_app_sidebar_menu, .left_sidebar_arrow {
+                    @extend .d-none;
+                }
+            }
+
+            .dropdown-menu.ks_appdrawer_div{
+                 left: 90px;
+                 top: 0 !important;
+                 height: 100%;
+                 max-height: 100%;
+                 z-index: 0;
+            }
+        }
+    }
+    .o_action_manager{
+        background-color: transparent;
+        margin-left: 0px;
+    }
+}
+
+.ks_menu_search.ks-find-values ~ apps-drawer-nav{
+    @extend .d-none;
+}
+
+.ks-search-values:empty ~ .apps-drawer-nav{
+    @extend .d-flex;
+}
+.ks-search-values:empty ~ .ks_appdrawer-tab-content{
+     @extend .d-block;
+}
+
+.ks-search-values ~ .apps-drawer-nav,
+.ks-search-values ~ .ks_appdrawer-tab-content{
+     @extend .d-none;
+}
+
+#FrequentlyApps:not(.active), #AllApps:not(.active){
+    @extend .d-none;
+}
+
+// #AllApps.active,
+// #FrequentlyApps.active{
+//    @extend .d-block;
+// }
+
+.ks_appdrawer_main_div{
+
+//     .owl-dots{
+//         position: fixed;
+//         right: 15px;
+//         top: 50%;
+//         transform: translateY(-50%);
+//         display: flex;
+//         flex-direction: column;
+//
+//         .owl-dot {
+//             span{
+//                 @include square(10px, $radius: 30px);
+//                 margin: 5px;
+//                 background: #343a40;
+//                 display: block;
+//                 transition: opacity .2s ease;
+//                 -webkit-backface-visibility: hidden;
+//                 -webkit-tap-highlight-color: transparent;
+//                 -webkit-touch-callout: none;
+//             }
+//             &:focus{
+//                 outline: none;
+//             }
+//             &.active,
+//             &:hover{
+//                 box-shadow: none;
+//                  span{
+//                     -webkit-backface-visibility: visible;
+//                     background: var(--primary);
+//                  }
+//             }
+//         }
+//
+//     }
+}
+
+// ks_appsmenu_edit
+.ks_appsmenu_edit{
+    .ks-search-values:empty ~ .apps-drawer-nav,
+    .ks_user_pic, .ks_menu_search, ul.nav.nav-pills.apps-drawer-nav {
+        @extend .d-none;
+    }
+    .owl-carousel.owl-loaded{
+         @extend .d-flex;
+         @extend .align-items-center;
+         @extend .h-100;
+    }
+    .ks_appdrawer_inner_app_div{
+        .dropdown-item{
+            position: relative;
+            opacity: 0.7;
+            transition: all ease-in-out 0.3s;
+            &.ks_add_visible{
+              opacity: 1;
+            }
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+
+}
+.ks_appdrawer_inner_app_div{
+    .options{
+        @include position(absolute, $top: 8px, $right: 24px);
+        @include square(24px, $radius: 2px);
+        background: #616266;
+        &.ks_fav_icon{
+            @include flex-center-justify();
+            cursor: pointer;
+            img{
+                @include square(14px, $radius: 0);
+                animation: hiddenAnimation 0.8s ease 1;
+            }
+            &.ks_rmv_fav{
+              img{
+                 animation: hithere 1s ease 1;
+              }
+            }
+            @keyframes hithere {
+              30% { transform: scale(1.2); }
+              40%, 60% { transform: rotate(-20deg) scale(1.2); }
+              50% { transform: rotate(20deg) scale(1.2); }
+              70% { transform: rotate(0deg) scale(1.2); }
+              100% { transform: scale(1); }
+            }
+            @keyframes hiddenAnimation {
+              0%{transform: scale(1); }
+              30%{transform: scale(1.4); }
+              60%{transform: scale(1); }
+            }
+        }
+        &.ks-ap-edit{
+          right: auto;
+          left: 24px;
+          @include flex-center-justify();
+          z-index: 2;
+          img{
+              @include square(12px, $radius: 0);
+          }
+        }
+    }
+}
+.ks-app-drawer-close{
+  text-align: center;
+  padding: 0 0 30px;
+  .fav_close{
+    @extend %pointer;
+    img{
+      @include square(62px, $radius: 50%);
+    }
+  }
+}
+
+.ks_appsmenu_edit{
+  .tabContent{
+    height: 100%;
+  }
+}
+.o_menu_apps {
+  .dropdown-menu.ks_appdrawer_div {
+    .ks_appdrawer-tab-content {
+      .ks_appdrawer_panel{
+        &.tabContent{
+          display: flex;
+          align-items: center;
+          .item{
+            width: 100%;
+            display: none !important;
+            &.active{
+              display: flex !important;
+            }
+          }
+        }
+      }
+      .dropdown-item{
+        &:hover{
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+.ks-tabs{
+  padding: 0;
+  @include position(absolute, $top: 50%, $right: 30px);
+  transform: translate(0, -50%);
+  list-style: none;
+  @include flex-column();
+  li{
+    @extend %pointer;
+    span{
+      display: block;
+      @include square(14px, $radius: 30px);
+      margin: 5px;
+      background: #343a40;
+      box-shadow: 0 0 2px var(--color);
+    }
+    &.active{
+      span{
+        background: var(--primary);
+      }
+    }
+  }
+}
+
+body.ks_vertical_body_panel.o_web_client.o_home_menu_background{
+  .ks_left_sidebar_panel{
+     background: transparent !important;
+     box-shadow: none;
+  }
+}
+.o_home_menu {
+    display: flex !important;
+    flex-direction:  column;
+    padding: 0.5rem;
+    box-shadow: none;
+
+    @media(min-width: 992px){
+        padding-left: 20vw;
+        padding-right: 20vw;
+    }
+    width: 100vw;
+   // z-index: 1002;
+    top: 45px !important;
+    position: fixed !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: none;
+//     transform: scale(0);
+    transform-origin: top left;
+    background: transparent;
+
+    .ks_appdrawer-tab-content{
+//         overflow-x: hidden;
+//         overflow-y: auto;
+        max-height: 75%;
+        width: 100%;
+        //display: flex !important;
+        .ks_appdrawer_panel{
+            .ks_appdrawer_inner_app_div{
+                @extend %app_dropw_list;
+                justify-content: center;
+            }
+        }
+    }
+
+    .apps-drawer-nav{
+        @extend .justify-content-center;
+
+        .nav-link {
+            border: 1px solid $ks_border    ;
+            margin: 0 0.5rem;
+            border-radius: 30px;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    }
+
+    .ks_user_pic{
+        @extend %full_width;
+        @include align-center();
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 1rem;
+
+        .ks_user_name{
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            color: var(--color);
+        }
+    }
+    .ks_menu_search{
+        @extend %full_width;
+
+        .ks_menu_search_box{
+             box-shadow: 0 10px 15px rgba($black, 0.1);
+             border: 1px solid rgba($black, 0.05);
+             border-radius: 40px;
+             overflow: hidden;
+             padding: 0 2rem 0 0rem;
+             background: $white;
+
+             .input-box-text{
+                @include position(absolute, $top: 50%, $right: 1.8rem);
+                transform: translateY(-50%);
+                color: var(--dark);
+             }
+
+             .ks_search_input{
+                border: none;
+                height: 44px;
+                padding-left: 1.5rem;
+             }
+        }
+    }
+    // END - ks_menu_search
+
+    .ks-search-values{
+        height: 100%;
+        overflow: auto;
+        @extend %empty;
+        .ks_o_apps{
+            @extend %app_dropw_list;
+            @extend .mb-4;
+            .dropdown-item{
+              &:hover{
+                background-color: transparent;
+              }
+            }
+        }
+        .ks_o_menuitems{
+            .ks-menu-search-value{
+                font-weight: 600;
+                span.o_menuitem_parents{
+                    font-weight : 300;
+                }
+            }
+        }
+    }
+    // End -  ks-search-values
+}
+.o_home_menu {
+//   .dropdown-menu.ks_appdrawer_div {
+    .ks_appdrawer-tab-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      .ks_appdrawer_panel{
+        .ks_appdrawer_inner_app_div{
+            .o_app {
+                .o-app-icon {
+                    width: 90px;
+                    max-height: 90px;
+                    margin-bottom: 1rem;
+                    background-size: contain;
+                    transition: all ease-in-out 0.3s;
+                    box-shadow: 0 7px 16px -10px #000000;
+                }
+                .o-app-name {
+                    color: var(--color);
+                    text-shadow: none;
+                    max-width: 80px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
+        }
+        &.tabContent{
+          .o_apps{
+            width: 100%;
+            display: flex !important;
+            justify-content: center;
+            flex-wrap: wrap;
+            .o_app {
+                @include flex-center-justify();
+                flex-direction: column;
+                width: 100%;
+                transform-origin: left top;
+                .o_app_icon {
+                    max-height: 90px;
+                    margin-bottom: 1rem;
+                    background-size: contain;
+                    transition: all ease-in-out 0.3s;
+                    box-shadow: 0 7px 16px -10px #000000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .o_caption {
+                    color: var(--color);
+                    text-shadow: none;
+                    max-width: 80px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                &:hover {
+                    .o_app_icon {
+                        box-shadow: 0 14px 16px -10px #000000 !important;
+                        transform: translateY(-6px) !important;
+                    }
+                }
+            }
+          }
+        }
+      }
+      .dropdown-item{
+        &:hover{
+          background-color: transparent;
+        }
+      }
+    }
+    &.o_search_hidden .o_home_menu_scrollable > div:first-child {
+        margin-top: 10px;
+        @include media-breakpoint-up(md) {
+            margin-top: 10px;
+        }
+    }
+//   }
+}
+.o_home_menu_background .ks_favt_apps{
+    display: none;
+}
+html[data-color-mode="ks-light"]{
+    .o_home_menu_background{
+        background-color : var(--body-background);
+        background : var(--body-background);
+    }
+}
+html[data-color-mode="ks-dark"]{
+    .o_home_menu_background{
+        background : var(--ks-main-control-bg);
+    }
+}
+.o_web_studio_icon_creator .o_web_studio_selector{
+    color : #454546;
+}
+.o_mail_systray_dropdown{
+    z-index: 2000;
+}
+.o_home_menu {
+    .o_home_menu_scrollable {
+        .o_apps{
+            max-width: none;
+        }
+    }
+}
+.o_home_menu{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.o_legacy_dialog{
+    z-index: 2050;
+}
+.ks_user_pic .ks_user_menu_avatar {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+}
+
+.row{
+    --gutter-x: 0px;
+    text-align: left;
+}
+.my-4{
+    margin-top: 2.5rem;
+}
+.o_kanban_renderer .o_kanban_record > div{
+    background-color: transparent;
+    border-color: transparent;
+}
+.o_menu_toggle{
+    >svg{
+        display: none;
+    }
+}
+.o_menu_systray {
+    margin-left: auto;
+}
+.o_home_menu{
+    height: auto !important;
+}
+.o_studio{
+    height: 100% !important;
+}
+.o_studio_home_menu {
+    .o_app {
+        .o_web_studio_edit_icon{
+            top: 0px;
+        }
+
+    }
+}
+.o_home_menu_scrollable{
+    height: 60Vh
+}
+.o_command_palette_search{
+    >input{
+        color: white;
+    }
+}

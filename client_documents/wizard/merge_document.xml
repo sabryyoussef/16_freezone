@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_document_merge_wizard" model="ir.ui.view">
+        <field name="name">res.partner.document.merge.wizard</field>
+        <field name="model">res.partner.document.merge</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string=" Merge ">
+                <notebook>
+                    <page string="Items">
+                        <field name="item_ids" nolabel="1" colspan="2">
+                            <tree create="false" edit="0" delete="0">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="type_id"/>
+                                <field name="issue_date"/>
+                                <field name="attachment_ids" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="action_merge" string="Merge" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_merge_documents_lines" model="ir.actions.act_window">
+        <field name="name">Merge</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.document.merge</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_document_merge_wizard"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_res_partner_document"/>
+    </record>
+
+</odoo>
+

@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="hr_deduction_draft_leave_inherit" model="ir.ui.view">
+            <field name="name">hr_deduction_draft_leave_inherit</field>
+            <field name="model">hr.deductions</field>
+            <field name="inherit_id" ref="discipline_system.hr_deductions_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group attrs="{'invisible': ['|',('draft_leave', '=', None),('draft_leave_status', '!=', 'confirm')]}">
+                        <field name="draft_leave"/>
+                        <field name="draft_leave_status"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

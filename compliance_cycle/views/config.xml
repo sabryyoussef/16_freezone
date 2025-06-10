@@ -1,0 +1,248 @@
+<odoo>
+
+    <menuitem id="compliance_menu_config" name="Configuration"
+              parent="compliance_cycle.compliance_root_menu" sequence="500"/>
+    <menuitem id="compliance_menu_setting" name="Setting" parent="compliance_menu_config" sequence="2"/>
+    <menuitem id="compliance_menu_list" name="Listing" parent="compliance_menu_config" sequence="3"/>
+
+    <record id="initial_client_onboarding_stage_tree" model="ir.ui.view">
+        <field name="name">initial.client.onboarding.stage.tree</field>
+        <field name="model">initial.client.onboarding.stage</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="initial_client_onboarding_stage_action" model="ir.actions.act_window">
+        <field name="name">Initial Client Onboarding Stages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">initial.client.onboarding.stage</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="initial_client_onboarding_stage_menu" name="Initial Client Onboarding Stages"
+              parent="compliance_menu_config" action="initial_client_onboarding_stage_action" sequence="1"/>
+
+    <record id="risk_category_form" model="ir.ui.view">
+        <field name="name">risk.category.form</field>
+        <field name="model">risk.category</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assessment List">
+                            <field name="data_ids" domain="[('category_id', '=', id)]"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="risk_category_tree" model="ir.ui.view">
+        <field name="name">risk.category.tree</field>
+        <field name="model">risk.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="risk_category_action" model="ir.actions.act_window">
+        <field name="name">Risk Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">risk.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="risk_category_menu" name="Risk Category"
+              parent="compliance_menu_setting" action="risk_category_action" sequence="2"/>
+
+    <record id="risk_scoring_form" model="ir.ui.view">
+        <field name="name">risk.scoring.form</field>
+        <field name="model">risk.scoring</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="rating_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="risk_scoring_tree" model="ir.ui.view">
+        <field name="name">risk.scoring.tree</field>
+        <field name="model">risk.scoring</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="rating_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="risk_scoring_action" model="ir.actions.act_window">
+        <field name="name">Risk Scoring</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">risk.scoring</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="risk_scoring_menu" name="Risk Scoring"
+              parent="compliance_menu_setting" action="risk_scoring_action" sequence="3"/>
+
+    <record id="risk_rating_form" model="ir.ui.view">
+        <field name="name">risk.rating.form</field>
+        <field name="model">risk.rating</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="type"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <field name="document_required_type_ids">
+                                <tree editable="bottom">
+                                    <field name="document_id" options="{'no_quick_create':True,'no_create_edit':True,'no_create': True}" required="1"/>
+                                    <field name="is_required"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="risk_rating_tree" model="ir.ui.view">
+        <field name="name">risk.rating.tree</field>
+        <field name="model">risk.rating</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type"/>
+            </tree>
+        </field>
+    </record>
+    <record id="risk_rating_action" model="ir.actions.act_window">
+        <field name="name">Risk Rating</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">risk.rating</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="risk_rating_menu" name="Risk Rating"
+              parent="compliance_menu_setting" action="risk_rating_action" sequence="3"/>
+
+    <record id="listing_group_form" model="ir.ui.view">
+        <field name="name">listing.group.form</field>
+        <field name="model">listing.group</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="List">
+                            <field name="listing_ids">
+                                <tree editable="bottom">
+                                    <field name="name" string="Value"/>
+                                    <field name="scoring_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="listing_group_tree" model="ir.ui.view">
+        <field name="name">risk.rating.tree</field>
+        <field name="model">risk.rating</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="listing_group_action" model="ir.actions.act_window">
+        <field name="name">Listing Group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">listing.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="listing_group_menu" name="Listing Group"
+              parent="compliance_menu_list" action="listing_group_action" sequence="1"/>
+
+    <record id="assessment_list_form" model="ir.ui.view">
+        <field name="name">assessment.list.form</field>
+        <field name="model">assessment.list</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header></header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                        </group>
+                        <group>
+                            <field name="listing_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="assessment_list_tree" model="ir.ui.view">
+        <field name="name">assessment.list.tree</field>
+        <field name="model">assessment.list</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="listing_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="assessment_list_action" model="ir.actions.act_window">
+        <field name="name">Assessment List</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">assessment.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="assessment_list_menu" name="Assessment List"
+              parent="compliance_menu_list" action="assessment_list_action" sequence="2"/>
+</odoo>

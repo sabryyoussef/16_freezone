@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_wizard,crm_wizard,model_crm_wizard,,1,1,1,1
+access_crm_call_wizard,crm_call_wizard,model_crm_call_wizard,,1,1,1,1
+access_crm_leads,crm_leads,crm.model_crm_lead,,1,1,1,1

@@ -1,0 +1,141 @@
+<odoo>
+    <record id="partner_custom" model="ir.ui.view">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_new" type="object" string="New" class="oe_highlight"
+                            attrs="{'invisible': ['|',('is_appear_buttons', '=', False),('stage_id', 'not in', [2,3])]}"/>
+                    <button name="action_verified" type="object" string="Verified" class="btn btn-success"
+                            attrs="{'invisible': ['|',('is_appear_buttons', '=', False),('stage_id', '!=', 1)]}"/>
+                    <button name="action_liquidated_struck_off" type="object"
+                            string="Liquidated Struck-off" class="btn btn-warning"
+                            attrs="{'invisible': ['|',('is_appear_buttons', '=', False),('stage_id', '!=', 2)]}"/>
+                    <field name="stage_id" widget="statusbar" class="o_field_statusbar"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="replace">
+                <field name="is_appear_buttons" invisible="1"/>
+                <field name="phone" widget="phone"
+                       attrs="{'required': [('company_type', '=','company')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="replace">
+                <field name="email" widget="email" context="{'gravatar_image': True}" required="1"/>
+                <!--                       attrs="{'required': ['|',('user_ids','!=', []),('company_type', '=','company')]}"/>-->
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="license_authority_id"
+                       attrs="{'invisible': [('company_type', '!=','company')],'required': [('company_type', '=','company')]}"/>
+                <field name="foreign_jurisdiction_id"
+                       attrs="{'invisible': [('license_authority_id', '!=',81)],'required': [('license_authority_id', '=', 81)]}"/>
+                <field name="license_activity_ids" widget="many2many_tags" invisible="1"/>
+                <field name="incorporation_date"
+                       attrs="{'invisible': [('company_type', '!=','company')],'required': [('company_type', '=','company')]}"/>
+                <field name="license_validity" attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <label for="license_validity_from" string="License Validity"
+                       attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <div name="corporate_tax_period" class="o_row"
+                     attrs="{'invisible': [('company_type', '!=','company')]}">
+                    <field name="license_validity_from"
+                           widget="daterange"
+                           options="{&quot;related_end_date&quot;: &quot;license_validity_to&quot;}"
+                           attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                    <i class="fa fa-long-arrow-right mx-2 oe_edit_only"
+                       aria-label="Arrow icon"
+                       title="Arrow"/>
+                    <field name="license_validity_to"
+                           widget="daterange"
+                           options="{&quot;related_start_date&quot;: &quot;license_validity_from&quot;}"
+                           attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                </div>
+
+                <field name="source_id" attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <field name="license_number" attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <field name="legal_form_id" attrs="{'invisible': [('company_type', '!=','company')]}" invisible="1"/>
+                <field name="source_wealth" attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <field name="status" attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                <field name="shareholder"/>
+                <field name="gender"
+                       attrs="{'invisible': [('company_type', '!=','person')],'required': [('company_type', '=','person')]}"/>
+                <field name="relationship" attrs="{'invisible': [('company_type', '!=','person')]}"/>
+                <field name="ubo" attrs="{'invisible': [('company_type', '!=','person')]}"/>
+            </xpath>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_open_shareholder" type="object" string="Create Company"
+                            class="btn-primary"
+                            attrs="{'invisible': [('shareholder', '!=','True')]}"/>
+                </header>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string="Shareholder">
+                    <field name="shareholder_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="position"/>
+                            <field name="shares"/>
+                            <field name="total"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//group" position="after">
+                <group name="documents">
+                    <group name="secondary_documents" string="">
+
+                    </group>
+                    <group name="main_documents" string="Main Documents">
+                        <field name="residency" widget="boolean_toggle"
+                               attrs="{'invisible': [('company_type', '!=','person')]}"/>
+                        <field name="emirates_no_id"
+                               domain="[('partner_id', '!=', False), ('partner_id', '=', id)]"
+                               context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_525_86b2c880)s}"
+                               attrs="{'invisible': ['|',('residency', '!=',True),('company_type', '!=','person')]}"/>
+                        <field name="residence_visa_id"
+                               domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                               context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_526_f6c7bc14)s}"
+                               attrs="{'invisible': ['|',('residency', '!=',True),('company_type', '!=','person')]}"/>
+                        <field name="trade_license_id"
+                               domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                               context="{'default_partner_id': id,'default_type_id': %(project_custom.res_partner_document_type_trade_license)s}"
+                               attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                        <field name="memorandum_articles_id"
+                               domain="[('partner_id','!=', False),('partner_id','=', id)]"
+                               context="{'default_partner_id': id,'default_type_id': %(__export__.res_partner_document_type_816_d205684b)s}"
+                               attrs="{'invisible': [('company_type', '!=','company')]}"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="all_license_activity_ids" widget="many2many_tags" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_stages_kanban_search" model="ir.ui.view">
+        <field name="name">res.partner.stages.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="stage_id" widget="many2one" options="{'no_create': True}"/>
+                <filter name="partner_stage" string="Stage" domain="[]" context="{'group_by' : 'stage_id'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="context">{'search_default_partner_stage': 1}</field>
+    </record>
+    <!--    <record id="res_partner_stages" model="ir.ui.view">-->
+    <!--        <field name="name">res.partner.stage</field>-->
+    <!--        <field name="model">res.partner</field>-->
+    <!--        <field name="inherit_id" ref=""/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//kanban" position="attributes">-->
+    <!--                <attribute name="default_group_by">stage_id</attribute>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+</odoo>

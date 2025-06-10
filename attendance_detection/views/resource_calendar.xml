@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="resource_calendar_allowed_late_inherit" model="ir.ui.view">
+            <field name="name">resource_calendar_allowed_late_inherit</field>
+            <field name="model">resource.calendar</field>
+            <field name="inherit_id" ref="resource.resource_calendar_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tz']" position="after">
+                    <field name="late_allowance" widget="float_time"/>
+                    <field name="late_deductions" string="Deductions">
+                        <tree editable="bottom">
+                            <field name="late_from" string="Late From" widget="float_time"/>
+                            <field name="late_to" string="Late To" widget="float_time"/>
+                            <field name="reason_id" string="Deduction Reason"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

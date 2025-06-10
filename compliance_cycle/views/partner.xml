@@ -1,0 +1,52 @@
+<odoo>
+    <record id="res_partner_address" model="ir.ui.view">
+        <field name="name">res.partner.address</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <page name="internal_notes" position="after">
+                <page name="address" string="Address">
+                    <field name="partner_address_lines">
+                        <tree editable="bottom">
+                            <field name="type" required="1"/>
+                            <field name="street"/>
+                            <field name="street2"/>
+                            <field name="zip"/>
+                            <field name="city"/>
+                            <field name="state_id"/>
+                            <field name="country_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_shareholder" model="ir.ui.view">
+        <field name="name">res.partner.structure</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="business_structure_id"/>
+                <field name="nationality_id"
+                       attrs="{'invisible': [('company_type', '!=','person')],'required': [('company_type', '=','person')]}"/>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string="Shareholder Compliance">
+                    <field name="compliance_shareholder_ids">
+                        <tree editable="bottom" create="0">
+                            <field name="partner_id"/>
+                            <field name="contact_id"/>
+                            <field name="ubo_id"/>
+                            <field name="shareholding"/>
+                            <field name="relationship_ids" widget="many2many_tags"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

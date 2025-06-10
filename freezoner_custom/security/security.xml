@@ -1,0 +1,26 @@
+<odoo>
+    <record id="confirm_proforma_invoice" model="res.groups">
+        <field name="name"> Confirm Pro-forma Invoice </field>
+    </record>
+    <record id="template_project_button_group" model="res.groups">
+        <field name="name">Project Template Button</field>
+    </record>
+    <record id="hr_expense_group" model="res.groups">
+        <field name="name">Expense Group</field>
+    </record>
+    <record id="project_done_button_group" model="res.groups">
+        <field name="name">Project Done Button</field>
+    </record>
+    <record id="task_done_button_group" model="res.groups">
+        <field name="name">Task Done Button</field>
+    </record>
+    <record id="proforma_sov_price_group" model="res.groups">
+        <field name="name"> Proforma Invoice Sov Price Access </field>
+    </record>
+    <record id="project_see_only_task_rule" model="ir.rule">
+        <field name="name">user: see own only tasks</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[('user_ids','in',user.id)]</field>
+        <field name="groups" eval="[(4,ref('project.group_project_user'))]"/>
+    </record>
+</odoo>

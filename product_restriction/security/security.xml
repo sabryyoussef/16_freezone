@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<odoo>
+   <record id="group_product_restriction_user" model="res.groups">
+      <field name="name">Product Restriction</field>
+   </record>
+</odoo>

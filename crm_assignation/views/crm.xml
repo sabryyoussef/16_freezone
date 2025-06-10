@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+        <record id="action_assign_and_notify" model="ir.actions.act_window">
+            <field name="name">Assign And Notify</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead.assign</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'default_lead_id': active_id}</field>
+            <field name="view_id" ref="crm_lead_assign_and_notify_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="crm_lead_from_view_assignation" model="ir.ui.view">
+            <field name="name">CRM Inherit Assignation</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="%(crm_assignation.action_assign_and_notify)d" string="Assign &amp; Notify"
+                            type="action"
+                            class="oe_highlight"
+                            data-hotkey="A"
+                            attrs="{'invisible': [('user_id', '!=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

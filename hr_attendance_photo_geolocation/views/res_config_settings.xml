@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>	
+  		<record id="res_config_settings_view_form_hr_attendance" model="ir.ui.view">
+			<field name="name">res.config.settings.view.form.inherit.hr.attendance</field>
+            <field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>			
+			<field name="arch" type="xml">						
+				<xpath expr="//div[@data-key='hr_attendance']" position="inside">
+                    <h2>Check In / Check Out Features</h2>
+                    <div class="row mt16 o_settings_container" name="hr_attendance_photo_geolocation">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Geolocation">
+                            <div class="o_setting_left_pane">
+                                <field name="hr_attendance_geolocation"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Geolocation</span>
+                                <div class="text-muted">
+                                    Enable to Capture the Geolocation while using the attendance
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="col-12 col-lg-6 o_setting_box" title="Photo">
+                            <div class="o_setting_left_pane">
+                                <field name="hr_attendance_photo"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Photo</span>
+                                <div class="text-muted">
+                                    Enable to Capture the Photo while using the attendance
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+				</xpath>				
+			</field>
+		</record>
+	</data>		
+</odoo>

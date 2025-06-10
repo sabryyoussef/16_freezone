@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_res_partner_view_form" model="ir.ui.view">
+        <field name="name">inherit.res.partner.view.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <group name="assessment_group">
+                    <group string="OPERATION TEAMS">
+
+                    </group>
+                    <group string="Partner Risk Assessment">
+                        <field name="risk_assessment_ids" widget="many2many_tags"
+                               options="{'color_field': 'color', 'no_create_edit': True}"
+                               placeholder="e.g. &quot;B2B&quot;, &quot;VIP&quot;, &quot;Consulting&quot;, ..."/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_res_partner_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="risk_assessment_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_res_partner_view_kanban" model="ir.ui.view">
+        <field name="name">res.partner.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban/templates/t/div/div[2]/div/strong[2]" position='replace'>
+                <strong class="o_kanban_record_title oe_partner_heading">
+                    <field name="name"/>
+                </strong>
+            </xpath>
+            <xpath expr="//kanban/templates/t/div/div[2]" position='after'>
+                <div attrs="{'invisible': [('risk_name', '!=', 'MEDIUM')]}"
+                     style="background-color:#ff8300;color:white;width:30px; display: flex; justify-content: center; align-items: center; height: 150px;">
+                    <div style="transform: rotate(90deg); font-weight: bold; text-align: center;">
+                        <field name="risk_name"/>
+                    </div>
+                </div>
+                <div attrs="{'invisible': [('risk_name', '!=', 'LOW')]}"
+                     style="background-color:green;color:white;width:30px; display: flex; justify-content: center; align-items: center; height: 150px;">
+                    <div style="transform: rotate(90deg); font-weight: bold; text-align: center;">
+                        <field name="risk_name"/>
+                    </div>
+                </div>
+                <div attrs="{'invisible': [('risk_name', '!=', 'HIGH')]}"
+                     style="background-color:red;color:white;width:30px; display: flex; justify-content: center; align-items: center; height: 150px;">
+                    <div style="transform: rotate(90deg); font-weight: bold; text-align: center;">
+                        <field name="risk_name"/>
+                    </div>
+                </div>
+                <div attrs="{'invisible': [('risk_name', '!=', 'VERY HIGH')]}"
+                     style="background-color: maroon; color: white; width:30px;display: flex; justify-content: center; align-items: center; height: 150px;">
+                    <div style="transform: rotate(-90deg); font-weight: bold; text-align: center; white-space: nowrap;">
+                        <field name="risk_name"/>
+                    </div>
+                </div>
+
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

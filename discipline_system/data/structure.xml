@@ -1,0 +1,35 @@
+<odoo>
+    <data noupdate="0">
+
+<!--        <record id="discipline_system.hr_default_structure_ted" model="hr.payroll.structure">-->
+<!--            <field name="name">Default Pay</field>-->
+<!--            <field name="type_id" ref="hr_contract.structure_type_employee"/>-->
+<!--            <field name="report_id" ref="hr_payroll.action_report_payslip"/>-->
+<!--            <field name="schedule_pay">monthly</field>-->
+<!--            <field name="use_worked_day_lines">True</field>-->
+<!--        </record>-->
+
+<!--        <record id="discipline_system.deduction_salary_rule" model="hr.salary.rule">-->
+<!--            <field name="name">Applied Deduction</field>-->
+<!--            <field name="category_id" ref="hr_payroll.DED"/>-->
+<!--            <field name="code">APPLIED_DEDUCTION</field>-->
+<!--            <field name="appears_on_payslip">True</field>-->
+<!--            <field name="condition_select">python</field>-->
+<!--            <field name="condition_python">result = inputs.APPLIED_DEDUCTION.amount > 5</field>-->
+<!--            <field name="amount_select">code</field>-->
+<!--            <field name="amount_python_compute">-->
+<!--                result = - (contract.wage / 30) * (inputs.APPLIED_DEDUCTION.amount / 5 )-->
+<!--                result_name = inputs.APPLIED_DEDUCTION.name-->
+<!--            </field>-->
+<!--            <field name="struct_id" ref="discipline_system.hr_default_structure_ted"/>-->
+<!--            <field name="active">True</field>-->
+
+<!--        </record>-->
+
+<!--        <record id="discipline_system.payslip_input_type" model="hr.payslip.input.type">-->
+<!--            <field name="name">Applied Deduction</field>-->
+<!--            <field name="code">APPLIED_DEDUCTION</field>-->
+<!--        </record>-->
+    </data>
+
+</odoo>

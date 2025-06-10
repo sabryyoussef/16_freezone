@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="user_audit_form_view" model="ir.ui.view">
+		<field name="name">user.audit.configuration.form.view</field>
+		<field name="model">user.audit.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Configuration">
+				<sheet>
+
+					<group>
+						<group>
+							<field name="name"/>
+						</group>
+						<group>
+							<field name="read_log"/>
+							<field name="write_log"/>
+							<field name="create_log"/>
+							<field name="delete_log"/>
+						</group>
+					</group>
+					
+					
+					
+					<div style="background-color: #dee2e6;">
+						<h2 style="color:purple; margin-left:5px;">Users</h2>
+					</div>
+					<group>
+						<field name="all_users"/>
+					</group>
+                    <field name="user_ids" nolabel="1" attrs="{'invisible': [('all_users', '=', True)]}"/>
+                    
+                    <div style="background-color: #dee2e6;">
+                    	<h2 style="color:purple; margin-left:2px;">Objects</h2>
+                    </div>
+                    <field name="model_ids" nolabel="1"/>
+
+                    <div style="background-color: #dee2e6;">
+                    	<h2 style="color:purple; margin-left:5px;">Fields</h2>
+                    </div>
+                    <field name="field_ids" nolabel="1"/>
+
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="user_audit_tree_view" model="ir.ui.view">
+		<field name="name">user.audit.configuration.tree.view</field>
+		<field name="model">user.audit.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Audit Configuration">
+				<field name="name"/>
+				<field name="model_ids"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="user_audit_action_view" model="ir.actions.act_window">
+		<field name="name">Configuration</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">user.audit.configuration</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="user_audit_tree_view"/>
+	</record>
+
+</odoo>

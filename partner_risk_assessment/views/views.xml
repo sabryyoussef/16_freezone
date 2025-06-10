@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_risk_assessment_view_tree" model="ir.ui.view">
+        <field name="name">partner.risk.assessment.tree</field>
+        <field name="model">partner.risk.assessment</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </tree>
+        </field>
+    </record>
+    <record id="inherit_risk_assessment_view_action" model="ir.actions.act_window">
+        <field name="name">Risk Assessment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.risk.assessment</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem id="inherit_risk_assessment_view_menu" name="Risk Assessment"
+              parent="contacts.res_partner_menu_config"
+              action="inherit_risk_assessment_view_action" sequence="10"/>
+</odoo>

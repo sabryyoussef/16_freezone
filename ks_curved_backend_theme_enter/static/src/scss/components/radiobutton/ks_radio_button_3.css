@@ -1,0 +1,61 @@
+:root{
+    --primary: #28C397;
+}
+
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+  background: var(--primary);
+  border-radius: 50% !important;
+  content: "";
+  border-radius:50% !important;
+  transform:scale(1) !important;
+}
+.custom-control.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: transparent;
+  border-color: inherit !important;
+  content: "";
+  border-radius:50% !important;
+}
+.custom-control.custom-radio .custom-control-label:after, .custom-control.custom-radio .custom-control-label:before{
+border-radius:50% !important;
+}
+
+/* new css 10/2/23 */
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::after {
+  background: var(--primary);
+  border-radius: 50%;
+  content: "";
+  border-radius:50% !important;
+  transform:scale(1) !important;
+}
+.form-check.o_radio_item .form-check-input:checked ~ .form-check-label::before {
+  background-color: transparent;
+  border-color: inherit;
+  content: "";
+  border-radius:50% !important;
+}
+.form-check.o_radio_item .form-check-label {
+    position: relative;
+    vertical-align: top;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-label:before, .form-check.o_radio_item .form-check-label:after {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    content: "";
+    border: var(--primary) solid 1px;
+    border-radius: 50%;
+    width: 1.33rem;
+    height: 1.3rem;
+    left: -18px;
+    top: 0.2rem;
+}
+.form-check.o_radio_item .form-check-label:before {
+    border-radius: 50%;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-check.o_radio_item .form-check-input {
+    position: absolute;
+    opacity: 0;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

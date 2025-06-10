@@ -1,0 +1,17 @@
+<odoo>
+    <data noupdate="0">
+        <record id="incident" model="hr.deductions.reasons">
+            <field name="reason">Incident</field>
+            <field name="rate">1</field>
+        </record>
+        <record id="tardiness" model="hr.deductions.reasons">
+            <field name="reason">Tardiness</field>
+            <field name="rate">3</field>
+        </record>
+        <record id="warning_letter" model="hr.deductions.reasons">
+            <field name="reason">Warning Letter</field>
+            <field name="rate">0.0</field>
+        </record>
+
+    </data>
+</odoo>

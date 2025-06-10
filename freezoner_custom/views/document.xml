@@ -1,0 +1,14 @@
+<odoo>
+    <record id="document_tasks_related" model="ir.ui.view">
+        <field name="name">document.task.related</field>
+        <field name="model">res.partner.document</field>
+        <field name="inherit_id" ref="client_documents.client_documents_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <header>
+                    <button name="move_task_stage" type="object" string="Move Task To Done"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>

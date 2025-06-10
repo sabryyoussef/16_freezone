@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Project Products Tree View -->
+    <record id="view_project_products_tree" model="ir.ui.view">
+        <field name="name">project.project.products.tree</field>
+        <field name="model">project.project.products</field>
+        <field name="arch" type="xml">
+            <tree string="Project Products" decoration-muted="not active">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Project Products Form View -->
+    <record id="view_project_products_form" model="ir.ui.view">
+        <field name="name">project.project.products.form</field>
+        <field name="model">project.project.products</field>
+        <field name="arch" type="xml">
+            <form string="Project Product">
+                <header>
+                    <button name="action_add_remarks" string="Add Remarks" type="object" class="btn btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="product_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Remarks" name="remarks">
+                            <field name="remarks_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Project Products Search View -->
+    <record id="view_project_products_search" model="ir.ui.view">
+        <field name="name">project.project.products.search</field>
+        <field name="model">project.project.products</field>
+        <field name="arch" type="xml">
+            <search string="Project Products">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="groupby_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Product" name="groupby_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Customer" name="groupby_partner" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Project Products Action -->
+    <record id="action_project_products" model="ir.actions.act_window">
+        <field name="name">Project Products</field>
+        <field name="res_model">project.project.products</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_project_products_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first project product!
+            </p>
+            <p>
+                Add products to your projects and track their status.
+            </p>
+        </field>
+    </record>
+
+    <!-- Project Products Menu -->
+    <menuitem id="menu_project_products"
+        name="Project Products"
+        parent="project.menu_main_pm"
+        action="action_project_products"
+        sequence="20"/>
+
+    <!-- Project Product Remarks Tree View -->
+    <record id="view_project_products_remarks_tree" model="ir.ui.view">
+        <field name="name">project.project.products.remarks.tree</field>
+        <field name="model">project.project.products.remarks</field>
+        <field name="arch" type="xml">
+            <tree string="Project Product Remarks" decoration-muted="not active">
+                <field name="name"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Project Product Remarks Form View -->
+    <record id="view_project_products_remarks_form" model="ir.ui.view">
+        <field name="name">project.project.products.remarks.form</field>
+        <field name="model">project.project.products.remarks</field>
+        <field name="arch" type="xml">
+            <form string="Project Product Remark">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Remark"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="active" widget="boolean_toggle"/>
+                    </group>
+                    <notebook>
+                        <page string="Products" name="products">
+                            <field name="product_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Project Product Remarks Search View -->
+    <record id="view_project_products_remarks_search" model="ir.ui.view">
+        <field name="name">project.project.products.remarks.search</field>
+        <field name="model">project.project.products.remarks</field>
+        <field name="arch" type="xml">
+            <search string="Project Product Remarks">
+                <field name="name"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Project Product Remarks Action -->
+    <record id="action_project_products_remarks" model="ir.actions.act_window">
+        <field name="name">Project Product Remarks</field>
+        <field name="res_model">project.project.products.remarks</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_project_products_remarks_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first project product remark!
+            </p>
+            <p>
+                Add remarks to track product status and notes.
+            </p>
+        </field>
+    </record>
+
+    <!-- Project Product Remarks Menu -->
+    <menuitem id="menu_project_products_remarks"
+        name="Product Remarks"
+        parent="menu_project_products"
+        action="action_project_products_remarks"
+        sequence="10"/>
+</odoo> 

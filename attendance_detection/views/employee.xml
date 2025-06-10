@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- hr_attendance.view_attendance_tree-->
+
+        <record id="hr_employee_check_in_deduction" model="ir.ui.view">
+            <field name="name">hr.employee.button.check_in</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="regular_check_in"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

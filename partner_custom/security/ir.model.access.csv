@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_license_activity,license_activity,model_license_activity,,1,1,1,1
+access_legal_form,legal_form,model_legal_form,,1,1,1,1
+access_shareholder_data,shareholder_data,model_shareholder_data,,1,1,1,1
+access_partner_stage,partner_stage,model_partner_stage,partner_custom.partner_create_stage_group,1,1,1,1
+access_partner_stages,partner_stages,model_partner_stage,,1,0,0,0

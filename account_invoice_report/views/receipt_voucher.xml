@@ -1,0 +1,178 @@
+<odoo>
+    <template id="report_receipt_voucher">
+        <t t-call="account_invoice_report.custom_internal_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div class="page">
+                <div class="oe_structure"/>
+                <br/>
+                <br/>
+                <div class="header">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <table class="table table-bordered" DIR="LTR"
+                           style="margin-top:-40px;border: 2px solid white;width: 100%;">
+                        <tr>
+                            <td width="30%">
+                                <img src="/account_invoice_report/static/description/freezoner.png"
+                                     style="max-height: 80px;"
+                                     alt="Logo"/>
+
+                                <br/>
+                                <br/>
+                                <br/>
+                                <span style="font-weight:bold;font-size:13px;">Freezoner Corporate Business Provider
+                                </span>
+                                <br/>
+                                <span style="font-size:14px;">Office 2001, Tower B</span>
+                                <br/>
+                                <span style="font-size:14px;">Business Central Tower, Media City</span>
+                                <br/>
+                                <span style="font-size:14px;">Dubai United Arab Emirates</span>
+                                <br/>
+                                <span style="font-weight:bold;font-size:14px;">TRN</span>
+                                <span style="font-size:14px;">100592590200003</span>
+                            </td>
+                            <td width="35%"></td>
+                            <td width="35%">
+                                <span style="font-weight:bold;color:#DAA520;font-size:18px;">Receipt Voucher</span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <t t-if="o.partner_id.parent_id">
+                                    <span style="font-weight:bold;font-size:14px;">
+                                        <span t-esc="o.partner_id.parent_id.name"/>
+                                    </span>
+                                    <br/>
+                                    <span style="font-size:14px;">
+                                        <span t-esc="o.partner_id.name"/>
+                                    </span>
+                                </t>
+                                <t t-if="not o.partner_id.parent_id">
+                                    <span style="font-weight:bold;font-size:14px;">
+                                        <span t-esc="o.partner_id.name"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.partner_id.street">
+                                    <br/>
+                                    <span style="font-size:14px;">
+                                        <span t-esc="o.partner_id.street"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.partner_id.city">
+                                    <br/>
+                                    <span style="font-size:14px;">
+                                        <span t-esc="o.partner_id.city"/>
+                                        ,
+                                        <span t-esc="o.partner_id.country_id.name"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.partner_id.email">
+                                    <br/>
+                                    <span style="font-size:14px;" t-esc="o.partner_id.email"/>
+                                </t>
+                                <t t-if="o.partner_id.phone">
+                                    <br/>
+                                    <span style="font-size:14px;" t-esc="o.partner_id.phone"/>
+                                </t>
+                                <t t-if="o.partner_id.vat">
+                                    <br/>
+                                    <span style="font-weight:bold;font-size:14px;">TRN (VAT)</span>
+                                    <span style="font-size:14px;" t-esc="o.partner_id.vat"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                <table style="width: 100%;border-collapse: collapse;font-size:18px;">
+                    <thead style="text-align:center;">
+                        <th style="border: 1px solid;padding: 15px;width:20%;font-weight: normal;" scope="col">Date</th>
+                        <th style="border: 1px solid;padding: 15px;width:15%;font-weight: normal;" scope="col">
+                            <span t-esc="o.date"/>
+                        </th>
+                        <th style="border: 1px solid;padding: 15px;width:30%;font-weight: normal;" scope="col">
+                            Payment Reference Number
+                        </th>
+                        <th style="border: 1px solid;padding: 13px;width:25%;" scope="col">
+                            <span style="font-weight:bold;color:#DAA520;" t-esc="o.name"/>
+                        </th>
+                    </thead>
+                    <thead style="text-align:center;">
+                        <th style="border: 1px solid;padding: 15px;width:20%;font-weight: normal;" scope="col">
+                            AMOUNT IN FX CURRENCY
+                        </th>
+                        <th style="border: 1px solid;padding: 15px;width:15%;font-weight: normal;" scope="col">
+                            <span t-field="o.amount_total_in_currency_signed"/>
+                        </th>
+                        <th style="border: 1px solid;padding: 15px;width:30%;font-weight: normal;" scope="col">
+                            Payment Method
+                        </th>
+                        <th style="border: 1px solid;padding: 13px;width:25%;" scope="col">
+                            <span style="font-weight: normal;" t-esc="o.payment_method_line_id.name"/>
+                        </th>
+                    </thead>
+                    <thead style="text-align:center;">
+                        <th style="border: 1px solid;padding: 15px;width:20%;font-weight: normal;" scope="col">
+                            AMOUNT
+                        </th>
+                        <th style="border: 1px solid;padding: 13px;width:25%;" scope="col">
+                            <span style="font-weight:bold;color:#DAA520;" t-field="o.amount_total_signed"/>
+                        </th>
+                        <th style="border: 1px solid;padding: 15px;width:30%;font-weight: normal;" scope="col">
+                            Bank Reference Number
+                        </th>
+                        <th style="border: 1px solid;padding: 13px;width:25%;" scope="col">
+                            <span style="font-weight: normal;" t-esc="o.ref"/>
+                        </th>
+                    </thead>
+                </table>
+                <br/><br/>
+                <p>
+                    We are pleased to confirm receipt of the payment for your account. Your prompt settlement is greatly
+                    appreciated and ensures smooth processing of our services. Thank you for your cooperation.
+                </p>
+                <br/>
+                <br/>
+                <h4 style="text-align:center;font-size:23px;font-weight:bold;color:#DAA520;">Thank you for choosing
+                    Freezoner
+                </h4>
+                <br/>
+                <div style="text-align:center;">
+                    <img t-attf-src="/account_invoice_report/static/description/Group.png"
+                         alt="icon_img" style="width: 80%;"/>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_receipt_voucher_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="account_invoice_report.report_receipt_voucher"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_receipt_voucher_print" model="ir.actions.report">
+        <field name="name">Receipt Voucher</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="account.model_account_payment"/>
+        <field name="report_name">account_invoice_report.report_receipt_voucher_template</field>
+        <field name="report_file">account_invoice_report.report_receipt_voucher_template</field>
+        <field name="print_report_name">('Receipt Voucher - %s' % (object.partner_id.name))</field>
+    </record>
+</odoo>

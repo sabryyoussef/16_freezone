@@ -1,0 +1,10 @@
+<odoo>
+    <report
+            id="report_crm_report_xlsx"
+            model="crm.lead.wizard"
+            report_type="xlsx"
+            string="Lead Report"
+            name="crm_report.print_items_report"
+            file="crm_report.print_items_report"
+        />
+</odoo>

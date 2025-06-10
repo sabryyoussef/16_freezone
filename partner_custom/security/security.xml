@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="partner_create_stage_group" model="res.groups">
+        <field name="name">Partner Create Stage </field>
+    </record>
+    <record id="partner_can_edit_verified_group" model="res.groups">
+        <field name="name">Partner Can Edit After Verified (Manager)</field>
+    </record>
+
+</odoo>
